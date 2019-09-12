@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
+import { ProjectListModule } from './project-list/project-list.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { CoreModule } from './core/core.module';
   imports: [
     BrowserModule,
     CoreModule,
+    ProjectListModule,
     AppRoutingModule
   ],
   providers: [],
