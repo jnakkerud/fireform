@@ -3,6 +3,10 @@ body {
     margin: 0;
   }
    
+  .du-button[md-button], .du-button[md-raised-button] {
+    text-transform: uppercase;
+  }
+
   h1, h2 {
     font-weight: 400;
   }
