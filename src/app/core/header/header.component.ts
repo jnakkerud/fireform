@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
+
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-header',
@@ -7,11 +9,33 @@ import { Router } from '@angular/router';
     styleUrls: ['./header.component.scss']
 })
 
-export class HeaderComponent {
-    constructor(private router: Router) { }
+export class HeaderComponent implements OnInit {
 
-    // TODO detect initial Router state and set drop down
-    selected = '2';
+    selected: string;
+    showSelect: boolean;
+
+    constructor(private router: Router, private route: ActivatedRoute) {
+    }
+
+    ngOnInit() {
+        // Detect global router changes and set drop down if needed
+        this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+            .subscribe(() => {
+                let active = this.route;
+                while (active.firstChild) { active = active.firstChild; }
+                active.params.subscribe((params: Params) => {
+                    this.handleParam(params.id);
+                });
+            });
+    }
+
+    private handleParam(id: string) {
+        this.showSelect = false;
+        if (id && id !== 'create') {
+            this.showSelect = true;
+            this.selected = id;
+        }
+    }
 
     onSelectChange() {
         if (this.selected === 'all') {

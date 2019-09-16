@@ -10,10 +10,10 @@
         <span>DUVOLA</span>
       </a>
 
-      <mat-form-field *ngIf="selected != 'all'">
+      <mat-form-field *ngIf="showSelect">
         <mat-select [(value)]="selected" (selectionChange)="onSelectChange()">
           <mat-option value="all">See all collections</mat-option>
-          <mat-option value="create">Create Collection</mat-option>
+          <mat-option value="create">Create collection</mat-option>
           <mat-divider></mat-divider>
           <mat-option value="1">Option 1</mat-option>
           <mat-option value="2">Option 2</mat-option>
