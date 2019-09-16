@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProjectListComponent } from './project-list/project-list.component';
 import { EditCollectionComponent } from './edit-collection/edit-collection.component';
+import { CreateCollectionComponent } from './create-collection/create-collection.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'collections', pathMatch: 'full'},
+  {path: 'createCollection', component: CreateCollectionComponent},
   {
     path: 'collections',
     children: [

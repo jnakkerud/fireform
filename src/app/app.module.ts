@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ProjectListModule } from './project-list/project-list.component';
 import { EditCollectionModule } from './edit-collection/edit-collection.component';
+import { CreateCollectionModule } from './create-collection/create-collection.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EditCollectionModule } from './edit-collection/edit-collection.componen
     CoreModule,
     ProjectListModule,
     EditCollectionModule,
+    CreateCollectionModule,
     AppRoutingModule
   ],
   providers: [],

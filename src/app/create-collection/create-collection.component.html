@@ -1,0 +1,10 @@
+<form [formGroup]="collectionNameGrp">
+    <ng-template matStepLabel>Fill out your address</ng-template>
+    <mat-form-field>
+        <input matInput placeholder="Name" formControlName="nameCtrl" required>
+    </mat-form-field>
+    <div>
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-button (click)="onNext()">Next</button>
+    </div>
+</form>
