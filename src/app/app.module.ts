@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
-import { ProjectListModule } from './project-list/project-list.component';
+import { CollectionListModule } from './collection-list/collection-list.component';
 import { EditCollectionModule } from './edit-collection/edit-collection.component';
 import { CreateCollectionModule } from './create-collection/create-collection.component';
 
@@ -16,7 +16,7 @@ import { CreateCollectionModule } from './create-collection/create-collection.co
   imports: [
     BrowserModule,
     CoreModule,
-    ProjectListModule,
+    CollectionListModule,
     EditCollectionModule,
     CreateCollectionModule,
     AppRoutingModule

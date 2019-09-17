@@ -6,17 +6,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCardModule } from '@angular/material/card';
 
-import { ProjectItemService } from './project-item.service';
+import { CollectionService } from '../core/collection-service/collection.service';
 
 @Component({
     selector: 'app-project-list',
-    templateUrl: 'project-list.component.html',
-    styleUrls: ['./project-list.component.scss'],
-    providers: [ ProjectItemService ]
+    templateUrl: 'collection-list.component.html',
+    styleUrls: ['./collection-list.component.scss']
 })
 
-export class ProjectListComponent {
-    constructor(public projectItemService: ProjectItemService) { }
+export class CollectionListComponent {
+    constructor(public collectionService: CollectionService) { }
 }
 
 @NgModule({
@@ -25,7 +24,7 @@ export class ProjectListComponent {
         CommonModule,
         BrowserAnimationsModule,
         MatCardModule],
-    exports: [ProjectListComponent],
-    declarations: [ProjectListComponent],
+    exports: [CollectionListComponent],
+    declarations: [CollectionListComponent],
   })
-  export class ProjectListModule {}
+  export class CollectionListModule {}

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProjectListComponent } from './project-list/project-list.component';
+import { CollectionListComponent } from './collection-list/collection-list.component';
 import { EditCollectionComponent } from './edit-collection/edit-collection.component';
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 
@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'collections',
     children: [
-      {path: '', component: ProjectListComponent}, // TODO rename to CollectionListComponent
+      {path: '', component: CollectionListComponent}, // TODO rename to CollectionListComponent
       {path: ':id', component: EditCollectionComponent},
     ],
   },

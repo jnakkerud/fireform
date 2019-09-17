@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-export interface ProjectItem {
+export interface CollectionItem {
     id: string;
     name: string;
     description: string;
 }
 
-const PROJECTS: ProjectItem[] = [
+const PROJECTS: CollectionItem[] = [
     {
         id: '1',
         name: 'First Project',
@@ -44,9 +44,23 @@ const PROJECTS: ProjectItem[] = [
     }
 ];
 
-@Injectable()
-export class ProjectItemService {
-    getProjects(): ProjectItem[] {
-        return PROJECTS;
-      }
+@Injectable({
+    providedIn: 'root',
+})
+export class CollectionService {
+
+    items: CollectionItem[] = [];
+
+    constructor() {
+        // seed the collection
+        this.items.push.apply(this.items, PROJECTS);
+    }
+
+    getCollectionItems(): CollectionItem[] {
+        return this.items;
+    }
+
+    addItem(item: CollectionItem) {
+        this.items.push(item);
+    }
 }

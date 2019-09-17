@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 
 import { HeaderComponent } from './header/header.component';
+import { CollectionService } from './collection-service/collection.service';
 
 @NgModule({
     imports: [
@@ -21,6 +22,6 @@ import { HeaderComponent } from './header/header.component';
         RouterModule],
     exports: [HeaderComponent],
     declarations: [HeaderComponent],
-    providers: [],
+    providers: [CollectionService],
 })
 export class CoreModule { }

@@ -1,5 +1,5 @@
 <div class="project-list">
-    <a *ngFor="let project of projectItemService.getProjects()"
+    <a *ngFor="let project of collectionService.getCollectionItems()"
        class="project-list-item"
       [routerLink]="['/collections/', project.id]">
       <mat-card class="project-list-card">
