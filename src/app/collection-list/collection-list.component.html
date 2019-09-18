@@ -1,4 +1,12 @@
 <div class="project-list">
+    <a class="project-list-item" [routerLink]="['/createCollection/']">
+      <mat-card class="project-list-card">
+        <mat-card-content class="project-list-card-summary">
+          <mat-card-title>Create Collection</mat-card-title>
+          <mat-icon aria-hidden="false" aria-label="Add" color='accent'>add</mat-icon>
+        </mat-card-content>
+      </mat-card>
+    </a>
     <a *ngFor="let project of collectionService.getCollectionItems()"
        class="project-list-item"
       [routerLink]="['/collections/', project.id]">

@@ -60,7 +60,16 @@ export class CollectionService {
         return this.items;
     }
 
-    addItem(item: CollectionItem) {
+    addItem(item: CollectionItem): CollectionItem {
+        if (item.id === '-1') {
+            // create a new ID
+            item.id = this.generateId();
+        }
         this.items.push(item);
+        return item;
+    }
+
+    private generateId(): string {
+        return Math.random().toString(36).substr(2, 9);
     }
 }

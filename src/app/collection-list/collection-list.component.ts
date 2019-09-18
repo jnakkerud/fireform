@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 import { CollectionService } from '../core/collection-service/collection.service';
 
@@ -23,6 +24,7 @@ export class CollectionListComponent {
         RouterModule,
         CommonModule,
         BrowserAnimationsModule,
+        MatIconModule,
         MatCardModule],
     exports: [CollectionListComponent],
     declarations: [CollectionListComponent],

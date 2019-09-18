@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+import { CollectionService } from '../core/collection-service/collection.service';
+
 @Component({
     selector: 'app-create-collection',
     templateUrl: 'create-collection.component.html'
@@ -15,7 +17,7 @@ export class CreateCollectionComponent implements OnInit {
 
     collectionNameGrp: FormGroup;
 
-    constructor(private router: Router, private formBuilder: FormBuilder) { }
+    constructor(private router: Router, private formBuilder: FormBuilder, private collectionService: CollectionService) { }
 
     ngOnInit() {
         this.collectionNameGrp = this.formBuilder.group({
@@ -29,12 +31,17 @@ export class CreateCollectionComponent implements OnInit {
 
     onNext() {
         // validate
-        const name = this.collectionNameGrp.get('nameCtrl').value;
+        const nameVal = this.collectionNameGrp.get('nameCtrl').value;
 
         // save collection project
+        const newItem = this.collectionService.addItem({
+            id: '-1',
+            name: nameVal,
+            description: 'description'
+        });
 
         // move to edit collection
-        this.router.navigate(['/collections', name]);
+        this.router.navigate(['/collections', newItem.id]);
     }
 }
 
