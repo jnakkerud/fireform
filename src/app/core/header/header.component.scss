@@ -5,3 +5,7 @@ mat-toolbar.mat-toolbar mat-form-field.mat-form-field {
       font-weight: bold;
     }
   }
+
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
