@@ -60,13 +60,26 @@ export class CollectionService {
         return this.items;
     }
 
+    // TODO better name
     addItem(item: CollectionItem): CollectionItem {
+        let editResult: CollectionItem;
         if (item.id === '-1') {
             // create a new ID
             item.id = this.generateId();
+            this.items.push(item);
+            editResult = item;
+        } else {
+            editResult = this.getItem(item.id);
+            if (editResult) {
+                editResult.name = item.name;
+                editResult.description = item.description;
+            }
         }
-        this.items.push(item);
-        return item;
+        return editResult;
+    }
+
+    getItem(itemId: string): CollectionItem {
+        return this.items.find(x => x.id === itemId);
     }
 
     private generateId(): string {
