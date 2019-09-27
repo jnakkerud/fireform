@@ -3,7 +3,8 @@ import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
 
-import { CollectionService, CollectionItem } from '../collection-service/collection.service';
+import { CollectionItem } from '../collection-service/collection.service';
+import { RecentlyUsedService } from '../recently-used-service/recently-used.service';
 
 @Component({
     selector: 'app-header',
@@ -16,7 +17,10 @@ export class HeaderComponent implements OnInit {
     selected: string;
     showSelect: boolean;
 
-    constructor(private router: Router, private route: ActivatedRoute, private collectionService: CollectionService) {
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private rencentlyUsedService: RecentlyUsedService) {
     }
 
     ngOnInit() {
@@ -51,7 +55,6 @@ export class HeaderComponent implements OnInit {
     }
 
     getRecentlyUsedItems(): CollectionItem[] {
-        // TODO get from local storage
-        return this.collectionService.getCollectionItems().slice(0, 5);
+        return this.rencentlyUsedService.get();
     }
 }

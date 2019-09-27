@@ -49,7 +49,7 @@ const PROJECTS: CollectionItem[] = [
 })
 export class CollectionService {
 
-    items: CollectionItem[] = [];
+    private items: CollectionItem[] = [];
 
     constructor() {
         // seed the collection
@@ -80,6 +80,14 @@ export class CollectionService {
 
     getItem(itemId: string): CollectionItem {
         return this.items.find(x => x.id === itemId);
+    }
+
+    removeItem(item: CollectionItem) {
+        for (let i = 0; i < this.items.length; i++) {
+            if ( this.items[i].id === item.id) {
+                this.items.splice(i, 1);
+            }
+         }
     }
 
     private generateId(): string {

@@ -16,6 +16,7 @@ import { CollectionService } from './collection-service/collection.service';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
+import { RecentlyUsedService } from './recently-used-service/recently-used.service';
 
 @NgModule({
     imports: [
@@ -31,6 +32,6 @@ import { AuthService } from './auth/auth.service';
         RouterModule],
     exports: [HeaderComponent, LoginComponent],
     declarations: [HeaderComponent, LoginComponent],
-    providers: [CollectionService, AuthGuardService, AuthService],
+    providers: [CollectionService, AuthGuardService, AuthService, RecentlyUsedService],
 })
 export class CoreModule { }

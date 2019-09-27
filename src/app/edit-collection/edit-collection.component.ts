@@ -1,6 +1,6 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
+import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
 
 @Component({
     selector: 'app-edit-collection',
@@ -23,9 +24,15 @@ export class EditCollectionComponent implements OnInit {
     showNameEditor = false;
     collectionNameGrp: FormGroup;
 
-    constructor(private route: ActivatedRoute, private collectionService: CollectionService, private formBuilder: FormBuilder) {
-        route.params.subscribe(p => {
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private collectionService: CollectionService,
+        private recentlyUsedService: RecentlyUsedService,
+        private formBuilder: FormBuilder) {
+        this.route.params.subscribe(p => {
             this.editItem = this.collectionService.getItem(p.id);
+            this.recentlyUsedService.set(this.editItem.id);
         });
     }
 
@@ -51,6 +58,14 @@ export class EditCollectionComponent implements OnInit {
             name: this.collectionNameGrp.get('nameCtrl').value,
             description: this.editItem.description
         });
+    }
+
+    onDelete() {
+        // delete from the collection
+        this.collectionService.removeItem(this.editItem);
+
+        // move to card view
+        this.router.navigate(['/']);
     }
 }
 
