@@ -1,11 +1,7 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <div class="edit-name" (mouseenter)="editName = true" (mouseleave)="editName = false">
-            <span>{{editItem.name}}</span>
-            <button *ngIf="editName" mat-icon-button (click)="onEditName()">
-                <mat-icon>edit</mat-icon>
-            </button>
-        </div>
+
+        <span class="edit-name">{{editItem.name}}</span>
 
         <button mat-button class="crm-command-bar-button">
             <mat-icon>link</mat-icon>
@@ -16,6 +12,13 @@
             <mat-icon>delete</mat-icon>
             Delete collection
         </button>
+
+        <span class="toolbar-spacer"></span>
+
+        <button mat-icon-button (click)="onEditName()">
+            <mat-icon>settings</mat-icon>
+        </button>
+
     </mat-toolbar-row>
 </mat-toolbar>
 <div *ngIf="showNameEditor">
