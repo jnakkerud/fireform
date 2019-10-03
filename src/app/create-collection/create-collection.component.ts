@@ -1,12 +1,10 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { CollectionService } from '../core/collection-service/collection.service';
+import { AngularMaterialModule } from '../angular-material.module';
 
 @Component({
     selector: 'app-create-collection',
@@ -48,8 +46,7 @@ export class CreateCollectionComponent implements OnInit {
 @NgModule({
     imports: [
         RouterModule,
-        MatButtonModule,
-        MatInputModule,
+        AngularMaterialModule,
         ReactiveFormsModule,
         CommonModule],
     exports: [CreateCollectionComponent],

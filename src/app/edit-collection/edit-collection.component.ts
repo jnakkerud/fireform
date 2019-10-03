@@ -3,14 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatDividerModule } from '@angular/material/divider';
-
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
+import { AngularMaterialModule } from '../angular-material.module';
 
 @Component({
     selector: 'app-edit-collection',
@@ -72,11 +67,7 @@ export class EditCollectionComponent implements OnInit {
 @NgModule({
     imports: [
         RouterModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatInputModule,
-        MatDividerModule,
+        AngularMaterialModule,
         ReactiveFormsModule,
         CommonModule],
     exports: [EditCollectionComponent],

@@ -4,10 +4,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-
 import { CollectionService } from '../core/collection-service/collection.service';
+import { AngularMaterialModule } from '../angular-material.module';
 
 @Component({
     selector: 'app-project-list',
@@ -24,8 +22,7 @@ export class CollectionListComponent {
         RouterModule,
         CommonModule,
         BrowserAnimationsModule,
-        MatIconModule,
-        MatCardModule],
+        AngularMaterialModule],
     exports: [CollectionListComponent],
     declarations: [CollectionListComponent],
   })
