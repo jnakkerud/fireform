@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { CollectionListModule } from './collection-list/collection-list.component';
 import { EditCollectionModule } from './edit-collection/edit-collection.component';
 import { CreateCollectionModule } from './create-collection/create-collection.component';
+import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CreateCollectionModule } from './create-collection/create-collection.co
     CollectionListModule,
     EditCollectionModule,
     CreateCollectionModule,
+    DynamicFormModule,
     AppRoutingModule
   ],
   providers: [],
