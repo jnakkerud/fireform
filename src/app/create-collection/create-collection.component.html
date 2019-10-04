@@ -1,10 +1,1 @@
-<form [formGroup]="collectionNameGrp" (ngSubmit)="onNext()">
-    <ng-template matStepLabel>Fill out your address</ng-template>
-    <mat-form-field>
-        <input matInput placeholder="Name" formControlName="nameCtrl" required>
-    </mat-form-field>
-    <div>
-        <button mat-button (click)="onCancel()">Cancel</button>
-        <button mat-button type="submit" [disabled]="collectionNameGrp.invalid">Next</button>
-    </div>
-</form>
+<app-collection-settings (cancel)="onCancel()" (save)="onNext($event)"></app-collection-settings>

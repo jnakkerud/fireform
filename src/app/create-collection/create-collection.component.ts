@@ -1,43 +1,24 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { CollectionService } from '../core/collection-service/collection.service';
-import { AngularMaterialModule } from '../angular-material.module';
+import { CollectionItem } from '../core/collection-service/collection.service';
+import { CollectionSettingsModule } from '../collection-settings/collection-settings.component';
 
 @Component({
     selector: 'app-create-collection',
     templateUrl: 'create-collection.component.html'
 })
 
-export class CreateCollectionComponent implements OnInit {
+export class CreateCollectionComponent {
 
-    collectionNameGrp: FormGroup;
-
-    constructor(private router: Router, private formBuilder: FormBuilder, private collectionService: CollectionService) { }
-
-    ngOnInit() {
-        this.collectionNameGrp = this.formBuilder.group({
-            nameCtrl: ['', Validators.required]
-        });
-    }
+    constructor(private router: Router) { }
 
     onCancel() {
         this.router.navigate(['/']);
     }
 
-    onNext() {
-        // validate
-        const nameVal = this.collectionNameGrp.get('nameCtrl').value;
-
-        // save collection project
-        const newItem = this.collectionService.addItem({
-            id: '-1',
-            name: nameVal,
-            description: 'description'
-        });
-
+    onNext(newItem: CollectionItem) {
         // move to edit collection
         this.router.navigate(['/collections', newItem.id]);
     }
@@ -46,8 +27,7 @@ export class CreateCollectionComponent implements OnInit {
 @NgModule({
     imports: [
         RouterModule,
-        AngularMaterialModule,
-        ReactiveFormsModule,
+        CollectionSettingsModule,
         CommonModule],
     exports: [CreateCollectionComponent],
     declarations: [CreateCollectionComponent],
