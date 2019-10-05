@@ -15,26 +15,16 @@
 
         <span class="toolbar-spacer"></span>
 
-        <button mat-icon-button (click)="onEditName()">
+        <button mat-icon-button (click)="toggleSettings()">
             <mat-icon>settings</mat-icon>
         </button>
 
     </mat-toolbar-row>
 </mat-toolbar>
-<div *ngIf="showNameEditor">
-    <div class="edit-container">
-        <form [formGroup]="collectionNameGrp" (ngSubmit)="onSave()">
-            <mat-form-field>
-                <input matInput placeholder="Name" formControlName="nameCtrl" required>
-            </mat-form-field>
-            <div>
-                <button mat-button (click)="onCancel()">Cancel</button>
-                <button mat-button type="submit" [disabled]="collectionNameGrp.invalid">Save</button>
-            </div>
-        </form>
-    </div>
+<ng-container *ngIf="showEditor">
+    <app-collection-settings (cancel)="toggleSettings()" (save)="toggleSettings()"></app-collection-settings>
     <mat-divider></mat-divider>
-</div>
+</ng-container>
 <div class="edit-container">
     <main class="edit-main">
         <span>Edit Collection View {{editItem.id}}</span>

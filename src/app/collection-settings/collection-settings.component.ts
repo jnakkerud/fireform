@@ -48,6 +48,9 @@ export class CollectionSettingsComponent implements OnInit {
     async createForm() {
         this.formModel = await this.dynamicFormService.getFormMetadata(SETTINGS_FORM);
         this.formGroup = this.dynamicFormService.createGroup(this.formModel);
+
+        // bind the collection item to the form
+        this.formGroup.patchValue(this.collectionItem);
     }
 
     onCancel() {

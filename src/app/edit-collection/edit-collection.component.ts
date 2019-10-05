@@ -1,11 +1,11 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, NgModule, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
 import { AngularMaterialModule } from '../angular-material.module';
+import { CollectionSettingsModule, CollectionSettingsComponent } from '../collection-settings/collection-settings.component';
 
 @Component({
     selector: 'app-edit-collection',
@@ -13,46 +13,32 @@ import { AngularMaterialModule } from '../angular-material.module';
     styleUrls: ['./edit-collection.component.scss']
 })
 
-export class EditCollectionComponent implements OnInit {
+export class EditCollectionComponent {
     editItem: CollectionItem;
-    editName = false;
-    showNameEditor = false;
-    collectionNameGrp: FormGroup;
+    showEditor = false;
+
+    // We need a setter here cause the CollectionSettingsComponent is hidden initially
+    @ViewChild(CollectionSettingsComponent, {static: false}) set content(value: CollectionSettingsComponent) {
+        this.settingsComponent = value;
+        if (this.settingsComponent) {
+            this.settingsComponent.collectionItem = this.editItem;
+        }
+    }
+    settingsComponent: CollectionSettingsComponent;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private collectionService: CollectionService,
-        private recentlyUsedService: RecentlyUsedService,
-        private formBuilder: FormBuilder) {
+        private recentlyUsedService: RecentlyUsedService) {
         this.route.params.subscribe(p => {
             this.editItem = this.collectionService.getItem(p.id);
             this.recentlyUsedService.set(this.editItem.id);
         });
     }
 
-    ngOnInit() {
-        //  TODO resolve duplicate with create collection view
-        this.collectionNameGrp = this.formBuilder.group({
-            nameCtrl: [this.editItem.name, Validators.required]
-        });
-    }
-
-    onEditName() {
-        this.showNameEditor = true;
-    }
-
-    onCancel() {
-        this.showNameEditor = false;
-    }
-
-    onSave() {
-        this.showNameEditor = false;
-        this.editItem = this.collectionService.addItem({
-            id: this.editItem.id,
-            name: this.collectionNameGrp.get('nameCtrl').value,
-            description: this.editItem.description
-        });
+    toggleSettings() {
+        this.showEditor = !this.showEditor;
     }
 
     onDelete() {
@@ -68,7 +54,7 @@ export class EditCollectionComponent implements OnInit {
     imports: [
         RouterModule,
         AngularMaterialModule,
-        ReactiveFormsModule,
+        CollectionSettingsModule,
         CommonModule],
     exports: [EditCollectionComponent],
     declarations: [EditCollectionComponent],
