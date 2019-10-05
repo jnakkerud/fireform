@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 
@@ -9,12 +9,15 @@ import { CollectionSettingsModule } from '../collection-settings/collection-sett
     selector: 'app-create-collection',
     templateUrl: 'create-collection.component.html'
 })
-
 export class CreateCollectionComponent {
+
+    private returnUrl: string;
 
     constructor(private router: Router) { }
 
     onCancel() {
+        // TODO back to originating view
+        // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
         this.router.navigate(['/']);
     }
 

@@ -1,12 +1,16 @@
 <div class="edit-container">
-    <form [formGroup]="collectionNameGrp" (ngSubmit)="onSubmit()">
-        <ng-template matStepLabel>Fill out your address</ng-template>
-        <mat-form-field>
-            <input matInput placeholder="Name" formControlName="nameCtrl" required>
-        </mat-form-field>
-        <div>
+
+    <ng-container *ngIf="formGroup">
+    
+        <dynamic-form (keyup.enter)="onSubmit()" autocomplete="off" [className]="'nested-grid-container'"
+            [formGroup]="formGroup" [model]="formModel">
+        </dynamic-form>
+    
+        <div class="button-row">
             <button mat-button (click)="onCancel()">Cancel</button>
-            <button mat-button type="submit" [disabled]="collectionNameGrp.invalid">{{submitButtonLabel}}</button>
+            <button mat-button [disabled]="!isValid()" (click)="onSubmit()">{{submitButtonLabel}}</button>
         </div>
-    </form>
+    
+    </ng-container>
+
 </div>
