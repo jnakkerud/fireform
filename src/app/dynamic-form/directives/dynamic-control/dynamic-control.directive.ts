@@ -18,10 +18,12 @@ import { DynamicFormControl, DynamicFormControlCustomEvent, DynamicFormControlMo
 
 import { DynamicDatepickerComponent } from '../../components/dynamic-datepicker/dynamic-datepicker.component';
 import { DynamicInputComponent } from '../../components/dynamic-input/dynamic-input.component';
+import { DynamicTextareaComponent } from '../../components/dynamic-textarea/dynamic-textarea.component';
 
 const components = {
   date: DynamicDatepickerComponent,
-  input: DynamicInputComponent
+  input: DynamicInputComponent,
+  textarea: DynamicTextareaComponent
 };
 
 @Directive({

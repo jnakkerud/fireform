@@ -7,6 +7,7 @@ import { DynamicFormComponent } from './containers/dynamic-form/dynamic-form.com
 
 import { DynamicDatepickerComponent } from './components/dynamic-datepicker/dynamic-datepicker.component';
 import { DynamicInputComponent } from './components/dynamic-input/dynamic-input.component';
+import { DynamicTextareaComponent } from './components/dynamic-textarea/dynamic-textarea.component';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -20,6 +21,7 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicControlDirective,
     DynamicFormComponent,
     DynamicDatepickerComponent,
+    DynamicTextareaComponent,
     DynamicInputComponent
   ],
   exports: [
@@ -27,7 +29,8 @@ import { AngularMaterialModule } from '../angular-material.module';
   ],
   entryComponents: [
     DynamicDatepickerComponent,
-    DynamicInputComponent
+    DynamicInputComponent,
+    DynamicTextareaComponent
   ]
 })
 export class DynamicFormModule {

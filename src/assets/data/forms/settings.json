@@ -19,7 +19,7 @@
       "required": true
     },
     {
-      "type": "input",
+      "type": "textarea",
       "id": "description",
       "label": "Description",  
       "gridItemClass": "grid-column-1"
