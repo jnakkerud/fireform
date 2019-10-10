@@ -6,6 +6,7 @@ import { CollectionService, CollectionItem } from '../core/collection-service/co
 import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
 import { AngularMaterialModule } from '../angular-material.module';
 import { CollectionSettingsModule, CollectionSettingsComponent } from '../collection-settings/collection-settings.component';
+import { FormBuilderModule } from '../form-builder/form-builder.component';
 
 @Component({
     selector: 'app-edit-collection',
@@ -55,6 +56,7 @@ export class EditCollectionComponent {
         RouterModule,
         AngularMaterialModule,
         CollectionSettingsModule,
+        FormBuilderModule,
         CommonModule],
     exports: [EditCollectionComponent],
     declarations: [EditCollectionComponent],

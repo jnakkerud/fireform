@@ -25,14 +25,4 @@
     <app-collection-settings (cancel)="toggleSettings()" (save)="toggleSettings()"></app-collection-settings>
     <mat-divider></mat-divider>
 </ng-container>
-<div class="edit-container">
-    <main class="edit-main">
-        <span>Edit Collection View {{editItem.id}}</span>
-    </main>
-    <aside class="edit-controls">
-        <span>Controls</span>
-    </aside>
-    <aside class="edit-properties">
-        <span>Properties</span>
-    </aside>
-</div>
+<app-form-builder></app-form-builder>

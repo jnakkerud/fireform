@@ -1,0 +1,37 @@
+@import '../../styles/constants';
+
+.edit-container {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    padding: 1.5em;
+}
+
+.edit-main {
+    margin-top: 1.5em;
+}
+  
+.edit-controls, .edit-properties {
+    padding: 1em;
+    border-radius: 3px;
+    background: rgba(147, 128, 108, 0.1);
+}
+
+.edit-controls {
+    /* put the nav on the left */
+    order: -1;
+}
+
+@media (min-width: $small-breakpoint-width) {
+    .edit-container {
+      flex-direction: row;
+    }
+    .edit-main {
+      flex: 1;
+      padding: 2em;
+      margin: 0;
+    }
+    .edit-controls, .edit-properties {
+      flex: 0 0 20em;
+    }
+  }
