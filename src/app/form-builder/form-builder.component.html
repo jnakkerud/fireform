@@ -1,11 +1,29 @@
 <div class="edit-container">
     <main class="edit-main">
-        <span>Edit Collection View</span>
+        <div
+        cdkDropList
+        id="form-field-list"
+        [cdkDropListData]="formFields"
+        cdkDropListConnectedTo="control-list"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <form-field-snippit *ngFor="let item of formFields" [formField]="item" cdkDrag></form-field-snippit>
+      </div>
     </main>
     <aside class="edit-controls">
-        <span>Controls</span>
+        <h2>Controls</h2>
+        <div
+        cdkDropList
+        id="control-list"
+        [cdkDropListData]="controls"
+        cdkDropListConnectedTo="form-field-list"
+        class="example-list"
+        cdkDropListSortingDisabled
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of controls" cdkDrag>{{item.name}}</div>
+      </div>        
     </aside>
     <aside class="edit-properties">
-        <span>Properties</span>
+        <h2>Properties</h2>
     </aside>
 </div>
