@@ -5,7 +5,7 @@
         id="form-field-list"
         [cdkDropListData]="formFields"
         cdkDropListConnectedTo="control-list"
-        class="example-list"
+        class="fields-container"
         (cdkDropListDropped)="drop($event)">
         <form-field-snippit *ngFor="let item of formFields" [formField]="item" cdkDrag></form-field-snippit>
       </div>

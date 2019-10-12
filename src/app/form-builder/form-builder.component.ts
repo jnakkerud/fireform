@@ -1,10 +1,13 @@
 import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { DragDropModule, CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { FormFieldSnippitComponent } from './form-field-snippit/form-field-snippit.component';
+import { DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
+import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 
 /** Clamps a number between zero and a maximum. */
 function clamp(value: number, max: number): number {
@@ -14,7 +17,7 @@ function clamp(value: number, max: number): number {
 export interface FormField {
     type: string;
     name: string;
-    // TODO properties: key value pairs
+    model: DynamicFormControlModel[];
 }
 
 @Component({
@@ -27,20 +30,41 @@ export class FormBuilderComponent {
     controls: FormField[] = [
         {
             type: 'input',
-            name: 'Input'
+            name: 'Input',
+            model: [
+                {
+                    type: 'input',
+                    id: 'input',
+                    label: 'Input Label'
+                }
+            ]
         },
         {
             type: 'textarea',
-            name: 'TextArea'
+            name: 'TextArea',
+            model: [
+                {
+                    type: 'textarea',
+                    id: 'textarea',
+                    label: 'TextArea Label'
+                }
+            ]
+
         },
         {
             type: 'date',
-            name: 'Date'
+            name: 'Date',
+            model: [
+                {
+                    type: 'date',
+                    id: 'date',
+                    label: 'Date Label'
+                }
+            ]
         }
     ];
 
     formFields: FormField[] = [];
-
 
     drop(event: CdkDragDrop<FormField[]>) {
         if (event.previousContainer === event.container) {
@@ -63,6 +87,8 @@ export class FormBuilderComponent {
     imports: [
         AngularMaterialModule,
         DragDropModule,
+        DynamicFormModule,
+        ReactiveFormsModule,
         CommonModule],
     exports: [FormBuilderComponent, FormFieldSnippitComponent],
     declarations: [FormBuilderComponent, FormFieldSnippitComponent],

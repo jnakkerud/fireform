@@ -53,7 +53,7 @@ export class DynamicFormControlModel {
   type: string;                    // "input"
   id: string;                      // "givenName"
 
-  inputType: string;               // "text"
+  inputType?: string;               // "text"
 
   // Optional items
 

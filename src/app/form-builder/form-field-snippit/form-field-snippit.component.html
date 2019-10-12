@@ -1,3 +1,4 @@
-<div class="example-box">
-    <span>{{formField.name}}</span>
+<div (click)="onClick()" class="form-field-container">
+    <dynamic-form [formGroup]="formGroup" [model]="formModel">
+    </dynamic-form>
 </div>
