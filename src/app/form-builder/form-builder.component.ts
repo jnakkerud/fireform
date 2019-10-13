@@ -8,10 +8,25 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { FormFieldSnippitComponent } from './form-field-snippit/form-field-snippit.component';
 import { DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import { PropertyEditorComponent } from './property-editor/property-editor.component';
 
 /** Clamps a number between zero and a maximum. */
 function clamp(value: number, max: number): number {
     return Math.max(0, Math.min(max, value));
+}
+
+function clone(formField: FormField): FormField {
+    return {
+        type: formField.type,
+        name: formField.name,
+        model: [
+            {
+                type: formField.model[0].type,
+                id: formField.model[0].id,
+                label: `${formField.name} Label`
+            }
+        ]
+    };
 }
 
 export interface FormField {
@@ -35,7 +50,6 @@ export class FormBuilderComponent {
                 {
                     type: 'input',
                     id: 'input',
-                    label: 'Input Label'
                 }
             ]
         },
@@ -46,7 +60,6 @@ export class FormBuilderComponent {
                 {
                     type: 'textarea',
                     id: 'textarea',
-                    label: 'TextArea Label'
                 }
             ]
 
@@ -58,7 +71,6 @@ export class FormBuilderComponent {
                 {
                     type: 'date',
                     id: 'date',
-                    label: 'Date Label'
                 }
             ]
         }
@@ -70,6 +82,10 @@ export class FormBuilderComponent {
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else if (event.previousContainer.id === 'control-list') {
+            // clone and copy the model
+            const ff = event.previousContainer.data[event.previousIndex];
+            event.previousContainer.data[event.previousIndex] = clone(ff);
+
             copyArrayItem(event.previousContainer.data,
                 event.container.data,
                 event.previousIndex,
@@ -90,7 +106,7 @@ export class FormBuilderComponent {
         DynamicFormModule,
         ReactiveFormsModule,
         CommonModule],
-    exports: [FormBuilderComponent, FormFieldSnippitComponent],
-    declarations: [FormBuilderComponent, FormFieldSnippitComponent],
+    exports: [FormBuilderComponent, FormFieldSnippitComponent, PropertyEditorComponent],
+    declarations: [FormBuilderComponent, FormFieldSnippitComponent, PropertyEditorComponent],
   })
   export class FormBuilderModule {}

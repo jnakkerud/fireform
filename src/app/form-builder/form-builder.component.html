@@ -7,7 +7,7 @@
         cdkDropListConnectedTo="control-list"
         class="fields-container"
         (cdkDropListDropped)="drop($event)">
-        <form-field-snippit *ngFor="let item of formFields" [formField]="item" cdkDrag></form-field-snippit>
+        <form-field-snippit *ngFor="let item of formFields" (click)="propertyEditor.onFormField(item)" [formField]="item" cdkDrag></form-field-snippit>
       </div>
     </main>
     <aside class="edit-controls">
@@ -25,5 +25,6 @@
     </aside>
     <aside class="edit-properties">
         <h2>Properties</h2>
+        <property-editor #propertyEditor></property-editor>
     </aside>
 </div>

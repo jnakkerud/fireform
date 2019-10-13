@@ -26,10 +26,4 @@ export class FormFieldSnippitComponent implements OnInit {
         this.formModel = this.formField.model;
         this.formGroup = this.dynamicFormService.createGroup(this.formModel);
     }
-
-    onClick() {
-        // bind to the property editor
-        console.log('selected ' + this.formField.name);
-    }
-
 }
