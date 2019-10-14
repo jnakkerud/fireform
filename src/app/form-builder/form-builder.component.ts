@@ -76,7 +76,7 @@ export class FormBuilderComponent {
         }
     ];
 
-    formFields: FormField[] = [];
+    public formFields: FormField[] = [];
 
     drop(event: CdkDragDrop<FormField[]>) {
         if (event.previousContainer === event.container) {

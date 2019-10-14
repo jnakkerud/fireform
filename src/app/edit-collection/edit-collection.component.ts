@@ -6,7 +6,7 @@ import { CollectionService, CollectionItem } from '../core/collection-service/co
 import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
 import { AngularMaterialModule } from '../angular-material.module';
 import { CollectionSettingsModule, CollectionSettingsComponent } from '../collection-settings/collection-settings.component';
-import { FormBuilderModule } from '../form-builder/form-builder.component';
+import { FormBuilderModule, FormField } from '../form-builder/form-builder.component';
 
 @Component({
     selector: 'app-edit-collection',
@@ -48,6 +48,17 @@ export class EditCollectionComponent {
 
         // move to card view
         this.router.navigate(['/']);
+    }
+
+    saveForm(formFields: FormField[]) {
+        const model = [];
+
+        for (const ff of formFields) {
+            model.push(ff.model[0]);
+        }
+
+        // TODO save to service
+        console.log(JSON.stringify(model));
     }
 }
 

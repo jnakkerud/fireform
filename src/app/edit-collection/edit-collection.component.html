@@ -25,4 +25,11 @@
     <app-collection-settings (cancel)="toggleSettings()" (save)="toggleSettings()"></app-collection-settings>
     <mat-divider></mat-divider>
 </ng-container>
-<app-form-builder></app-form-builder>
+<app-form-builder #formBuilder></app-form-builder>
+<footer class="editor-footer">
+    <span class="toolbar-spacer"></span>
+
+    <button mat-button class="crm-command-bar-button" (click)="saveForm(formBuilder.formFields)">
+        Save
+    </button>
+</footer>
