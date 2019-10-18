@@ -30,8 +30,7 @@ export class CollectionSettingsComponent implements OnInit {
     }
     private item = {
         id: '-1',
-        name: '',
-        description: ''
+        name: ''
     };
 
     public formGroup: FormGroup;

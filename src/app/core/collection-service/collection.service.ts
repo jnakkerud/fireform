@@ -3,43 +3,40 @@ import { Injectable } from '@angular/core';
 export interface CollectionItem {
     id: string;
     name: string;
-    description: string;
+    description?: string;
+    form?: string;
 }
 
 const PROJECTS: CollectionItem[] = [
     {
         id: '1',
-        name: 'First Project',
-        description: 'This is the first project'
+        name: 'First Project'
     },
     {
         id: '2',
-        name: 'Second Project',
-        description: 'This is the second project'
+        name: 'Second Project'
 
     },
     {
         id: '3',
         name: 'Thrid Project',
-        description: 'This is the second project'
+        description: 'The Third Description'
 
     },
     {
         id: '4',
-        name: 'Fourth Project',
-        description: 'This is the second project'
+        name: 'Fourth Project'
 
     },
     {
         id: '5',
         name: '5 Project',
-        description: 'This is the second project'
+        description: 'The Fifth Description'
 
     },
     {
         id: '6',
-        name: '6 Project',
-        description: 'This is the second project'
+        name: '6 Project'
 
     }
 ];
@@ -73,6 +70,7 @@ export class CollectionService {
             if (editResult) {
                 editResult.name = item.name;
                 editResult.description = item.description;
+                editResult.form = item.form;
             }
         }
         return editResult;

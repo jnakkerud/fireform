@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { FormFieldSnippitComponent } from './form-field-snippit/form-field-snipp
 import { DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
+import { CollectionItem } from '../core/collection-service/collection.service';
 
 /** Clamps a number between zero and a maximum. */
 function clamp(value: number, max: number): number {
@@ -35,6 +36,40 @@ export interface FormField {
     model: DynamicFormControlModel[];
 }
 
+const FORM_CONTROLS: FormField[] = [
+    {
+        type: 'input',
+        name: 'Input',
+        model: [
+            {
+                type: 'input',
+                id: 'input',
+            }
+        ]
+    },
+    {
+        type: 'textarea',
+        name: 'TextArea',
+        model: [
+            {
+                type: 'textarea',
+                id: 'textarea',
+            }
+        ]
+
+    },
+    {
+        type: 'date',
+        name: 'Date',
+        model: [
+            {
+                type: 'date',
+                id: 'date',
+            }
+        ]
+    }
+];
+
 @Component({
     selector: 'app-form-builder',
     templateUrl: 'form-builder.component.html',
@@ -42,41 +77,24 @@ export interface FormField {
 })
 export class FormBuilderComponent {
 
-    controls: FormField[] = [
-        {
-            type: 'input',
-            name: 'Input',
-            model: [
-                {
-                    type: 'input',
-                    id: 'input',
-                }
-            ]
-        },
-        {
-            type: 'textarea',
-            name: 'TextArea',
-            model: [
-                {
-                    type: 'textarea',
-                    id: 'textarea',
-                }
-            ]
-
-        },
-        {
-            type: 'date',
-            name: 'Date',
-            model: [
-                {
-                    type: 'date',
-                    id: 'date',
-                }
-            ]
+    @Input()
+    get collectionItem(): CollectionItem {
+        return this.item;
+    }
+    set collectionItem(value: CollectionItem) {
+        this.formFields = [];
+        this.item = value;
+        if (this.item && this.item.form) {
+            this.formFields = this.fromJson(this.item.form);
         }
-    ];
+    }
+    private item: CollectionItem;
 
-    public formFields: FormField[] = [];
+    private formFields: FormField[] = [];
+
+    get controls(): FormField[] {
+        return FORM_CONTROLS;
+    }
 
     drop(event: CdkDragDrop<FormField[]>) {
         if (event.previousContainer === event.container) {
@@ -96,6 +114,32 @@ export class FormBuilderComponent {
             const from = clamp(event.previousIndex, currentArray.length - 1);
             currentArray.splice(from, 1);
         }
+    }
+
+    toJson(): string {
+        const model = [];
+
+        for (const ff of this.formFields) {
+            model.push(ff.model[0]);
+        }
+
+        const formJson = JSON.stringify(model);
+        console.log(formJson);
+        return formJson;
+    }
+
+    fromJson(formJson: string): FormField[] {
+        const fields: FormField[] = [];
+        const model: DynamicFormControlModel[] = JSON.parse(formJson);
+        console.log(model);
+        for (const ff of model) {
+            fields.push({
+                type: ff.type,
+                name: '',
+                model: [ff]
+            });
+        }
+        return fields;
     }
 }
 
