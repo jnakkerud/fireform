@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Generate Link</h1>
+<div mat-dialog-content>
+  <p>Copy generated link</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="linkUrl">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="onGenerate()" cdkFocusInitial>Generate</button>
+</div>

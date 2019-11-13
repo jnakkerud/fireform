@@ -10,6 +10,7 @@ import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
 import { RecentlyUsedService } from './recently-used-service/recently-used.service';
 import { AngularMaterialModule } from '../angular-material.module';
+import { LinkService } from './link-service/link.service';
 
 @NgModule({
     imports: [
@@ -19,6 +20,6 @@ import { AngularMaterialModule } from '../angular-material.module';
         RouterModule],
     exports: [HeaderComponent, LoginComponent],
     declarations: [HeaderComponent, LoginComponent],
-    providers: [CollectionService, AuthGuardService, AuthService, RecentlyUsedService],
+    providers: [CollectionService, AuthGuardService, AuthService, RecentlyUsedService, LinkService],
 })
 export class CoreModule { }

@@ -16,10 +16,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
-
     LayoutModule,
     MatCheckboxModule,
     MatDatepickerModule,
@@ -35,6 +35,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDividerModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule
   ],
   exports: [
     LayoutModule,
@@ -51,6 +52,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDividerModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule
   ]
 
 })
