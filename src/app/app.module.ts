@@ -12,6 +12,7 @@ import { CollectionListModule } from './collection-list/collection-list.componen
 import { EditCollectionModule } from './edit-collection/edit-collection.component';
 import { CreateCollectionModule } from './create-collection/create-collection.component';
 import { GenerateLinkModule } from './generate-link/generate-link.component';
+import { GeneratedFormModule } from './generated-form/generated-form.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { GenerateLinkModule } from './generate-link/generate-link.component';
     EditCollectionModule,
     CreateCollectionModule,
     GenerateLinkModule,
+    GeneratedFormModule,
     HttpClientModule,
     AppRoutingModule
   ],

@@ -7,40 +7,6 @@ export interface CollectionItem {
     form?: string;
 }
 
-const PROJECTS: CollectionItem[] = [
-    {
-        id: '1',
-        name: 'First Project'
-    },
-    {
-        id: '2',
-        name: 'Second Project'
-
-    },
-    {
-        id: '3',
-        name: 'Thrid Project',
-        description: 'The Third Description'
-
-    },
-    {
-        id: '4',
-        name: 'Fourth Project'
-
-    },
-    {
-        id: '5',
-        name: '5 Project',
-        description: 'The Fifth Description'
-
-    },
-    {
-        id: '6',
-        name: '6 Project'
-
-    }
-];
-
 @Injectable({
     providedIn: 'root',
 })
@@ -50,7 +16,10 @@ export class CollectionService {
 
     constructor() {
         // seed the collection
-        this.items.push.apply(this.items, PROJECTS);
+        const c = localStorage.getItem('collections');
+        if (c) {
+            this.items.push.apply(this.items, JSON.parse(c));
+        }
     }
 
     getCollectionItems(): CollectionItem[] {
@@ -73,6 +42,7 @@ export class CollectionService {
                 editResult.form = item.form;
             }
         }
+        this.write();
         return editResult;
     }
 
@@ -82,13 +52,18 @@ export class CollectionService {
 
     removeItem(item: CollectionItem) {
         for (let i = 0; i < this.items.length; i++) {
-            if ( this.items[i].id === item.id) {
+            if (this.items[i].id === item.id) {
                 this.items.splice(i, 1);
             }
-         }
+        }
+        this.write();
     }
 
     private generateId(): string {
         return Math.random().toString(36).substr(2, 9);
+    }
+
+    private write() {
+        localStorage.setItem('collections', JSON.stringify(this.items));
     }
 }

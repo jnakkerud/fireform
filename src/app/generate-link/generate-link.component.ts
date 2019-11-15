@@ -44,9 +44,11 @@ export class GenenerateLinkComponent implements OnInit {
     onGenerate(): void {
         // call LinkService.generateLink(collectionId, linkId)
         this.linkService.addLink(this.linkId, this.data.collectionId);
+
         // close the dialog
         this.dialogRef.close();
     }
+
 }
 
 @NgModule({

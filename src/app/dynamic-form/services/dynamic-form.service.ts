@@ -32,7 +32,6 @@ export class DynamicFormService {
     return this.httpClient.get<DynamicFormControlModel[]>(this.uriPrefix + formId + this.uriSuffix).toPromise();
   }
 
-
   public createGroup(formModel: DynamicFormModel): FormGroup {
 
     const group = this.formBuilder.group({});

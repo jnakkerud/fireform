@@ -6,20 +6,22 @@ import { EditCollectionComponent } from './edit-collection/edit-collection.compo
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 import { LoginComponent } from './core/login/login.component';
 import { AuthGuardService } from './core/auth/auth-guard.service';
+import { GeneratedFormComponent } from './generated-form/generated-form.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'collections', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService]},
+  { path: '', redirectTo: 'collections', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   {
     path: 'collections',
     canActivateChild: [AuthGuardService],
     children: [
-      {path: '', component: CollectionListComponent}, // TODO rename to CollectionListComponent
-      {path: ':id', component: EditCollectionComponent},
+      { path: '', component: CollectionListComponent },
+      { path: ':id', component: EditCollectionComponent },
     ],
   },
-  {path: '**', redirectTo: ''},
+  { path: 'forms/:id', component: GeneratedFormComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
