@@ -120,6 +120,9 @@ export class FormBuilderComponent {
         const model = [];
 
         for (const ff of this.formFields) {
+            // Generate an ID for the form
+            const label = ff.model[0].label;
+            ff.model[0].id = label ? label.split(' ').join('_').toLowerCase() : Math.random().toString(36).substr(2, 9);
             model.push(ff.model[0]);
         }
 

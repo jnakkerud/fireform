@@ -6,7 +6,7 @@ import { EditCollectionComponent } from './edit-collection/edit-collection.compo
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 import { LoginComponent } from './core/login/login.component';
 import { AuthGuardService } from './core/auth/auth-guard.service';
-import { GeneratedFormComponent } from './generated-form/generated-form.component';
+import { GeneratedFormComponent, FormCompleteComponent } from './generated-form/generated-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'collections', pathMatch: 'full' },
@@ -21,6 +21,7 @@ const routes: Routes = [
     ],
   },
   { path: 'forms/:id', component: GeneratedFormComponent },
+  { path: 'formcomplete/:id', component: FormCompleteComponent },
   { path: '**', redirectTo: '' },
 ];
 
