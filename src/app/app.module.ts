@@ -6,14 +6,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
-
-// TODO can these be moved to AppRoutingModule
 import { CollectionListModule } from './collection-list/collection-list.component';
 import { EditCollectionModule } from './edit-collection/edit-collection.component';
 import { CreateCollectionModule } from './create-collection/create-collection.component';
 import { GenerateLinkModule } from './generate-link/generate-link.component';
 import { GeneratedFormModule } from './generated-form/generated-form.component';
-
 
 @NgModule({
   declarations: [

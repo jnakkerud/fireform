@@ -26,7 +26,6 @@ export class CollectionService {
         return this.items;
     }
 
-    // TODO better name
     addItem(item: CollectionItem): CollectionItem {
         let editResult: CollectionItem;
         if (item.id === '-1') {
