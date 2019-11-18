@@ -47,3 +47,5 @@ Thumbs.db
 
 # firebase 
 .firebase/*
+# firebase credentials
+/src/app/api-keys.ts
