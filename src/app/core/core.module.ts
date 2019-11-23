@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import { HeaderComponent } from './header/header.component';
 import { CollectionService } from './collection-service/collection.service';
 import { LoginComponent } from './login/login.component';
@@ -16,6 +18,7 @@ import { DataService } from './data-service/data.service';
 @NgModule({
     imports: [
         AngularMaterialModule,
+        AngularFirestoreModule,
         ReactiveFormsModule,
         CommonModule,
         RouterModule],

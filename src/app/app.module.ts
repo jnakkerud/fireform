@@ -20,6 +20,7 @@ export const firebaseConfig = {
   apiKey: masterFirebaseConfig.apiKey,
   authDomain: masterFirebaseConfig.authDomain,
   databaseURL: masterFirebaseConfig.databaseURL,
+  projectId: masterFirebaseConfig.projectId,
   storageBucket: masterFirebaseConfig.storageBucket
 };
 

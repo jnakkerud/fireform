@@ -1,4 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable, of, Observer } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 export interface CollectionItem {
     id: string;
@@ -12,57 +16,49 @@ export interface CollectionItem {
 })
 export class CollectionService {
 
-    private items: CollectionItem[] = [];
+    private itemsCollection: AngularFirestoreCollection<CollectionItem>;
+    private items: Observable<CollectionItem[]>;
 
-    constructor() {
-        // seed the collection
-        const c = localStorage.getItem('collections');
-        if (c) {
-            this.items.push.apply(this.items, JSON.parse(c));
-        }
+    constructor(private afs: AngularFirestore) {
+        this.itemsCollection = afs.collection<CollectionItem>('collections');
+        this.items = this.itemsCollection.valueChanges();
     }
 
-    getCollectionItems(): CollectionItem[] {
+    getItems(): Observable<CollectionItem[]> {
         return this.items;
     }
 
-    addItem(item: CollectionItem): CollectionItem {
-        let editResult: CollectionItem;
+    upsertItem(item: CollectionItem): Observable<CollectionItem> {
         if (item.id === '-1') {
             // create a new ID
-            item.id = this.generateId();
-            this.items.push(item);
-            editResult = item;
+            item.id = this.afs.createId();
+            this.itemsCollection.doc(item.id).set(item);
+            return of(item);
         } else {
-            editResult = this.getItem(item.id);
-            if (editResult) {
-                editResult.name = item.name;
-                editResult.description = item.description;
-                editResult.form = item.form;
-            }
+            return new Observable((observer: Observer<CollectionItem>) => {
+                this.getItem(item.id)
+                    .subscribe(res => {
+                        const editResult = { ...res, ...item };
+                        console.log('editResult', editResult);
+                        this.itemsCollection.doc(item.id).update(editResult);
+                        observer.next(editResult);
+                        observer.complete();
+                    }, err => observer.error(err));
+            });
         }
-        this.write();
-        return editResult;
     }
 
-    getItem(itemId: string): CollectionItem {
-        return this.items.find(x => x.id === itemId);
+    getItem(id: string): Observable<CollectionItem> {
+        return this.itemsCollection.doc<CollectionItem>(id).valueChanges().pipe(
+            take(1),
+            map(item => {
+              return item;
+            })
+        );
     }
 
     removeItem(item: CollectionItem) {
-        for (let i = 0; i < this.items.length; i++) {
-            if (this.items[i].id === item.id) {
-                this.items.splice(i, 1);
-            }
-        }
-        this.write();
+        this.itemsCollection.doc(item.id).delete();
     }
 
-    private generateId(): string {
-        return Math.random().toString(36).substr(2, 9);
-    }
-
-    private write() {
-        localStorage.setItem('collections', JSON.stringify(this.items));
-    }
 }

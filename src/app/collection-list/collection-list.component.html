@@ -7,7 +7,7 @@
         </mat-card-content>
       </mat-card>
     </a>
-    <a *ngFor="let project of collectionService.getCollectionItems()"
+    <a *ngFor="let project of collectionService.getItems() | async"
        class="project-list-item"
       [routerLink]="['/collections/', project.id]">
       <mat-card class="project-list-card">

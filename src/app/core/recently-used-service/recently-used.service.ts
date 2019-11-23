@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { forkJoin } from 'rxjs';
 import { CollectionService, CollectionItem } from '../collection-service/collection.service';
 
 @Injectable({
@@ -16,25 +16,29 @@ export class RecentlyUsedService {
 
         const collectionItems: CollectionItem[] = [];
 
-        for (const id of storedIds) {
-            const item = this.collectionService.getItem(id);
-            if (item) {
-                collectionItems.push(item);
-            }
-        }
+        // match the id with a collection item
+        /*const observables = storedIds.map(id => this.collectionService.getItem(id));
 
+        forkJoin(observables).subscribe({
+            next: value => value.forEach(item => collectionItems.push(item)),
+            complete: () => console.log('This is how it ends!')
+        });
+
+
+
+        // fill in additional items up to 5
         if (collectionItems.length < 5) {
-            const items = this.collectionService.getCollectionItems();
-            for (const item of items) {
-                if (!storedIds.find(i => i === item.id)) {
-                    collectionItems.push(item);
+            this.collectionService.getItems().subscribe(items => {
+                for (const item of items) {
+                    if (!storedIds.find(i => i === item.id)) {
+                        collectionItems.push(item);
+                    }
+                    if (collectionItems.length === 5) {
+                        break;
+                    }
                 }
-                if (collectionItems.length === 5) {
-                    break;
-                }
-             }
-
-        }
+            });
+        }*/
 
         return collectionItems;
     }

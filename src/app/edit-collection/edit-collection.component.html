@@ -22,7 +22,7 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <ng-container *ngIf="showEditor">
-    <app-collection-settings (cancel)="toggleSettings()" (save)="toggleSettings()"></app-collection-settings>
+    <app-collection-settings (cancel)="toggleSettings()" (save)="saveSettings($event)"></app-collection-settings>
     <mat-divider></mat-divider>
 </ng-container>
 <app-form-builder #formBuilder [collectionItem]="editItem"></app-form-builder>

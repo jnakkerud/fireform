@@ -17,7 +17,7 @@ import { GenerateLinkModule,  GenenerateLinkComponent } from '../generate-link/g
 })
 
 export class EditCollectionComponent {
-    editItem: CollectionItem;
+    editItem: CollectionItem = {id: '', name: ''};
     showEditor = false;
 
     // We need a setter here cause the CollectionSettingsComponent is hidden initially
@@ -36,8 +36,10 @@ export class EditCollectionComponent {
         private collectionService: CollectionService,
         private recentlyUsedService: RecentlyUsedService) {
         this.route.params.subscribe(p => {
-            this.editItem = this.collectionService.getItem(p.id);
-            this.recentlyUsedService.set(this.editItem.id);
+            this.collectionService.getItem(p.id).subscribe(item => {
+                this.editItem = item;
+                this.recentlyUsedService.set(this.editItem.id);
+            });
         });
     }
 
@@ -66,7 +68,14 @@ export class EditCollectionComponent {
 
     saveForm(formJson: string) {
         this.editItem.form = formJson;
-        this.collectionService.addItem(this.editItem);
+        this.collectionService.upsertItem(this.editItem).subscribe(item => {
+            this.editItem = item;
+        });
+    }
+
+    saveSettings(item: CollectionItem) {
+        this.editItem = item;
+        this.toggleSettings();
     }
 }
 

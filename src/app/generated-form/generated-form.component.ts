@@ -24,7 +24,7 @@ export class GeneratedFormComponent implements OnInit {
     public formGroup: FormGroup;
     public formModel: DynamicFormModel;
 
-    collectionItem: CollectionItem;
+    collectionItem: CollectionItem = {id: '', name: ''};
     link: Link;
 
     constructor(
@@ -37,7 +37,9 @@ export class GeneratedFormComponent implements OnInit {
     ) {
         this.route.params.subscribe(p => {
             this.link = this.linkService.getLink(p.id);
-            this.collectionItem = this.collectionService.getItem(this.link.collectionId);
+            this.collectionService.getItem(this.link.collectionId).subscribe(res => {
+                this.collectionItem = res;
+            });
         });
     }
 

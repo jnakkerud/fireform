@@ -58,18 +58,15 @@ export class CollectionSettingsComponent implements OnInit {
     }
 
     onSubmit() {
-        // validate
-        const nameVal = this.formGroup.get('name').value;
-
         // save collection project
-        const newItem = this.collectionService.addItem({
+        this.collectionService.upsertItem({
             id: this.collectionItem.id,
-            name: nameVal,
+            name: this.formGroup.get('name').value,
             description: this.formGroup.get('description').value
+        }).subscribe(item => {
+            // fire submit event
+            this.save.emit(item);
         });
-
-        // fire submit event
-        this.save.emit(newItem);
     }
 
     public isValid() {
