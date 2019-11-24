@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { CollectionService, CollectionItem } from '../collection-service/collection.service';
 
 @Injectable({
@@ -7,40 +7,36 @@ import { CollectionService, CollectionItem } from '../collection-service/collect
 })
 export class RecentlyUsedService {
 
-    constructor(private collectionService: CollectionService) { }
+    collectionItems: Observable<CollectionItem[]>;
 
-    public get(): CollectionItem[] {
-        // get ID's from local storage
-        const data = localStorage.getItem('collection-ids');
-        const storedIds = (data) ? JSON.parse(data) as [] : [];
+    constructor(collectionService: CollectionService) {
+        this.collectionItems = collectionService.getItems();
+    }
 
-        const collectionItems: CollectionItem[] = [];
+    public get(): Observable<CollectionItem[]>  {
 
-        // match the id with a collection item
-        /*const observables = storedIds.map(id => this.collectionService.getItem(id));
-
-        forkJoin(observables).subscribe({
-            next: value => value.forEach(item => collectionItems.push(item)),
-            complete: () => console.log('This is how it ends!')
-        });
-
-
-
-        // fill in additional items up to 5
-        if (collectionItems.length < 5) {
-            this.collectionService.getItems().subscribe(items => {
-                for (const item of items) {
-                    if (!storedIds.find(i => i === item.id)) {
-                        collectionItems.push(item);
-                    }
-                    if (collectionItems.length === 5) {
-                        break;
+        return new Observable((observer: Observer<CollectionItem[]>) => {
+            this.collectionItems.subscribe(items => {
+                // get ID's from local storage
+                const data = localStorage.getItem('collection-ids');
+                const storedIds = (data) ? JSON.parse(data) as [] : [];
+                let resultItems: CollectionItem[] = [];
+                for (const id of storedIds) {
+                    const idx = items.findIndex(item => item.id === id);
+                    if (idx > -1) {
+                        resultItems.push(items[idx]);
+                        items.splice(idx, 1);
                     }
                 }
-            });
-        }*/
 
-        return collectionItems;
+                if (items.length > 0 && resultItems.length < 5) {
+                    // fill remaining items up to 5
+                    resultItems = resultItems.concat(items.slice(0, Math.min(5 - resultItems.length, items.length)));
+                }
+
+                observer.next(resultItems);
+            });
+        });
     }
 
     public set(id: string) {

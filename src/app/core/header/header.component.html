@@ -10,14 +10,16 @@
         <span>DUVOLA</span>
       </a>
 
-      <mat-form-field *ngIf="showSelect">
-        <mat-select [(value)]="selected" (selectionChange)="onSelectChange()">
-          <mat-option value="all">See all collections</mat-option>
-          <mat-option value="create">Create collection</mat-option>
-          <mat-divider></mat-divider>
-          <mat-option *ngFor="let item of getRecentlyUsedItems()" [value]="item.id">{{item.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <ng-container *ngIf="recentlyUsedItems | async as items">
+        <mat-form-field *ngIf="showSelect">
+          <mat-select [(value)]="selected" (selectionChange)="onSelectChange()">
+            <mat-option value="all">See all collections</mat-option>
+            <mat-option value="create">Create collection</mat-option>
+            <mat-divider></mat-divider>
+            <mat-option *ngFor="let item of items" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
 
       <span class="toolbar-spacer"></span>
 

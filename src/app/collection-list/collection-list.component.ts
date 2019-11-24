@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { CollectionService } from '../core/collection-service/collection.service';
+import { Observable } from 'rxjs';
+
+import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 import { AngularMaterialModule } from '../angular-material.module';
 
 @Component({
@@ -14,7 +16,12 @@ import { AngularMaterialModule } from '../angular-material.module';
 })
 
 export class CollectionListComponent {
-    constructor(public collectionService: CollectionService) { }
+
+    collectionItems: Observable<CollectionItem[]>;
+
+    constructor(collectionService: CollectionService) {
+        this.collectionItems = collectionService.getItems();
+    }
 }
 
 @NgModule({

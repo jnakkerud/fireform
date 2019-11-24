@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { CollectionItem } from '../collection-service/collection.service';
 import { RecentlyUsedService } from '../recently-used-service/recently-used.service';
@@ -16,12 +17,15 @@ export class HeaderComponent implements OnInit {
 
     selected: string;
     showSelect: boolean;
+    recentlyUsedItems: Observable<CollectionItem[]>;
+    // items: CollectionItem[] = [];
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private rencentlyUsedService: RecentlyUsedService) {
-    }
+            this.recentlyUsedItems = this.rencentlyUsedService.get();
+        }
 
     ngOnInit() {
         // Detect global router changes and set drop down if needed
@@ -54,7 +58,4 @@ export class HeaderComponent implements OnInit {
         }
     }
 
-    getRecentlyUsedItems(): CollectionItem[] {
-        return this.rencentlyUsedService.get();
-    }
 }

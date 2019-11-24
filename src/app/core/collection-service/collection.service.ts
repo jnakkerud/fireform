@@ -17,15 +17,13 @@ export interface CollectionItem {
 export class CollectionService {
 
     private itemsCollection: AngularFirestoreCollection<CollectionItem>;
-    private items: Observable<CollectionItem[]>;
 
     constructor(private afs: AngularFirestore) {
         this.itemsCollection = afs.collection<CollectionItem>('collections');
-        this.items = this.itemsCollection.valueChanges();
     }
 
     getItems(): Observable<CollectionItem[]> {
-        return this.items;
+        return this.itemsCollection.valueChanges();
     }
 
     upsertItem(item: CollectionItem): Observable<CollectionItem> {

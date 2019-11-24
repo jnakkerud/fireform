@@ -7,12 +7,12 @@
         </mat-card-content>
       </mat-card>
     </a>
-    <a *ngFor="let project of collectionService.getItems() | async"
+    <a *ngFor="let item of (collectionItems | async)"
        class="project-list-item"
-      [routerLink]="['/collections/', project.id]">
+      [routerLink]="['/collections/', item.id]">
       <mat-card class="project-list-card">
-        <mat-card-title>{{project.name}}</mat-card-title>
-        <mat-card-content class="project-list-card-summary">{{project.description}}</mat-card-content>
+        <mat-card-title>{{item.name}}</mat-card-title>
+        <mat-card-content class="project-list-card-summary">{{item.description}}</mat-card-content>
       </mat-card>
     </a>
 </div>
