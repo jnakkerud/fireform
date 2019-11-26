@@ -2,6 +2,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
+import { tap, concatMap } from 'rxjs/operators';
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
@@ -34,17 +35,18 @@ export class GeneratedFormComponent implements OnInit {
         private collectionService: CollectionService,
         private linkService: LinkService,
         private dataService: DataService
-    ) {
-        this.route.params.subscribe(p => {
-            this.link = this.linkService.getLink(p.id);
-            this.collectionService.getItem(this.link.collectionId).subscribe(res => {
-                this.collectionItem = res;
-            });
-        });
-    }
+    ) {}
 
     ngOnInit() {
-        this.createForm();
+        this.route.params.subscribe(p => {
+            this.linkService.getLink(p.id).pipe(
+                tap(l => this.link = l),
+                concatMap(l => this.collectionService.getItem(l.collectionId))
+            ).subscribe(res => {
+                this.collectionItem = res;
+                this.createForm();
+            });
+        });
     }
 
     async createForm() {
@@ -54,7 +56,7 @@ export class GeneratedFormComponent implements OnInit {
 
     onSubmit() {
         // save the document to the collection
-        this.dataService.add(this.formGroup.value);
+        this.dataService.add(this.collectionItem, this.formGroup.value);
 
         // forward to completed form
         this.router.navigate(['/formcomplete', this.link.id]);

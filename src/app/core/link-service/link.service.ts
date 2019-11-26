@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+
 export interface Link {
     id: string;
     collectionId: string;
@@ -10,34 +15,32 @@ export interface Link {
 })
 export class LinkService {
 
-    private links: Link[] = [];
+    private linksCollection: AngularFirestoreCollection<Link>;
 
-    constructor() {
-        // seed the collection
-        const s = localStorage.getItem('links');
-        if (s) {
-            this.links.push.apply(this.links, JSON.parse(s));
-        }
+    constructor(private afs: AngularFirestore) {
+        this.linksCollection = afs.collection<Link>('links');
     }
 
     generateLinkId(): string {
-        return Math.random().toString(36).substr(2, 9);
+        return this.afs.createId();
     }
 
     addLink(linkId: string, cId: string) {
-        this.links.push({
-            id: linkId,
-            collectionId: cId
-        });
-        this.write();
+        this.linksCollection.doc(linkId).set(
+            {
+                id: linkId,
+                collectionId: cId
+            }
+        );
     }
 
-    getLink(linkId: string): Link {
-        return this.links.find(x => x.id === linkId);
-    }
-
-    private write() {
-        localStorage.setItem('links', JSON.stringify(this.links));
+    getLink(linkId: string): Observable<Link> {
+        return this.linksCollection.doc<Link>(linkId).valueChanges().pipe(
+            take(1),
+            map(link => {
+              return link;
+            })
+        );
     }
 
 }

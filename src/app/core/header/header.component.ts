@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
-import { filter, tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { CollectionItem } from '../collection-service/collection.service';
@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
     selected: string;
     showSelect: boolean;
     recentlyUsedItems: Observable<CollectionItem[]>;
-    // items: CollectionItem[] = [];
 
     constructor(
         private router: Router,
