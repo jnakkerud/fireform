@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: ':id', component: EditCollectionComponent },
     ],
   },
-  { path: 'forms/:id', component: GeneratedFormComponent },
+  { path: 'form/:id', component: GeneratedFormComponent },
   { path: 'formcomplete/:id', component: FormCompleteComponent },
   { path: '**', redirectTo: '' },
 ];

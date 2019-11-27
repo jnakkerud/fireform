@@ -96,7 +96,7 @@ export class FormCompleteComponent {
 
     constructor(private route: ActivatedRoute) {
         this.route.params.subscribe(p => {
-            this.url = `${window.location.origin}/forms/${p.id}`;
+            this.url = `${window.location.origin}/form/${p.id}`;
             // TODO get and show the collection title
         });
     }

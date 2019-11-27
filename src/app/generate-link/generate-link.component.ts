@@ -38,7 +38,7 @@ export class GenenerateLinkComponent implements OnInit {
             this.linkId = this.linkService.generateLinkId();
         }
 
-        this.linkUrl = `${window.location.origin}/forms/${this.linkId}`;
+        this.linkUrl = `${window.location.origin}/form/${this.linkId}`;
     }
 
     onNoClick(): void {
