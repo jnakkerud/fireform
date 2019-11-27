@@ -9,6 +9,7 @@ export interface CollectionItem {
     name: string;
     description?: string;
     form?: string;
+    activeLink?: string;
 }
 
 @Injectable({

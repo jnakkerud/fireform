@@ -6,9 +6,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { LinkService } from '../core/link-service/link.service';
+import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 
-export interface LinkData {
-    collectionId: string;
+export interface FormData {
+    collectionItem: CollectionItem;
 }
 
 @Component({
@@ -23,12 +24,19 @@ export class GenenerateLinkComponent implements OnInit {
     linkUrl: string;
 
     constructor(
-        public linkService: LinkService,
+        private linkService: LinkService,
+        private collectionService: CollectionService,
         public dialogRef: MatDialogRef<GenenerateLinkComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: LinkData) { }
+        @Inject(MAT_DIALOG_DATA) public data: FormData) { }
 
     ngOnInit(): void {
-        this.linkId = this.generateLinkId();
+        // For now, support only one link per collection
+
+        // Look for the existing link, if it does not exist, then generate one
+        this.linkId = this.data.collectionItem.activeLink;
+        if (!this.linkId) {
+            this.linkId = this.linkService.generateLinkId();
+        }
 
         this.linkUrl = `${window.location.origin}/forms/${this.linkId}`;
     }
@@ -37,13 +45,15 @@ export class GenenerateLinkComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    generateLinkId(): string {
-        return this.linkService.generateLinkId();
-    }
-
     onGenerate(): void {
-        // call LinkService.generateLink(collectionId, linkId)
-        this.linkService.addLink(this.linkId, this.data.collectionId);
+
+        // save the collection with the activeLink
+        const editItem = this.data.collectionItem;
+        if (!editItem.activeLink) {
+            editItem.activeLink = this.linkId;
+            this.collectionService.upsertItem(editItem).subscribe();
+        }
+        this.linkService.upsertLink(this.linkId, editItem.id);
 
         // close the dialog
         this.dialogRef.close();

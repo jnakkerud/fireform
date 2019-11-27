@@ -60,8 +60,8 @@ export class EditCollectionComponent {
 
         // pass in the edit item to the dialog
         this.dialog.open(GenenerateLinkComponent, {
-            width: '350px',
-            data: { collectionId: this.editItem.id }
+            width: '450px',
+            data: { collectionItem: this.editItem }
         });
     }
 
