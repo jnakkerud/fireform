@@ -59,7 +59,7 @@ export class GeneratedFormComponent implements OnInit {
         this.dataService.add(this.collectionItem, this.formGroup.value);
 
         // forward to completed form
-        this.router.navigate(['/formcomplete', this.link.id]);
+        this.router.navigate(['/formcomplete', this.collectionItem.id]);
     }
 
     public isValid() {
@@ -84,20 +84,30 @@ export class GeneratedFormComponent implements OnInit {
     <mat-card>
     <mat-card-title>{{title}}</mat-card-title>
     <mat-card-content>
+        <div>
         <p>Your response has been saved</p>
-        <a href="{{url}}">Submit another response</a>
+        <p>
+            <a href="{{url}}">Submit another response</a>
+        </p>
+        </div>
     </mat-card-content>
     </mat-card>
-    `
+    `,
+    styles:
+    [':host {display: flex;justify-content: center;margin: 100px 0px;}',
+    'mat-card-title,mat-card-content {display: flex;justify-content: center;  min-width: 300px}}'
+    ]
 })
 export class FormCompleteComponent {
-    title = 'Success';
+    title = '';
     url = '';
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute, private collectionService: CollectionService) {
         this.route.params.subscribe(p => {
-            this.url = `${window.location.origin}/form/${p.id}`;
-            // TODO get and show the collection title
+            this.collectionService.getItem(p.id).subscribe(item => {
+                this.title = item.name;
+                this.url = `${window.location.origin}/form/${item.activeLink}`;
+            });
         });
     }
 }

@@ -15,7 +15,13 @@
     grid-column: 1;
 }
 
-.button-row button,
-.button-row a {
-  margin-right: 8px;
+.button-row {
+    display: flex;
+    justify-content: flex-end;  
+  
+}
+
+mat-card-title {
+    display: flex;
+    justify-content: center;
 }

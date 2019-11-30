@@ -1,16 +1,18 @@
 <div class="edit-container">
 
     <ng-container *ngIf="formGroup">
-        
-
-        <dynamic-form (keyup.enter)="onSubmit()" autocomplete="off" [className]="'nested-grid-container'"
-            [formGroup]="formGroup" [model]="formModel">
-        </dynamic-form>
+        <mat-card>
+            <mat-card-title>{{collectionItem.name}}</mat-card-title>
+            <mat-card-content>
+                <dynamic-form (keyup.enter)="onSubmit()" autocomplete="off" [className]="'nested-grid-container'"
+                    [formGroup]="formGroup" [model]="formModel">
+                </dynamic-form>
     
-        <div class="button-row">
-            <button mat-button [disabled]="!isValid()" (click)="onSubmit()">Submit</button>
-        </div>
-    
+                <div class="button-row">
+                    <button mat-button [disabled]="!isValid()" (click)="onSubmit()">Submit</button>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </ng-container>
 
 </div>
