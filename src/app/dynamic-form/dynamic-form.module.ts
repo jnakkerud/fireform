@@ -8,6 +8,7 @@ import { DynamicFormComponent } from './containers/dynamic-form/dynamic-form.com
 import { DynamicDatepickerComponent } from './components/dynamic-datepicker/dynamic-datepicker.component';
 import { DynamicInputComponent } from './components/dynamic-input/dynamic-input.component';
 import { DynamicTextareaComponent } from './components/dynamic-textarea/dynamic-textarea.component';
+import { DynamicCheckboxGroupComponent } from './components/dynamic-checkbox-group/dynamic-checkbox-group.component';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -22,7 +23,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicFormComponent,
     DynamicDatepickerComponent,
     DynamicTextareaComponent,
-    DynamicInputComponent
+    DynamicInputComponent,
+    DynamicCheckboxGroupComponent,
   ],
   exports: [
     DynamicFormComponent
@@ -30,7 +32,8 @@ import { AngularMaterialModule } from '../angular-material.module';
   entryComponents: [
     DynamicDatepickerComponent,
     DynamicInputComponent,
-    DynamicTextareaComponent
+    DynamicTextareaComponent,
+    DynamicCheckboxGroupComponent
   ]
 })
 export class DynamicFormModule {

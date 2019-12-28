@@ -3,21 +3,21 @@ import { FormGroup } from '@angular/forms';
 import { ValidatorModel } from './validator.model';
 
 export interface DynamicFormControlCustomEvent {
-
   type: string;                    // 'click' string
   id: string;                      // 'organisation.name'
   directive: string;               // 'matSuffix'
   name: string;                    // 'search'
-
 }
 
 export interface DynamicFormControl {
-
   formGroup: FormGroup;
   model: DynamicFormControlModel;
-
   customEvent?: EventEmitter<any>;
+}
 
+export interface Option {
+  label: string;
+  value: any;
 }
 
 export interface DynamicFormControlModelConfig {
@@ -44,6 +44,7 @@ export interface DynamicFormControlModelConfig {
 
   validators?: ValidatorModel[];
 
+  options?: Option[];
 }
 
 export class DynamicFormControlModel {
@@ -70,6 +71,8 @@ export class DynamicFormControlModel {
 
   validators?: ValidatorModel[];
 
+  options?: Option[];
+
   public constructor(config: DynamicFormControlModelConfig) {
 
     this.type = config.type;
@@ -90,6 +93,7 @@ export class DynamicFormControlModel {
 
     this.validators = config.validators || null;
 
+    this.options = config.options || null;
   }
 
 }

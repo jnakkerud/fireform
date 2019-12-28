@@ -19,11 +19,13 @@ import { DynamicFormControl, DynamicFormControlCustomEvent, DynamicFormControlMo
 import { DynamicDatepickerComponent } from '../../components/dynamic-datepicker/dynamic-datepicker.component';
 import { DynamicInputComponent } from '../../components/dynamic-input/dynamic-input.component';
 import { DynamicTextareaComponent } from '../../components/dynamic-textarea/dynamic-textarea.component';
+import { DynamicCheckboxGroupComponent } from '../../components/dynamic-checkbox-group/dynamic-checkbox-group.component';
 
 const components = {
   date: DynamicDatepickerComponent,
   input: DynamicInputComponent,
-  textarea: DynamicTextareaComponent
+  textarea: DynamicTextareaComponent,
+  checkboxgroup: DynamicCheckboxGroupComponent
 };
 
 @Directive({

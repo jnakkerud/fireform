@@ -7,10 +7,12 @@ import { CreateCollectionComponent } from './create-collection/create-collection
 import { LoginComponent } from './core/login/login.component';
 import { AuthGuardService } from './core/auth/auth-guard.service';
 import { GeneratedFormComponent, FormCompleteComponent } from './generated-form/generated-form.component';
+import { DynamicFormTestComponent } from './dynamic-form-test/dynamic-form-test.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'collections', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { path: 'test-form', component: DynamicFormTestComponent},
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   {
     path: 'collections',

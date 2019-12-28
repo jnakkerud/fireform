@@ -13,6 +13,7 @@ import { EditCollectionModule } from './edit-collection/edit-collection.componen
 import { CreateCollectionModule } from './create-collection/create-collection.component';
 import { GenerateLinkModule } from './generate-link/generate-link.component';
 import { GeneratedFormModule } from './generated-form/generated-form.component';
+import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
 
 // https://www.learnhowtoprogram.com/javascript/angular-extended/firebase-introduction-and-setup
 import { masterFirebaseConfig } from './api-keys';
@@ -37,6 +38,7 @@ export const firebaseConfig = {
     CreateCollectionModule,
     GenerateLinkModule,
     GeneratedFormModule,
+    DynamicFormTestModule,
     HttpClientModule,
     AppRoutingModule
   ],
