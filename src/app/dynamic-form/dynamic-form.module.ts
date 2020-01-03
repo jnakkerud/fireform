@@ -9,6 +9,7 @@ import { DynamicDatepickerComponent } from './components/dynamic-datepicker/dyna
 import { DynamicInputComponent } from './components/dynamic-input/dynamic-input.component';
 import { DynamicTextareaComponent } from './components/dynamic-textarea/dynamic-textarea.component';
 import { DynamicCheckboxGroupComponent } from './components/dynamic-checkbox-group/dynamic-checkbox-group.component';
+import { DynamicRadioGroupComponent } from './components/dynamic-radio-group/dynamic-radio-group.component';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -25,6 +26,7 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicTextareaComponent,
     DynamicInputComponent,
     DynamicCheckboxGroupComponent,
+    DynamicRadioGroupComponent
   ],
   exports: [
     DynamicFormComponent
@@ -33,7 +35,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicDatepickerComponent,
     DynamicInputComponent,
     DynamicTextareaComponent,
-    DynamicCheckboxGroupComponent
+    DynamicCheckboxGroupComponent,
+    DynamicRadioGroupComponent
   ]
 })
 export class DynamicFormModule {

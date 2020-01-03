@@ -42,6 +42,16 @@ const FORM_JSON = `
             {"label": "Orange", "value": "orange"},
             {"label": "Grape", "value": "grape"}
         ]
+    },
+    {
+        "type": "radiogroup",
+        "id": "radiogroup",
+        "label": "Shirt size:",
+        "options": [
+            {"label": "Small", "value": "s"},
+            {"label": "Medium", "value": "m"},
+            {"label": "Large", "value": "l"}
+        ]
     }
 ]
 `;
