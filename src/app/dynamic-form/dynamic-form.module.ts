@@ -10,6 +10,7 @@ import { DynamicInputComponent } from './components/dynamic-input/dynamic-input.
 import { DynamicTextareaComponent } from './components/dynamic-textarea/dynamic-textarea.component';
 import { DynamicCheckboxGroupComponent } from './components/dynamic-checkbox-group/dynamic-checkbox-group.component';
 import { DynamicRadioGroupComponent } from './components/dynamic-radio-group/dynamic-radio-group.component';
+import { DynamicSelectComponent } from './components/dynamic-select/dynamic-select.component';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -26,7 +27,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicTextareaComponent,
     DynamicInputComponent,
     DynamicCheckboxGroupComponent,
-    DynamicRadioGroupComponent
+    DynamicRadioGroupComponent,
+    DynamicSelectComponent
   ],
   exports: [
     DynamicFormComponent
@@ -36,7 +38,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicInputComponent,
     DynamicTextareaComponent,
     DynamicCheckboxGroupComponent,
-    DynamicRadioGroupComponent
+    DynamicRadioGroupComponent,
+    DynamicSelectComponent
   ]
 })
 export class DynamicFormModule {

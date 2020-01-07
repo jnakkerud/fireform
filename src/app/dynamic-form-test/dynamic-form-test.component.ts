@@ -52,6 +52,16 @@ const FORM_JSON = `
             {"label": "Medium", "value": "m"},
             {"label": "Large", "value": "l"}
         ]
+    },
+    {
+        "type": "select",
+        "id": "select",
+        "label": "Favorite Vegetable",
+        "options": [
+            {"label": "Carrot", "value": "carrot"},
+            {"label": "Eggplant", "value": "eggplant"},
+            {"label": "Onion", "value": "onion"}
+        ]
     }
 ]
 `;

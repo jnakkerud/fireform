@@ -21,13 +21,15 @@ import { DynamicInputComponent } from '../../components/dynamic-input/dynamic-in
 import { DynamicTextareaComponent } from '../../components/dynamic-textarea/dynamic-textarea.component';
 import { DynamicCheckboxGroupComponent } from '../../components/dynamic-checkbox-group/dynamic-checkbox-group.component';
 import { DynamicRadioGroupComponent } from '../../components/dynamic-radio-group/dynamic-radio-group.component';
+import { DynamicSelectComponent } from '../../components/dynamic-select/dynamic-select.component';
 
 const components = {
   date: DynamicDatepickerComponent,
   input: DynamicInputComponent,
   textarea: DynamicTextareaComponent,
   checkboxgroup: DynamicCheckboxGroupComponent,
-  radiogroup: DynamicRadioGroupComponent
+  radiogroup: DynamicRadioGroupComponent,
+  select: DynamicSelectComponent
 };
 
 @Directive({
