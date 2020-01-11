@@ -1,0 +1,27 @@
+<div [formGroup]="controlContainer.control">
+    <label>Options:</label>
+    <ng-container [formArrayName]="arrayName">
+        <div cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListData]="formArr.controls">
+    
+            <div class="option-container" *ngFor="let itemrow of formArr.controls; let i=index" [formGroupName]="i" cdkDrag>
+    
+                <mat-form-field class="option-item">
+                    <mat-label>Label</mat-label>
+                    <input matInput formControlName="label">
+                </mat-form-field>
+    
+                <mat-form-field class="option-item">
+                    <mat-label>Value</mat-label>
+                    <input matInput formControlName="value">
+                </mat-form-field>
+    
+                <button mat-icon-button aria-label="delete" (click)=deleteOption(i)>
+                    <mat-icon>delete</mat-icon>
+                </button>
+    
+            </div>
+    
+            <button mat-button (click)="addOption()">Add Option</button>
+        </div>
+    </ng-container>
+</div>
