@@ -17,10 +17,14 @@ export class OptionEditorComponent implements OnInit {
 
     @Input() arrayName: string;
 
+    @Input() initialOption = false;
+
     constructor(private controlContainer: ControlContainer, private fb: FormBuilder) { }
 
     ngOnInit() {
-        this.addOption();
+        if (this.initialOption) {
+            this.addOption();
+        }
     }
 
     initOptionRows() {

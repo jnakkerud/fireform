@@ -38,6 +38,25 @@ export class PropertyEditorComponent {
             ff.inputType = [formField.model[0].inputType];
         }
 
+        // TODO refactor if else for input types?
+        if (formField.type === 'checkboxgroup') {
+
+            // seed initial option if needed
+            if (!formField.model[0].options) {
+                formField.model[0].options = [
+                    { label: 'Label', value: 'value' }
+                ];
+            }
+
+            // create a array of formgroups
+            const grps: FormGroup[] = [];
+            for (const cfg of formField.model[0].options) {
+                grps.push(this.formBuilder.group(cfg));
+            }
+
+            ff.options = this.formBuilder.array(grps);
+        }
+
         this.formGroup = this.formBuilder.group(ff);
 
         // add valueChange to each control

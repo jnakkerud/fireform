@@ -3,13 +3,12 @@
         <mat-form-field>
             <input matInput placeHolder="Label" formControlName="label">
         </mat-form-field>
-    
-        <mat-form-field>
-            <input matInput placeHolder="Placeholder" formControlName="placeholder">
-        </mat-form-field>
 
         <ng-container [ngSwitch]="formField?.type">
             <ng-template [ngSwitchCase]="'input'">
+                <mat-form-field>
+                    <input matInput placeHolder="Placeholder" formControlName="placeholder">
+                </mat-form-field>
                 <mat-form-field>
                     <mat-select formControlName="inputType">
                         <mat-option value="email">Email</mat-option>
@@ -20,11 +19,18 @@
                 </mat-form-field>                      
             </ng-template>
             <ng-template [ngSwitchCase]="'textarea'">
-              <span>text area</span>
+                <mat-form-field>
+                    <input matInput placeHolder="Placeholder" formControlName="placeholder">
+                </mat-form-field>
             </ng-template>
             <ng-template [ngSwitchCase]="'date'">
-                <span>Date</span>
+                <mat-form-field>
+                    <input matInput placeHolder="Placeholder" formControlName="placeholder">
+                </mat-form-field>
             </ng-template >
+            <ng-template [ngSwitchCase]="'checkboxgroup'">
+                <option-editor arrayName="options"></option-editor>
+            </ng-template >            
         </ng-container>   
     </form>
 </div>

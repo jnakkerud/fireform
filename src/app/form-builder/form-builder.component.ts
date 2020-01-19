@@ -10,6 +10,7 @@ import { DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-con
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
 import { CollectionItem } from '../core/collection-service/collection.service';
+import { OptionEditorModule } from '../option-editor/option-editor.component';
 
 /** Clamps a number between zero and a maximum. */
 function clamp(value: number, max: number): number {
@@ -65,6 +66,16 @@ const FORM_CONTROLS: FormField[] = [
             {
                 type: 'date',
                 id: 'date',
+            }
+        ]
+    },
+    {
+        type: 'checkboxgroup',
+        name: 'Checkbox Group',
+        model: [
+            {
+                type: 'checkboxgroup',
+                id: 'checkboxgroup',
             }
         ]
     }
@@ -152,6 +163,7 @@ export class FormBuilderComponent {
         DragDropModule,
         DynamicFormModule,
         ReactiveFormsModule,
+        OptionEditorModule,
         CommonModule],
     exports: [FormBuilderComponent, FormFieldSnippitComponent, PropertyEditorComponent],
     declarations: [FormBuilderComponent, FormFieldSnippitComponent, PropertyEditorComponent],
