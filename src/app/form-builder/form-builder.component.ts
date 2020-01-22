@@ -88,6 +88,16 @@ const FORM_CONTROLS: FormField[] = [
                 id: 'radiogroup',
             }
         ]
+    },
+    {
+        type: 'select',
+        name: 'Select',
+        model: [
+            {
+                type: 'select',
+                id: 'select',
+            }
+        ]
     }
 ];
 
