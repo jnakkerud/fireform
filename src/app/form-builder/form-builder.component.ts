@@ -78,6 +78,16 @@ const FORM_CONTROLS: FormField[] = [
                 id: 'checkboxgroup',
             }
         ]
+    },
+    {
+        type: 'radiogroup',
+        name: 'Radio Group',
+        model: [
+            {
+                type: 'radiogroup',
+                id: 'radiogroup',
+            }
+        ]
     }
 ];
 

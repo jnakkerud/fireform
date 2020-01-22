@@ -30,7 +30,10 @@
             </ng-template >
             <ng-template [ngSwitchCase]="'checkboxgroup'">
                 <option-editor arrayName="options"></option-editor>
-            </ng-template >            
+            </ng-template >
+            <ng-template [ngSwitchCase]="'radiogroup'">
+                <option-editor arrayName="options"></option-editor>
+            </ng-template >                      
         </ng-container>   
     </form>
 </div>

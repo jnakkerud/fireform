@@ -39,7 +39,7 @@ export class PropertyEditorComponent {
         }
 
         // TODO refactor if else for input types?
-        if (formField.type === 'checkboxgroup') {
+        if (formField.type === 'checkboxgroup' || formField.type === 'radiogroup') {
 
             // seed initial option if needed
             if (!formField.model[0].options) {
