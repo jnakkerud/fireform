@@ -33,6 +33,7 @@ export class PropertyEditorComponent {
 
         ff.label = [formField.model[0].label];
         ff.placeholder = [formField.model[0].placeholder];
+        ff.required = [formField.model[0].required];
 
         if (formField.type === 'input') {
             ff.inputType = [formField.model[0].inputType];
