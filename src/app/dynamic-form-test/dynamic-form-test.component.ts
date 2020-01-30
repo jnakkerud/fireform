@@ -62,6 +62,11 @@ const FORM_JSON = `
             {"label": "Eggplant", "value": "eggplant"},
             {"label": "Onion", "value": "onion"}
         ]
+    },
+    {
+        "type": "toggle",
+        "id": "milk",
+        "label": "Like Milk?"
     }
 ]
 `;

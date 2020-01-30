@@ -11,6 +11,7 @@ import { DynamicTextareaComponent } from './components/dynamic-textarea/dynamic-
 import { DynamicCheckboxGroupComponent } from './components/dynamic-checkbox-group/dynamic-checkbox-group.component';
 import { DynamicRadioGroupComponent } from './components/dynamic-radio-group/dynamic-radio-group.component';
 import { DynamicSelectComponent } from './components/dynamic-select/dynamic-select.component';
+import { DynamicSlideToggleComponent } from './components/dynamic-slide-toggle/dynamic-slide-toggle.component';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -28,7 +29,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicInputComponent,
     DynamicCheckboxGroupComponent,
     DynamicRadioGroupComponent,
-    DynamicSelectComponent
+    DynamicSelectComponent,
+    DynamicSlideToggleComponent
   ],
   exports: [
     DynamicFormComponent
@@ -39,7 +41,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicTextareaComponent,
     DynamicCheckboxGroupComponent,
     DynamicRadioGroupComponent,
-    DynamicSelectComponent
+    DynamicSelectComponent,
+    DynamicSlideToggleComponent
   ]
 })
 export class DynamicFormModule {

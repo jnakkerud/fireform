@@ -22,6 +22,7 @@ import { DynamicTextareaComponent } from '../../components/dynamic-textarea/dyna
 import { DynamicCheckboxGroupComponent } from '../../components/dynamic-checkbox-group/dynamic-checkbox-group.component';
 import { DynamicRadioGroupComponent } from '../../components/dynamic-radio-group/dynamic-radio-group.component';
 import { DynamicSelectComponent } from '../../components/dynamic-select/dynamic-select.component';
+import { DynamicSlideToggleComponent } from '../../components/dynamic-slide-toggle/dynamic-slide-toggle.component';
 
 const components = {
   date: DynamicDatepickerComponent,
@@ -29,7 +30,8 @@ const components = {
   textarea: DynamicTextareaComponent,
   checkboxgroup: DynamicCheckboxGroupComponent,
   radiogroup: DynamicRadioGroupComponent,
-  select: DynamicSelectComponent
+  select: DynamicSelectComponent,
+  toggle: DynamicSlideToggleComponent
 };
 
 @Directive({

@@ -47,6 +47,9 @@ export class DynamicFormService {
   }
 
   public createControl(controlModel: DynamicFormControlModel) {
+    if (controlModel.type === 'toggle') {
+      return this.formBuilder.control(false, this.getValidators(controlModel.validators || []) );
+    }
 
     return this.formBuilder.control('', this.getValidators(controlModel.validators || []) );
   }
