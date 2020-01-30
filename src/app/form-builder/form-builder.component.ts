@@ -98,6 +98,16 @@ const FORM_CONTROLS: FormField[] = [
                 id: 'select',
             }
         ]
+    },
+    {
+        type: 'toggle',
+        name: 'Slide Toggle',
+        model: [
+            {
+                type: 'toggle',
+                id: 'toggle',
+            }
+        ]
     }
 ];
 
