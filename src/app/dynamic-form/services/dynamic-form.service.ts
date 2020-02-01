@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 
-import { DynamicFormControlModel } from '../models/dynamic-form-control.model';
+import { DynamicFormControlModel, DynamicFormControlModelConfig } from '../models/dynamic-form-control.model';
 import { DynamicFormModel } from '../models/dynamic-form.model';
 import { ValidatorModel } from '../models/validator.model';
 
@@ -13,6 +13,15 @@ import { DynamicFormModule } from '../dynamic-form.module';
 
 // export type Validator = ValidatorFn | AsyncValidatorFn;
 // export type ValidatorFactory = (args: any) => Validator;
+
+export function isString(value: any): value is string {
+  return typeof value === 'string';
+}
+
+export function parseReviver(key: string, value: any): any {
+  const regexDateISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|([+\-])([\d|:]*))?$/;
+  return isString(value) && regexDateISO.test(value) ? new Date(value) : value;
+}
 
 export type ValidatorFactory = (args: any) => ValidatorFn;
 
@@ -28,8 +37,8 @@ export class DynamicFormService {
               private httpClient: HttpClient) {
   }
 
-  public getFormMetadata(formId: string): Promise<DynamicFormControlModel[]> {
-    return this.httpClient.get<DynamicFormControlModel[]>(this.uriPrefix + formId + this.uriSuffix).toPromise();
+  public getFormMetadata(formId: string) {
+    return this.httpClient.get<DynamicFormControlModelConfig[]>(this.uriPrefix + formId + this.uriSuffix);
   }
 
   public createGroup(formModel: DynamicFormModel): FormGroup {
@@ -132,6 +141,16 @@ export class DynamicFormService {
 
     }
 
+  }
+
+  public fromJSON(json: string | object[]): DynamicFormModel | never {
+    const formModelJSON = isString(json) ? JSON.parse(json, parseReviver) : json;
+    const formModel: DynamicFormModel = [];
+
+    formModelJSON.forEach((model: any) => {
+      formModel.push(new DynamicFormControlModel(model));
+    });
+    return formModel;
   }
 
   private getProperty = (obj, path) => (

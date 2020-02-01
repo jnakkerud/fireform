@@ -72,8 +72,8 @@ export class GeneratedFormComponent implements OnInit {
         return valid;
     }
 
-    getFormMetadata(item: CollectionItem): Promise<DynamicFormControlModel[]> {
-        return Promise.resolve(JSON.parse(item.form));
+    getFormMetadata(item: CollectionItem): Promise<DynamicFormModel> {
+        return Promise.resolve<DynamicFormModel>(this.dynamicFormService.fromJSON(item.form));
     }
 }
 

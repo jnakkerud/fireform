@@ -19,6 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 
+// TODO create const and use ... notation for imports and exports
+
 @NgModule({
   imports: [
     LayoutModule,

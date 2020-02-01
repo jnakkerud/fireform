@@ -29,7 +29,7 @@ export class DynamicFormComponent {
   // tslint:disable-next-line:no-input-rename
   @Input('model') formModel: DynamicFormModel;
 
-  @Input() autocomplete: string;
+  @Input() autocomplete = 'off';
   @Input() className: string;
 
   @Output() customEvent = new EventEmitter<any>();

@@ -1,15 +1,16 @@
 <div *ngIf="editorEnabled; else notShow">
     <form [formGroup]="formGroup" class="example-container">
         <mat-form-field>
-            <input matInput placeHolder="Label" formControlName="label">
+            <input matInput placeholder="Label" formControlName="label">
         </mat-form-field>
 
         <ng-container [ngSwitch]="formField?.type">
             <ng-template [ngSwitchCase]="'input'">
                 <mat-form-field>
-                    <input matInput placeHolder="Placeholder" formControlName="placeholder">
+                    <input matInput placeholder="Placeholder" formControlName="placeholder">
                 </mat-form-field>
                 <mat-form-field>
+                    <mat-label>Input Types</mat-label>
                     <mat-select formControlName="inputType">
                         <mat-option value="email">Email</mat-option>
                         <mat-option value="tel">Telephone</mat-option>
@@ -22,12 +23,12 @@
             </ng-template>
             <ng-template [ngSwitchCase]="'textarea'">
                 <mat-form-field>
-                    <input matInput placeHolder="Placeholder" formControlName="placeholder">
+                    <input matInput placeholder="Placeholder" formControlName="placeholder">
                 </mat-form-field>
             </ng-template>
             <ng-template [ngSwitchCase]="'date'">
                 <mat-form-field>
-                    <input matInput placeHolder="Placeholder" formControlName="placeholder">
+                    <input matInput placeholder="Placeholder" formControlName="placeholder">
                 </mat-form-field>
             </ng-template >
             <ng-template [ngSwitchCase]="'checkboxgroup'">

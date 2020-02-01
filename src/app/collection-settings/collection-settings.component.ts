@@ -6,6 +6,7 @@ import { CollectionService, CollectionItem } from '../core/collection-service/co
 import { AngularMaterialModule } from '../angular-material.module';
 import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
+import { DynamicFormControlModelConfig } from '../dynamic-form/models/dynamic-form-control.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 
 const SETTINGS_FORM = 'settings';
@@ -44,9 +45,12 @@ export class CollectionSettingsComponent implements OnInit {
         this.createForm();
     }
 
-    async createForm() {
-        this.formModel = await this.dynamicFormService.getFormMetadata(SETTINGS_FORM);
-        this.formGroup = this.dynamicFormService.createGroup(this.formModel);
+    createForm() {
+        this.dynamicFormService.getFormMetadata(SETTINGS_FORM)
+            .subscribe((data: DynamicFormControlModelConfig[]) => {
+                this.formModel = this.dynamicFormService.fromJSON(data);
+                this.formGroup = this.dynamicFormService.createGroup(this.formModel);
+            });
 
         // bind the collection item to the form
         this.formGroup.patchValue(this.collectionItem);

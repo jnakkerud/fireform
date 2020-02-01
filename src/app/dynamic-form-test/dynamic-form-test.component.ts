@@ -113,8 +113,8 @@ export class DynamicFormTestComponent implements OnInit {
         console.log(this.formGroup.value);
     }
 
-    getFormMetadata(): Promise<DynamicFormControlModel[]> {
-        return Promise.resolve(JSON.parse(FORM_JSON));
+    getFormMetadata(): Promise<DynamicFormModel> {
+        return Promise.resolve<DynamicFormModel>(this.dynamicFormService.fromJSON(FORM_JSON));
     }
 }
 
