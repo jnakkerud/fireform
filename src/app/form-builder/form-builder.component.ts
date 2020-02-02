@@ -1,6 +1,7 @@
-import { Component, NgModule, Input } from '@angular/core';
+import { Component, NgModule, Input, ViewChildren, QueryList, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { DragDropModule, CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
 
@@ -116,7 +117,9 @@ const FORM_CONTROLS: FormField[] = [
     templateUrl: 'form-builder.component.html',
     styleUrls: ['./form-builder.component.scss']
 })
-export class FormBuilderComponent {
+export class FormBuilderComponent implements AfterViewInit, OnDestroy {
+
+    private selectIndex = -1;
 
     @Input()
     get collectionItem(): CollectionItem {
@@ -127,20 +130,38 @@ export class FormBuilderComponent {
         this.item = value;
         if (this.item && this.item.form) {
             this.formFields = this.fromJson(this.item.form);
+            this.selectIndex = 0;
         }
     }
     private item: CollectionItem;
 
     private formFields: FormField[] = [];
 
+    private subscription: Subscription;
+
     get controls(): FormField[] {
         return FORM_CONTROLS;
+    }
+
+    @ViewChildren(FormFieldSnippitComponent) fieldSnippets !: QueryList<FormFieldSnippitComponent>;
+
+    @ViewChild(PropertyEditorComponent, {static: false}) propertyEditor !: PropertyEditorComponent;
+
+    ngAfterViewInit(): void {
+        this.subscription = this.fieldSnippets.changes.subscribe(e => {
+            this.selectField();
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     drop(event: CdkDragDrop<FormField[]>) {
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else if (event.previousContainer.id === 'control-list') {
+            this.selectIndex = event.currentIndex;
             // clone and copy the model
             const ff = event.previousContainer.data[event.previousIndex];
             event.previousContainer.data[event.previousIndex] = clone(ff);
@@ -184,6 +205,16 @@ export class FormBuilderComponent {
             });
         }
         return fields;
+    }
+
+    private selectField() {
+        if (this.selectIndex >= 0 && this.fieldSnippets.length > 0) {
+            this.fieldSnippets.toArray()[this.selectIndex].select();
+        } else if (this.fieldSnippets.length === 0) {
+            // clear the property editor
+            this.propertyEditor.editorEnabled = false;
+        }
+        this.selectIndex = -1;
     }
 }
 
