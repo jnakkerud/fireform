@@ -6,37 +6,7 @@ import { DynamicFormControlCustomEvent, DynamicFormControlModel } from '../../mo
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'dynamic-input',
-  template: `
-    <mat-form-field [appearance]="model.appearance"
-                    [className]="model.gridItemClass"
-                    [formGroup]="formGroup">
-
-      <ng-container *ngIf="model.label" ngProjectAs="mat-label">
-        <mat-label> {{ model.label }} </mat-label>
-      </ng-container>
-
-      <span *ngIf="model.prefixIconName" matPrefix>
-        <mat-icon matPrefix> {{ model.prefixIconName }} </mat-icon>
-      </span>
-
-      <input matInput
-             [autocomplete]="model.autocomplete"
-             [formControlName]="model.id"
-             [placeholder]="model.placeholder"
-             [required]="model.required"
-             [type]="model.inputType"/>
-
-      <span *ngIf="model.suffixIconName" matSuffix>
-        <mat-icon matSuffix class="crm-suffix-icon" (click)="iconSuffixClickHandler()"> {{ model.suffixIconName }} </mat-icon>
-      </span>
-
-      <ng-container *ngFor="let validator of model.validators;" ngProjectAs="mat-error">
-        <mat-error *ngIf="formGroup.controls[model.id].hasError(validator.propertyName)"> {{ validator.message }} </mat-error>
-      </ng-container>
-
-    </mat-form-field>
-  `,
-  styles: []
+  templateUrl: 'dynamic-input.component.html'
 })
 export class DynamicInputComponent implements OnInit {
 

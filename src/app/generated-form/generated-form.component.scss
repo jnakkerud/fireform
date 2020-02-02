@@ -1,27 +1,7 @@
 .edit-container {
-    display: flex;
-    flex: 1 0 auto;
-    flex-direction: column;
     padding: 1.5em;
 }
 
-.nested-grid-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 1em;
-}
-
-.grid-column-1 {
-    grid-column: 1;
-}
-
-.button-row {
-    display: flex;
-    justify-content: flex-end;  
-  
-}
-
-mat-card-title {
-    display: flex;
-    justify-content: center;
+.edit-container .mat-card {
+    margin-bottom: 15px;
 }

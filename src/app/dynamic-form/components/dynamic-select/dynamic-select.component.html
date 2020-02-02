@@ -1,22 +1,22 @@
+<mat-card>
+  <mat-card-content>
+    <mat-form-field [appearance]="model.appearance" [className]="model.gridItemClass" [formGroup]="formGroup">
 
-<mat-form-field [appearance]="model.appearance"
-  [className]="model.gridItemClass"
-  [formGroup]="formGroup">
-  
-  <ng-container *ngIf="model.label" ngProjectAs="mat-label">
-    <mat-label> {{ model.label }} </mat-label>
-  </ng-container>
-  
-  <mat-select [formControlName]="model.id" 
-    [placeholder]="model.placeholder"
-    [required]="model.required">
-    <mat-option *ngFor="let option of model.options" [value]="option.value">
-      {{option.label}}
-    </mat-option>
-  </mat-select>
-  
-  <ng-container *ngFor="let validator of model.validators;" ngProjectAs="mat-error">
-    <mat-error *ngIf="formGroup.controls[model.id].hasError(validator.propertyName)"> {{ validator.message }} </mat-error>
-  </ng-container>
+      <ng-container *ngIf="model.label" ngProjectAs="mat-label">
+        <mat-label> {{ model.label }} </mat-label>
+      </ng-container>
 
-</mat-form-field>
+      <mat-select [formControlName]="model.id" [placeholder]="model.placeholder" [required]="model.required">
+        <mat-option *ngFor="let option of model.options" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+
+      <ng-container *ngFor="let validator of model.validators;" ngProjectAs="mat-error">
+        <mat-error *ngIf="formGroup.controls[model.id].hasError(validator.propertyName)"> {{ validator.message }}
+        </mat-error>
+      </ng-container>
+
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>

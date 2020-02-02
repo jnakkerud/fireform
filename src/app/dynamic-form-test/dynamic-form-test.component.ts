@@ -5,7 +5,6 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
 import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
-import { DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 
 const FORM_JSON = `
@@ -46,7 +45,7 @@ const FORM_JSON = `
     {
         "type": "radiogroup",
         "id": "radiogroup",
-        "label": "Shirt size:",
+        "label": "Shirt size",
         "options": [
             {"label": "Small", "value": "s"},
             {"label": "Medium", "value": "m"},
@@ -67,6 +66,11 @@ const FORM_JSON = `
         "type": "toggle",
         "id": "milk",
         "label": "Like Milk?"
+    },
+    {
+        "type": "date",
+        "id": "bday",
+        "label": "Birthday"
     }
 ]
 `;
@@ -74,22 +78,8 @@ const FORM_JSON = `
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'dynamic-form-test',
-    template: `
-    <ng-container *ngIf="formGroup">
-    <mat-card>
-    <mat-card-title>Test Form</mat-card-title>
-    <mat-card-content>
-        <dynamic-form (keyup.enter)="onSubmit()" autocomplete="off" [className]="'nested-grid-container'"
-            [formGroup]="formGroup" [model]="formModel">
-        </dynamic-form>
-
-        <div class="button-row">
-            <button mat-button (click)="onSubmit()">Submit</button>
-        </div>
-    </mat-card-content>
-    </mat-card>
-    </ng-container>
-    `,
+    templateUrl: 'dynamic-form-test.component.html',
+    styleUrls: ['./dynamic-form-test.component.scss'],
 })
 
 export class DynamicFormTestComponent implements OnInit {

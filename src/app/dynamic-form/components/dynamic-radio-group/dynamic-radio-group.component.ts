@@ -5,7 +5,7 @@ import { DynamicFormControlModel } from '../../models/dynamic-form-control.model
 
 @Component({
   // tslint:disable-next-line: component-selector
-  selector: 'dynamic-checkbox-group',
+  selector: 'dynamic-radio-group',
   templateUrl: 'dynamic-radio-group.component.html',
   styleUrls: ['./dynamic-radio-group.component.scss']
 })

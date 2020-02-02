@@ -6,14 +6,7 @@ import { DynamicFormControlCustomEvent, DynamicFormControlModel } from '../../mo
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'dynamic-slide-toggle',
-  template: `
-  <ng-container [formGroup]="formGroup">
-
-    <mat-slide-toggle [formControlName]="model.id">{{model.label}}</mat-slide-toggle>
-
-  </ng-container>
-  `,
-  styles: []
+  templateUrl: 'dynamic-slide-toggle.component.html'
 })
 export class DynamicSlideToggleComponent implements OnInit {
 

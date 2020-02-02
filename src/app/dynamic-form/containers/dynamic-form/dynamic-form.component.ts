@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { DynamicFormModel } from '../../models/dynamic-form.model';
@@ -20,7 +20,8 @@ import { DynamicFormControlCustomEvent } from '../../models/dynamic-form-control
 
     </form>
   `,
-  styleUrls: ['dynamic-form.component.scss']
+  styleUrls: ['dynamic-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DynamicFormComponent {
 

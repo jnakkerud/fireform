@@ -80,7 +80,7 @@ export class DynamicFormControlModel {
 
     this.inputType = config.inputType || 'text';
 
-    this.appearance = config.appearance || 'outline';
+    this.appearance = config.appearance || 'legacy';
     this.autocomplete = config.autocomplete || 'off';
     this.gridItemClass = config.gridItemClass || null;
     this.hideRequiredMarker = config.hideRequiredMarker || false;
