@@ -119,7 +119,7 @@ const FORM_CONTROLS: FormField[] = [
 })
 export class FormBuilderComponent implements AfterViewInit, OnDestroy {
 
-    private selectIndex = -1;
+    @Input() selectedIndex = -1;
 
     @Input()
     get collectionItem(): CollectionItem {
@@ -130,7 +130,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
         this.item = value;
         if (this.item && this.item.form) {
             this.formFields = this.fromJson(this.item.form);
-            this.selectIndex = 0;
+            this.selectedIndex = 0;
         }
     }
     private item: CollectionItem;
@@ -159,9 +159,10 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
 
     drop(event: CdkDragDrop<FormField[]>) {
         if (event.previousContainer === event.container) {
+            this.selectedIndex = event.currentIndex;
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else if (event.previousContainer.id === 'control-list') {
-            this.selectIndex = event.currentIndex;
+            this.selectedIndex = event.currentIndex;
             // clone and copy the model
             const ff = event.previousContainer.data[event.previousIndex];
             event.previousContainer.data[event.previousIndex] = clone(ff);
@@ -172,6 +173,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
                 event.currentIndex);
         } else {
             // just remove from form field list
+            this.selectedIndex = -1;
             const currentArray = event.previousContainer.data;
             const from = clamp(event.previousIndex, currentArray.length - 1);
             currentArray.splice(from, 1);
@@ -207,14 +209,19 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
         return fields;
     }
 
+    handleClick(index: number) {
+        this.selectedIndex = index;
+        this.selectField();
+    }
+
     private selectField() {
-        if (this.selectIndex >= 0 && this.fieldSnippets.length > 0) {
-            this.fieldSnippets.toArray()[this.selectIndex].select();
-        } else if (this.fieldSnippets.length === 0) {
+        if (this.selectedIndex >= 0 && this.fieldSnippets.length > 0) {
+            const formField = this.fieldSnippets.toArray()[this.selectedIndex].formField;
+            Promise.resolve(null).then(() => this.propertyEditor.onFormField(formField));
+        } else if (this.fieldSnippets.length === 0 || this.selectedIndex === -1) {
             // clear the property editor
             this.propertyEditor.editorEnabled = false;
         }
-        this.selectIndex = -1;
     }
 }
 

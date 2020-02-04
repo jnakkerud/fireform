@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { FormGroup } from '@angular/forms';
 
@@ -11,7 +11,8 @@ import { DynamicFormControlModel } from '../../dynamic-form/models/dynamic-form-
     // tslint:disable-next-line: component-selector
     selector: 'form-field-snippit',
     templateUrl: 'form-field-snippit.component.html',
-    styleUrls: ['./form-field-snippit.component.scss']
+    styleUrls: ['./form-field-snippit.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class FormFieldSnippitComponent implements OnInit {
@@ -21,7 +22,7 @@ export class FormFieldSnippitComponent implements OnInit {
     public formGroup: FormGroup;
     public formModel: DynamicFormModel;
 
-    constructor(private dynamicFormService: DynamicFormService, private el: ElementRef) { }
+    constructor(private dynamicFormService: DynamicFormService) { }
 
     ngOnInit() {
         this.formModel = this.coerceModel(this.formField.model);
@@ -34,15 +35,5 @@ export class FormFieldSnippitComponent implements OnInit {
           formModel.push(new DynamicFormControlModel(model));
         });
         return formModel;
-    }
-
-    select() {
-        // TODO click on the material component.  TODO support cards for each field
-        // const control = this.el.nativeElement.querySelector('.mat-input-element');
-        const control = this.el.nativeElement;
-
-        if (control) {
-            control.click();
-        }
     }
 }
