@@ -22,15 +22,11 @@ export interface Option {
 
 export interface DynamicFormControlModelConfig {
 
-  // Mandatory items
-
   type: string;                    // "input"
   id?: string;                      // "givenName"
 
-  inputType?: string;              // "text"
-
   // Optional items
-
+  inputType?: string;              // "text"
   appearance?: string;             // "outline"
   autocomplete?: string;           // aka autoFill
   gridItemClass?: string;          // "grid-column-1"
@@ -49,15 +45,11 @@ export interface DynamicFormControlModelConfig {
 
 export class DynamicFormControlModel {
 
-  // Mandatory items
-
   type: string;                    // "input"
-  id?: string;                      // "givenName"
-
-  inputType?: string;               // "text"
+  id?: string;                     // "givenName"
 
   // Optional items
-
+  inputType?: string;               // "text"
   appearance?: string;             // "outline"
   autocomplete?: string;           // aka autoFill
   gridItemClass?: string;          // "grid-column-1"

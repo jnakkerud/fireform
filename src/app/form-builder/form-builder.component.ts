@@ -58,7 +58,6 @@ function clone(formField: FormField): FormField {
     );
 }
 
-
 const FORM_CONTROLS: FormConfig[] = [
     {
         name: 'Input',
@@ -194,7 +193,13 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
             model.push(ff.resolveModel);
         }
 
-        const formJson = JSON.stringify(model);
+        const formJson = JSON.stringify(model, (key, value) => {
+            // Filtering out null properties
+            if (value === null) {
+                return undefined;
+            }
+            return value;
+        });
         return formJson;
     }
 

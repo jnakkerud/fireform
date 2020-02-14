@@ -4,7 +4,6 @@ import { FormGroup } from '@angular/forms';
 
 import { FormField } from '../form-builder.component';
 import { DynamicFormService } from '../../dynamic-form/services/dynamic-form.service';
-import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -18,14 +17,12 @@ export class FormFieldSnippitComponent implements OnInit {
 
     @Input() formField: FormField;
 
-    public formModel: DynamicFormModel;
     public formGroup: FormGroup;
 
     constructor(private dynamicFormService: DynamicFormService) { }
 
     ngOnInit() {
-        this.formModel = this.formField.model;
-        Promise.resolve(null).then(() => this.formGroup = this.dynamicFormService.createGroup(this.formModel));
+        Promise.resolve(null).then(() => this.formGroup = this.dynamicFormService.createGroup(this.formField.model));
     }
 
 }
