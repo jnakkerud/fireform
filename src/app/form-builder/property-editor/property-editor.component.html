@@ -1,10 +1,10 @@
-<div *ngIf="editorEnabled; else notShow">
+<div *ngIf="formField; else notShow">
     <form [formGroup]="formGroup" class="example-container">
         <mat-form-field>
             <input matInput placeholder="Label" formControlName="label">
         </mat-form-field>
 
-        <ng-container [ngSwitch]="formField?.type">
+        <ng-container [ngSwitch]="formField.type">
             <ng-template [ngSwitchCase]="'input'">
                 <mat-form-field>
                     <input matInput placeholder="Placeholder" formControlName="placeholder">

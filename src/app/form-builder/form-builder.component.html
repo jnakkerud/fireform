@@ -7,9 +7,9 @@
         cdkDropListConnectedTo="control-list"
         class="fields-container"
         (cdkDropListDropped)="drop($event)">
-        <form-field-snippit *ngFor="let item of formFields; let i = index" 
-          (click)="handleClick(item, i)" 
-          [formField]="item"
+        <form-field-snippit *ngFor="let field of formFields; let i = index"
+          (click)="handleClick(i)"
+          [formField]="field"
           [class.form-field-snippit-active]="selectedIndex == i"
           cdkDrag></form-field-snippit>
       </div>

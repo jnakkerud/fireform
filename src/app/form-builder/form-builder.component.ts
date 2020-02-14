@@ -7,11 +7,39 @@ import { DragDropModule, CdkDragDrop, moveItemInArray, copyArrayItem } from '@an
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { FormFieldSnippitComponent } from './form-field-snippit/form-field-snippit.component';
-import { DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
+import { DynamicFormControlModelConfig, DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
+import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
 import { CollectionItem } from '../core/collection-service/collection.service';
 import { OptionEditorModule } from '../option-editor/option-editor.component';
+
+export interface FormConfig {
+    config: DynamicFormControlModelConfig;
+    name?: string;
+}
+
+export class FormField {
+    type: string;
+    name: string;
+    model: DynamicFormModel;
+
+    constructor(formConfig: FormConfig) {
+        this.name = formConfig.name;
+        this.type = formConfig.config.type;
+        this.model = [new DynamicFormControlModel(formConfig.config)];
+    }
+
+    get resolveModel(): DynamicFormControlModel {
+        // resolve and validate the model
+        const m = this.model[0];
+        if (!m.id) {
+            const label = m.label;
+            m.id = label ? label.split(' ').join('_').toLowerCase() : Math.random().toString(36).substr(2, 9);
+        }
+        return m;
+    }
+}
 
 /** Clamps a number between zero and a maximum. */
 function clamp(value: number, max: number): number {
@@ -19,96 +47,68 @@ function clamp(value: number, max: number): number {
 }
 
 function clone(formField: FormField): FormField {
-    return {
-        type: formField.type,
-        name: formField.name,
-        model: [
+    return new FormField(
+        { config:
             {
-                type: formField.model[0].type,
-                id: formField.model[0].id,
+                type: formField.type,
+                id: '',
                 label: `${formField.name} Label`
             }
-        ]
-    };
+        }
+    );
 }
 
-export interface FormField {
-    type: string;
-    name: string;
-    model: DynamicFormControlModel[];
-}
 
-const FORM_CONTROLS: FormField[] = [
+const FORM_CONTROLS: FormConfig[] = [
     {
-        type: 'input',
         name: 'Input',
-        model: [
+        config:
             {
                 type: 'input',
-                id: 'input',
             }
-        ]
     },
     {
-        type: 'textarea',
         name: 'TextArea',
-        model: [
+        config:
             {
                 type: 'textarea',
-                id: 'textarea',
             }
-        ]
 
     },
     {
-        type: 'date',
         name: 'Date',
-        model: [
+        config:
             {
                 type: 'date',
-                id: 'date',
             }
-        ]
     },
     {
-        type: 'checkboxgroup',
         name: 'Checkbox Group',
-        model: [
+        config:
             {
                 type: 'checkboxgroup',
-                id: 'checkboxgroup',
             }
-        ]
     },
     {
-        type: 'radiogroup',
         name: 'Radio Group',
-        model: [
+        config:
             {
                 type: 'radiogroup',
-                id: 'radiogroup',
             }
-        ]
     },
     {
-        type: 'select',
         name: 'Select',
-        model: [
+        config:
             {
                 type: 'select',
-                id: 'select',
             }
-        ]
     },
     {
-        type: 'toggle',
         name: 'Slide Toggle',
-        model: [
+        config:
             {
                 type: 'toggle',
-                id: 'toggle',
             }
-        ]
     }
 ];
 
@@ -139,8 +139,15 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
 
     private subscription: Subscription;
 
+    private formControls: FormField[];
     get controls(): FormField[] {
-        return FORM_CONTROLS;
+        if (!this.formControls) {
+            this.formControls = [];
+            for (const fc of FORM_CONTROLS) {
+                this.formControls.push(new FormField(fc));
+            }
+        }
+        return this.formControls;
     }
 
     @ViewChildren(FormFieldSnippitComponent) fieldSnippets !: QueryList<FormFieldSnippitComponent>;
@@ -184,27 +191,18 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
         const model = [];
 
         for (const ff of this.formFields) {
-            // Generate an ID for the form
-            const label = ff.model[0].label;
-            ff.model[0].id = label ? label.split(' ').join('_').toLowerCase() : Math.random().toString(36).substr(2, 9);
-            model.push(ff.model[0]);
+            model.push(ff.resolveModel);
         }
 
         const formJson = JSON.stringify(model);
-        console.log(formJson);
         return formJson;
     }
 
-    fromJson(formJson: string): FormField[] {
+    fromJson(fromJson: string): FormField[] {
         const fields: FormField[] = [];
-        const model: DynamicFormControlModel[] = JSON.parse(formJson);
-        console.log(model);
+        const model: DynamicFormControlModelConfig[] = JSON.parse(fromJson);
         for (const ff of model) {
-            fields.push({
-                type: ff.type,
-                name: '',
-                model: [ff]
-            });
+            fields.push(new FormField({config: ff}));
         }
         return fields;
     }
@@ -216,11 +214,10 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
 
     private selectField() {
         if (this.selectedIndex >= 0 && this.fieldSnippets.length > 0) {
-            const formField = this.fieldSnippets.toArray()[this.selectedIndex].formField;
-            Promise.resolve(null).then(() => this.propertyEditor.onFormField(formField));
+            Promise.resolve(null).then(() => this.propertyEditor.onFormField(this.fieldSnippets.toArray()[this.selectedIndex].formField));
         } else if (this.fieldSnippets.length === 0 || this.selectedIndex === -1) {
             // clear the property editor
-            this.propertyEditor.editorEnabled = false;
+            this.propertyEditor.formField = null;
         }
     }
 }

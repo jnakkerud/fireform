@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 
 import { FormField } from '../form-builder.component';
+import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -11,47 +12,42 @@ import { FormField } from '../form-builder.component';
 })
 export class PropertyEditorComponent {
 
-    formField: FormField;
     formGroup: FormGroup;
-
-    editorEnabled = false;
+    formField: FormField;
 
     constructor(private formBuilder: FormBuilder) { }
 
-    onFormField(formField: FormField) {
-        if (formField) {
-            this.editorEnabled = true;
-            this.formField = formField;
-            // this.formField.model[0].placeholder = 'Placeholder created';
-            this.createForm(formField);
-        }
+    onFormField(field: FormField) {
+        this.formField = field;
+        this.createForm(field.model);
     }
 
-    private createForm(formField: FormField) {
+    private createForm(model: DynamicFormModel) {
         // form builder, label and placeholder
         const ff: {[k: string]: any} = {};
 
-        ff.label = [formField.model[0].label];
-        ff.placeholder = [formField.model[0].placeholder];
-        ff.required = [formField.model[0].required];
+        const type = model[0].type;
+        ff.label = [model[0].label];
+        ff.placeholder = [model[0].placeholder];
+        ff.required = [model[0].required];
 
-        if (formField.type === 'input') {
-            ff.inputType = [formField.model[0].inputType];
+        if (type === 'input') {
+            ff.inputType = [model[0].inputType];
         }
 
         // TODO refactor if else for input types?
-        if (formField.type === 'checkboxgroup' || formField.type === 'radiogroup' || formField.type === 'select') {
+        if (type === 'checkboxgroup' || type === 'radiogroup' || type === 'select') {
 
             // seed initial option if needed
-            if (!formField.model[0].options) {
-                formField.model[0].options = [
+            if (!model[0].options) {
+                model[0].options = [
                     { label: 'Label', value: 'value' }
                 ];
             }
 
             // create a array of formgroups
             const grps: FormGroup[] = [];
-            for (const cfg of formField.model[0].options) {
+            for (const cfg of model[0].options) {
                 grps.push(this.formBuilder.group(cfg));
             }
 

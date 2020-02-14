@@ -25,7 +25,7 @@ export interface DynamicFormControlModelConfig {
   // Mandatory items
 
   type: string;                    // "input"
-  id: string;                      // "givenName"
+  id?: string;                      // "givenName"
 
   inputType?: string;              // "text"
 
@@ -52,7 +52,7 @@ export class DynamicFormControlModel {
   // Mandatory items
 
   type: string;                    // "input"
-  id: string;                      // "givenName"
+  id?: string;                      // "givenName"
 
   inputType?: string;               // "text"
 
