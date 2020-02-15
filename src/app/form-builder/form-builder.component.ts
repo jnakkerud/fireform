@@ -47,7 +47,7 @@ function clamp(value: number, max: number): number {
 }
 
 function clone(formField: FormField): FormField {
-    return new FormField(
+    const result = new FormField(
         { config:
             {
                 type: formField.type,
@@ -56,6 +56,8 @@ function clone(formField: FormField): FormField {
             }
         }
     );
+    result.name = formField.name;
+    return result;
 }
 
 const FORM_CONTROLS: FormConfig[] = [

@@ -50,10 +50,9 @@ export class CollectionSettingsComponent implements OnInit {
             .subscribe((data: DynamicFormControlModelConfig[]) => {
                 this.formModel = this.dynamicFormService.fromJSON(data);
                 this.formGroup = this.dynamicFormService.createGroup(this.formModel);
+                // bind the collection item to the form
+                this.formGroup.patchValue(this.collectionItem);
             });
-
-        // bind the collection item to the form
-        this.formGroup.patchValue(this.collectionItem);
     }
 
     onCancel() {
