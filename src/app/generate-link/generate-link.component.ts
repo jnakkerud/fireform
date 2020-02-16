@@ -67,8 +67,7 @@ export class GenenerateLinkComponent implements OnInit {
         FormsModule,
         ReactiveFormsModule,
         CommonModule],
-    entryComponents: [GenenerateLinkComponent],
     exports: [GenenerateLinkComponent],
-    declarations: [GenenerateLinkComponent],
+    declarations: [GenenerateLinkComponent]
   })
   export class GenerateLinkModule {}

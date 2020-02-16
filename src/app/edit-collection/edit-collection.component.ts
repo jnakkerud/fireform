@@ -103,7 +103,6 @@ export class EditCollectionComponent {
         GenerateLinkModule,
         CommonModule],
     exports: [EditCollectionComponent, DeleteConfirmationDialogComponent],
-    declarations: [EditCollectionComponent, DeleteConfirmationDialogComponent],
-    entryComponents: [DeleteConfirmationDialogComponent]
+    declarations: [EditCollectionComponent, DeleteConfirmationDialogComponent]
   })
   export class EditCollectionModule {}

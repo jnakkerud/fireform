@@ -34,15 +34,6 @@ import { AngularMaterialModule } from '../angular-material.module';
   ],
   exports: [
     DynamicFormComponent
-  ],
-  entryComponents: [
-    DynamicDatepickerComponent,
-    DynamicInputComponent,
-    DynamicTextareaComponent,
-    DynamicCheckboxGroupComponent,
-    DynamicRadioGroupComponent,
-    DynamicSelectComponent,
-    DynamicSlideToggleComponent
   ]
 })
 export class DynamicFormModule {
