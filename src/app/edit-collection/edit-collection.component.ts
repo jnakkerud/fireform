@@ -9,6 +9,7 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { CollectionSettingsModule, CollectionSettingsComponent } from '../collection-settings/collection-settings.component';
 import { FormBuilderModule } from '../form-builder/form-builder.component';
 import { GenerateLinkModule,  GenenerateLinkComponent } from '../generate-link/generate-link.component';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
 
 @Component({
     selector: 'app-edit-collection',
@@ -48,11 +49,25 @@ export class EditCollectionComponent {
     }
 
     onDelete() {
-        // delete from the collection
-        this.collectionService.removeItem(this.editItem);
+        const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+            data: {
+                message: 'Are you sure you want to delete this collection?',
+                buttonText: {
+                    ok: 'Yes',
+                    cancel: 'No'
+                }
+            }
+        });
 
-        // move to card view
-        this.router.navigate(['/']);
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            if (confirmed) {
+                // delete from the collection
+                this.collectionService.removeItem(this.editItem);
+
+                // move to card view
+                this.router.navigate(['/']);
+            }
+        });
     }
 
     onGenerateLink() {
@@ -87,7 +102,8 @@ export class EditCollectionComponent {
         FormBuilderModule,
         GenerateLinkModule,
         CommonModule],
-    exports: [EditCollectionComponent],
-    declarations: [EditCollectionComponent],
+    exports: [EditCollectionComponent, DeleteConfirmationDialogComponent],
+    declarations: [EditCollectionComponent, DeleteConfirmationDialogComponent],
+    entryComponents: [DeleteConfirmationDialogComponent]
   })
   export class EditCollectionModule {}
