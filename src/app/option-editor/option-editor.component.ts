@@ -19,7 +19,7 @@ export class OptionEditorComponent implements OnInit {
 
     @Input() initialOption = false;
 
-    constructor(private controlContainer: ControlContainer, private fb: FormBuilder) { }
+    constructor(public controlContainer: ControlContainer, private fb: FormBuilder) { }
 
     ngOnInit() {
         if (this.initialOption) {

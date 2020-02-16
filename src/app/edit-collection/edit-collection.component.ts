@@ -22,7 +22,7 @@ export class EditCollectionComponent {
     showEditor = false;
 
     // We need a setter here cause the CollectionSettingsComponent is hidden initially
-    @ViewChild(CollectionSettingsComponent, {static: false}) set content(value: CollectionSettingsComponent) {
+    @ViewChild(CollectionSettingsComponent) set content(value: CollectionSettingsComponent) {
         this.settingsComponent = value;
         if (this.settingsComponent) {
             this.settingsComponent.collectionItem = this.editItem;

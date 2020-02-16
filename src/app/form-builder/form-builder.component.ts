@@ -134,9 +134,10 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
             this.selectedIndex = 0;
         }
     }
-    private item: CollectionItem;
 
-    private formFields: FormField[] = [];
+    public formFields: FormField[] = [];
+
+    private item: CollectionItem;
 
     private subscription: Subscription;
 
@@ -153,7 +154,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
 
     @ViewChildren(FormFieldSnippitComponent) fieldSnippets !: QueryList<FormFieldSnippitComponent>;
 
-    @ViewChild(PropertyEditorComponent, {static: false}) propertyEditor !: PropertyEditorComponent;
+    @ViewChild(PropertyEditorComponent) propertyEditor !: PropertyEditorComponent;
 
     ngAfterViewInit(): void {
         this.subscription = this.fieldSnippets.changes.subscribe(e => {
