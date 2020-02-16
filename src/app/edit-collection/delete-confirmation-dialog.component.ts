@@ -9,7 +9,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
     <mat-dialog-content>
 	<p>
 		{{message}}
-	</p>
+    </p>
+    <p>
+        {{formDataMessage}}
+    </p>
     </mat-dialog-content>
     <mat-dialog-actions align="center">
         <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
@@ -20,6 +23,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export class DeleteConfirmationDialogComponent {
     message = 'Are you sure?';
+    formDataMessage = 'Remove formdata manually';
     confirmButtonText = 'Yes';
     cancelButtonText = 'Cancel';
 
@@ -28,6 +32,7 @@ export class DeleteConfirmationDialogComponent {
         private dialogRef: MatDialogRef<DeleteConfirmationDialogComponent>) {
         if (data) {
             this.message = data.message || this.message;
+            this.formDataMessage = data.formDataMessage || this.formDataMessage;
             if (data.buttonText) {
                 this.confirmButtonText = data.buttonText.ok || this.confirmButtonText;
                 this.cancelButtonText = data.buttonText.cancel || this.cancelButtonText;

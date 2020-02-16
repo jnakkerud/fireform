@@ -82,4 +82,8 @@ export class LinkService {
             collectionId: cId
         });
     }
+
+    removeLink(linkId: string): Promise<void> {
+        return this.linksCollection.doc(linkId).delete();
+    }
 }

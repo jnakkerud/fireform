@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
+import { LinkService } from '../core/link-service/link.service';
 import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
 import { AngularMaterialModule } from '../angular-material.module';
 import { CollectionSettingsModule, CollectionSettingsComponent } from '../collection-settings/collection-settings.component';
@@ -35,6 +36,7 @@ export class EditCollectionComponent {
         private router: Router,
         private dialog: MatDialog,
         private collectionService: CollectionService,
+        private linkService: LinkService,
         private recentlyUsedService: RecentlyUsedService) {
         this.route.params.subscribe(p => {
             this.collectionService.getItem(p.id).subscribe(item => {
@@ -52,6 +54,7 @@ export class EditCollectionComponent {
         const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
             data: {
                 message: 'Are you sure you want to delete this collection?',
+                formDataMessage: `Form Data in formdata/${this.editItem.id} must be removed manually`,
                 buttonText: {
                     ok: 'Yes',
                     cancel: 'No'
@@ -61,11 +64,10 @@ export class EditCollectionComponent {
 
         dialogRef.afterClosed().subscribe((confirmed: boolean) => {
             if (confirmed) {
-                // delete from the collection
-                this.collectionService.removeItem(this.editItem);
-
-                // move to card view
-                this.router.navigate(['/']);
+                this.deleteAll().then(() => {
+                    // move to card view
+                    this.router.navigate(['/']);
+                });
             }
         });
     }
@@ -91,6 +93,20 @@ export class EditCollectionComponent {
     saveSettings(item: CollectionItem) {
         this.editItem = item;
         this.toggleSettings();
+    }
+
+    async deleteAll(): Promise<void[]> {
+        const p1 = this.collectionService.removeItem(this.editItem);
+
+        // https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
+
+        // delete links
+        let p2 =  Promise.resolve();
+        if (this.editItem.activeLink) {
+            p2 = this.linkService.removeLink(this.editItem.activeLink);
+        }
+
+        return Promise.all([p1, p2]);
     }
 }
 

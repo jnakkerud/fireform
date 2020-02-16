@@ -56,8 +56,8 @@ export class CollectionService {
         );
     }
 
-    removeItem(item: CollectionItem) {
-        this.itemsCollection.doc(item.id).delete();
+    removeItem(item: CollectionItem): Promise<void> {
+        return this.itemsCollection.doc(item.id).delete();
     }
 
 }
