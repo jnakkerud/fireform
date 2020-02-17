@@ -82,6 +82,10 @@ export class EditCollectionComponent {
         });
     }
 
+    onDownload() {
+        // TODO call service
+        console.log('onDownload'); 
+    }
 
     saveForm(formJson: string) {
         this.editItem.form = formJson;
