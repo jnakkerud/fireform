@@ -1,0 +1,6 @@
+{
+    "/duvola-e812a": {
+      "target": "http://localhost:5001",
+      "secure": false
+    }
+} 

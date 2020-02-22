@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireFunctionsModule, ORIGIN} from '@angular/fire/functions';
 
 import { HeaderComponent } from './header/header.component';
 import { CollectionService } from './collection-service/collection.service';
@@ -14,11 +15,13 @@ import { RecentlyUsedService } from './recently-used-service/recently-used.servi
 import { AngularMaterialModule } from '../angular-material.module';
 import { LinkService } from './link-service/link.service';
 import { DataService } from './data-service/data.service';
+import { DownloadService } from './download-service/download.service';
 
 @NgModule({
     imports: [
         AngularMaterialModule,
         AngularFirestoreModule,
+        AngularFireFunctionsModule,
         ReactiveFormsModule,
         CommonModule,
         RouterModule],
@@ -30,6 +33,9 @@ import { DataService } from './data-service/data.service';
         AuthService,
         RecentlyUsedService,
         LinkService,
-        DataService],
+        DownloadService,
+        DataService,
+        // { provide: ORIGIN, useValue: 'http://localhost:4200' }
+    ],
 })
 export class CoreModule { }

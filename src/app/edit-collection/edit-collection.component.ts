@@ -11,6 +11,7 @@ import { CollectionSettingsModule, CollectionSettingsComponent } from '../collec
 import { FormBuilderModule } from '../form-builder/form-builder.component';
 import { GenerateLinkModule,  GenenerateLinkComponent } from '../generate-link/generate-link.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
+import { DownloadService } from '../core/download-service/download.service';
 
 @Component({
     selector: 'app-edit-collection',
@@ -37,6 +38,7 @@ export class EditCollectionComponent {
         private dialog: MatDialog,
         private collectionService: CollectionService,
         private linkService: LinkService,
+        private downloadService: DownloadService,
         private recentlyUsedService: RecentlyUsedService) {
         this.route.params.subscribe(p => {
             this.collectionService.getItem(p.id).subscribe(item => {
@@ -83,8 +85,7 @@ export class EditCollectionComponent {
     }
 
     onDownload() {
-        // TODO call service
-        console.log('onDownload'); 
+        this.downloadService.downloadCsv(this.editItem);
     }
 
     saveForm(formJson: string) {
