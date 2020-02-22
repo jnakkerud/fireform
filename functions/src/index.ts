@@ -1,22 +1,29 @@
 import * as functions from 'firebase-functions'
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
 
-
+const json2csv = require("json2csv").parse;
 
 // See basic example: https://github.com/firebase/functions-samples/tree/master/typescript-getting-started
 export const downloadCSV = functions.https.onCall((data, context) => {
 
-    const example = `
-    John,Doe,120 jefferson st.,Riverside, NJ, 08075
-    Jack,McGinnis,220 hobo Av.,Phila, PA,09119
-    "John ""Da Man""",Repici,120 Jefferson St.,Riverside, NJ,08075
-    Stephen,Tyler,"7452 Terrace ""At the Plaza"" road",SomeTown,SD, 91234
-    ,Blankman,,SomeTown, SD, 00298
-    "Joan ""the bone"", Anne",Jet,"9th, at Terrace plc",Desert City,CO,00123    
-    `;
+    const collectionId = data.collectionId;
+    console.log('collectionId:'+collectionId);
 
-    console.log('collectionId:'+data.collectionId);
+    const db = admin.firestore()
+    return db.collection(`formdata/${collectionId}/data`)
+    .get() 
+    .then((querySnapshot: any[]) => {
+       
+       const csvData: any[] = []
 
-    // fake a csv download
+       querySnapshot.forEach(doc => {
+           // TODO convert Timestamp to Date
+           csvData.push( doc.data() )
+       });
 
-    return example;
+       
+       return json2csv(csvData);
+    })
+   .catch((err: any) => console.log(err) )
 });
