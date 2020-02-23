@@ -1,6 +1,5 @@
 @import '../node_modules/@angular/material/theming';
 
-
 // Styles for the docs app that are based on the current theme.
 @mixin app-theme($theme) {
   $primary: map-get($theme, primary);

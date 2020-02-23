@@ -8,7 +8,7 @@
 
 
 // Define the light theme.
-$fireform-primary: mat-palette($mat-indigo);
+$fireform-primary: mat-palette($mat-blue-grey);
 $fireform-accent:  mat-palette($mat-pink, A200, A100, A400);
 
 $fireform-theme: mat-light-theme($fireform-primary, $fireform-accent);
