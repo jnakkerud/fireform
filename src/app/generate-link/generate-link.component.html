@@ -1,10 +1,12 @@
 <h1 mat-dialog-title>Form Link</h1>
-<div mat-dialog-content>
-  <p>Copy generated link</p>
+<mat-dialog-content>
+  <p>Link to share:</p>
 
-  <a>{{linkUrl}}</a>
+  <input type="text" readonly [(ngModel)]="linkUrl" (focus)="$event.target.select()" style="width: 100%;">
   
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onGenerate()" cdkFocusInitial>Done</button>
-</div>
+  <br>
+  <br>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button cdkFocusInitial mat-dialog-close class="ff-button">Done</button>
+</mat-dialog-actions>

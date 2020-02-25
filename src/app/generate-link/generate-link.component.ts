@@ -39,14 +39,13 @@ export class GenenerateLinkComponent implements OnInit {
         }
 
         this.linkUrl = `${window.location.origin}/form/${this.linkId}`;
-    }
 
-    onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.afterClosed().subscribe(result => {
+            this.onGenerate();
+        });
     }
 
     onGenerate(): void {
-
         // save the collection with the activeLink
         const editItem = this.data.collectionItem;
         if (!editItem.activeLink) {
@@ -54,9 +53,6 @@ export class GenenerateLinkComponent implements OnInit {
             this.collectionService.upsertItem(editItem).subscribe();
         }
         this.linkService.upsertLink(this.linkId, editItem.id);
-
-        // close the dialog
-        this.dialogRef.close();
     }
 
 }
