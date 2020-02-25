@@ -14,9 +14,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
         {{formDataMessage}}
     </p>
     </mat-dialog-content>
-    <mat-dialog-actions align="center">
-        <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
-        <button mat-raised-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close class="ff-button">{{cancelButtonText}}</button>
+        <button mat-button class="ff-button" (click)="onConfirmClick()" cdkFocusInitial>{{confirmButtonText}}</button>
     </mat-dialog-actions>
   `,
 })

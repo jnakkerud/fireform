@@ -58,8 +58,8 @@ export class EditCollectionComponent {
                 message: 'Are you sure you want to delete this collection?',
                 formDataMessage: `Form Data in formdata/${this.editItem.id} must be removed manually`,
                 buttonText: {
-                    ok: 'Yes',
-                    cancel: 'No'
+                    ok: 'Delete',
+                    cancel: 'Cancel'
                 }
             }
         });
