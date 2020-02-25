@@ -1,21 +1,18 @@
-.edit-container {
+:host {
     display: flex;
-    flex: 1 0 auto;
-    flex-direction: column;
-    padding: 1.5em;
+    justify-content: center;
 }
 
-.nested-grid-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 1em;
+.edit-container {
+    margin: 1.5em;
+    width: 850px;
+
+    @media (max-width: 720px) {
+        width: 100%;
+    }    
 }
 
-.grid-column-1 {
-    grid-column: 1;
-}
-
-.button-row button,
-.button-row a {
-  margin-right: 8px;
+.button-row {
+    display: flex;
+    justify-content: flex-end;  
 }

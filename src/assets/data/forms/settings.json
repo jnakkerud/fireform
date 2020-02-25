@@ -4,7 +4,7 @@
       "type": "input",
       "id": "name",
       "label": "Name",
-      "placeholder": "collection name",
+      "placeholder": "Enter a collection name",
   
       "validators": [
         {
@@ -22,6 +22,7 @@
       "type": "textarea",
       "id": "description",
       "label": "Description",  
+      "placeholder": "Enter a collection description",
       "gridItemClass": "grid-column-1"
     }
   

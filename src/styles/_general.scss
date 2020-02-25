@@ -3,8 +3,12 @@ body {
     margin: 0;
   }
    
-  .du-button[md-button], .du-button[md-raised-button] {
+  .ff-button[mat-button], .ff-button[mat-raised-button] {
     text-transform: uppercase;
+  }
+
+  .nested-grid-container .mat-form-field-infix,  .nested-grid-container .mat-form-field {
+    width: 100% !important;
   }
 
   h1, h2 {

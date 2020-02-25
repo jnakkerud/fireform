@@ -7,8 +7,8 @@
         </dynamic-form>
     
         <div class="button-row">
-            <button mat-button (click)="onCancel()">Cancel</button>
-            <button mat-button [disabled]="!isValid()" (click)="onSubmit()">{{submitButtonLabel}}</button>
+            <button mat-button (click)="onCancel()" color="primary" class="ff-button">Cancel</button>
+            <button mat-button [disabled]="!isValid()" (click)="onSubmit()" color="primary" class="ff-button">{{submitButtonLabel}}</button>
         </div>
     
     </ng-container>
