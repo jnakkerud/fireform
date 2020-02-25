@@ -19,46 +19,29 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 
-// TODO create const and use ... notation for imports and exports
+const modules: any[] = [
+  LayoutModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatNativeDateModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatDividerModule,
+  MatButtonModule,
+  MatIconModule,
+  MatListModule,
+  MatDialogModule
+];
 
 @NgModule({
-  imports: [
-    LayoutModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatNativeDateModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule
-  ],
-  exports: [
-    LayoutModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule
-  ]
+  imports: [ ...modules ],
+  exports: [ ...modules ]
 
 })
 export class AngularMaterialModule { }
