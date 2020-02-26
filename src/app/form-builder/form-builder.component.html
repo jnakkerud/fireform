@@ -11,7 +11,8 @@
           (click)="handleClick(i)"
           [formField]="field"
           [class.form-field-snippit-active]="selectedIndex == i"
-          cdkDrag></form-field-snippit>
+          cdkDrag>
+        </form-field-snippit>
       </div>
     </main>
     <aside class="edit-controls">
@@ -21,10 +22,13 @@
         id="control-list"
         [cdkDropListData]="controls"
         cdkDropListConnectedTo="form-field-list"
-        class="example-list"
+        class="control-list"
         cdkDropListSortingDisabled
         (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of controls" cdkDrag>{{item.name}}</div>
+        <div class="control-box" *ngFor="let item of controls" cdkDrag>
+          <!--<div class="control-box-placeholder" *cdkDragPlaceholder>{{item.name}}</div> -->  
+          {{item.name}}
+        </div>
       </div>        
     </aside>
     <aside class="edit-properties">
