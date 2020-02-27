@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+
+import { Subscription, ObjectUnsubscribedError } from 'rxjs';
 
 import { FormField } from '../form-builder.component';
 import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
@@ -10,12 +12,18 @@ import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
     templateUrl: 'property-editor.component.html',
     styleUrls: ['./property-editor.component.scss']
 })
-export class PropertyEditorComponent {
+export class PropertyEditorComponent implements OnDestroy {
 
     formGroup: FormGroup;
     formField: FormField;
 
+    subscriptions: Subscription[] = [];
+
     constructor(private formBuilder: FormBuilder) { }
+
+    ngOnDestroy() {
+        this.unsubscribe();
+    }
 
     onFormField(field: FormField) {
         this.formField = field;
@@ -23,6 +31,8 @@ export class PropertyEditorComponent {
     }
 
     private createForm(model: DynamicFormModel) {
+        this.unsubscribe();
+
         // form builder, label and placeholder
         const ff: {[k: string]: any} = {};
 
@@ -35,7 +45,6 @@ export class PropertyEditorComponent {
             ff.inputType = [model[0].inputType];
         }
 
-        // TODO refactor if else for input types?
         if (type === 'checkboxgroup' || type === 'radiogroup' || type === 'select') {
 
             // seed initial option if needed
@@ -63,9 +72,11 @@ export class PropertyEditorComponent {
     }
 
     private subscribeValueChange(control: AbstractControl, key: string) {
-        // TODO unsubscribe ??
-        control.valueChanges.subscribe(val => {
-            this.formField.model[0][key] = val;
-        });
+        this.subscriptions.push(control.valueChanges.subscribe(val => { this.formField.model[0][key] = val; }));
+    }
+
+    private unsubscribe() {
+        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions = [];
     }
 }
