@@ -3,15 +3,20 @@
     <ng-container *ngIf="formGroup">
 
         <mat-card>
+            <div class="cardStripe"></div>
             <mat-card-title>{{collectionItem.name}}</mat-card-title>
-            <mat-card-subtitle>Enter activity</mat-card-subtitle>
+            <mat-card-content>
+                <p>
+                    Enter activity
+                </p>
+            </mat-card-content>
         </mat-card>
         <dynamic-form (keyup.enter)="onSubmit()" autocomplete="off" [className]="'nested-grid-container'"
             [formGroup]="formGroup" [model]="formModel">
         </dynamic-form>
 
         <div class="button-row">
-            <button mat-flat-button color="primary" [disabled]="!isValid()" (click)="onSubmit()">Submit</button>
+            <button mat-flat-button color="primary" [disabled]="!isValid()" (click)="onSubmit()">SUBMIT</button>
         </div>
     </ng-container>
 

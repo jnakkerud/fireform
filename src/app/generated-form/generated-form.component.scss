@@ -1,7 +1,31 @@
+:host {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-color: #ECEFF1;
+}
+
 .edit-container {
-    padding: 1.5em;
+    margin: 1.5em;
+    width: 850px;
+
+    @media (max-width: 720px) {
+        width: 100%;
+    }    
 }
 
 .edit-container .mat-card {
     margin-bottom: 15px;
+}
+
+.cardStripe {
+    background-color: #607d8b;
+    color: rgba(255, 255, 255, 1);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    height: 10px;
+    left: -1px;
+    position: absolute;
+    top: -1px;
+    width: calc(100% + 2px)    
 }
