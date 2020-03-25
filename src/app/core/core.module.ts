@@ -11,6 +11,7 @@ import { CollectionService } from './collection-service/collection.service';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
+import { UserService } from './auth/user.service';
 import { RecentlyUsedService } from './recently-used-service/recently-used.service';
 import { AngularMaterialModule } from '../angular-material.module';
 import { LinkService } from './link-service/link.service';
@@ -31,6 +32,7 @@ import { DownloadService } from './download-service/download.service';
         CollectionService,
         AuthGuardService,
         AuthService,
+        UserService,
         RecentlyUsedService,
         LinkService,
         DownloadService,

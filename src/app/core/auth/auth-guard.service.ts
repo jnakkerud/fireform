@@ -6,22 +6,26 @@ import {
     CanActivate,
     CanActivateChild } from '@angular/router';
 
-import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanActivateChild {
 
-    constructor(public auth: AuthService, public router: Router) { }
+    constructor(public userService: UserService, public router: Router) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (!this.auth.isAuthenticated()) {
-            this.router.navigate(['login']);
-            return false;
-        }
-        return true;
+    canActivate(): Promise<boolean> {
+        return new Promise((resolve) => {
+            this.userService.getCurrentUser()
+                .then(user => {
+                    return resolve(true);
+                }, err => {
+                    this.router.navigate(['login']);
+                    return resolve(false);
+                });
+        });
     }
 
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        return this.canActivate(route, state);
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+        return this.canActivate();
     }
 }

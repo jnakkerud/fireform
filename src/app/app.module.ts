@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { CoreModule } from './core/core.module';
 import { CollectionListModule } from './collection-list/collection-list.component';
@@ -34,6 +35,7 @@ export const firebaseConfig = {
     BrowserModule,
     CoreModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
     CollectionListModule,
     EditCollectionModule,
     CreateCollectionModule,

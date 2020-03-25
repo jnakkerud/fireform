@@ -31,10 +31,14 @@ export class LoginComponent implements OnInit {
 
     submit() {
         if (this.form.valid) {
-            if (!this.authService.authenticate(this.form.value)) {
-                this.error = 'Invalid username or password';
-            }
-            this.router.navigateByUrl(this.return);
+
+            this.authService.authenticate(this.form.value).then(valid => {
+                if (!valid) {
+                    this.error = 'Invalid username or password';
+                }
+                this.router.navigateByUrl(this.return);
+            });
+
         }
     }
 }
