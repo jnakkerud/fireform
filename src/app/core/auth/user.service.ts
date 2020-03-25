@@ -16,12 +16,8 @@ export class UserService {
     }
 
     getCurrentUser(): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            if (this.user) {
-                resolve(this.user);
-            } else {
-                reject();
-            }
+        return new Promise<any>((resolve) => {
+            resolve(this.user);
         });
     }
 }

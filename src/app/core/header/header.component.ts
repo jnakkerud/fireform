@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+
+import { Overlay, OverlayRef, CdkOverlayOrigin } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 
 import { CollectionItem } from '../collection-service/collection.service';
 import { RecentlyUsedService } from '../recently-used-service/recently-used.service';
+import { UserService } from '../auth/user.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-header',
@@ -19,9 +24,19 @@ export class HeaderComponent implements OnInit {
     showSelect: boolean;
     recentlyUsedItems: Observable<CollectionItem[]>;
 
+    @ViewChild(CdkOverlayOrigin) overlayOrigin: CdkOverlayOrigin;
+    @ViewChild('overlay') overlayTemplate: TemplateRef<any>;
+
+    overlayRef: OverlayRef | null;
+    private popupCloseSubscription = Subscription.EMPTY;
+    userEmail: string;
+
     constructor(
+        public overlay: Overlay, public viewContainerRef: ViewContainerRef,
         private router: Router,
         private route: ActivatedRoute,
+        private userService: UserService,
+        private authService: AuthService,
         private rencentlyUsedService: RecentlyUsedService) {
             this.recentlyUsedItems = this.rencentlyUsedService.get();
         }
@@ -57,4 +72,73 @@ export class HeaderComponent implements OnInit {
         }
     }
 
+    openUserPanel() {
+        this.userService.getCurrentUser().then(user => {
+            if (user) {
+                // console.log('panel opened: ' + JSON.stringify(user));
+                this.userEmail = user.email;
+                this.createUserPanel();
+            } else {
+                this.userEmail = null;
+                console.log('no user');
+            }
+        });
+    }
+
+    createUserPanel() {
+        const positionStrategy = this.overlay.position()
+            .flexibleConnectedTo(this.overlayOrigin.elementRef)
+            .withFlexibleDimensions(true)
+            .withPush(true)
+            .withViewportMargin(10)
+            .withGrowAfterOpen(true)
+            .withPositions([{
+                originX: 'start',
+                originY: 'bottom',
+                overlayX: 'start',
+                overlayY: 'top',
+                offsetX: 0,
+                offsetY: 0
+            },
+            {
+                originX: 'start',
+                originY: 'top',
+                overlayX: 'start',
+                overlayY: 'bottom',
+            },
+            {
+                originX: 'start',
+                originY: 'bottom',
+                overlayX: 'start',
+                overlayY: 'top',
+            }
+            ]);
+
+        this.overlayRef = this.overlay.create({
+            positionStrategy,
+            scrollStrategy: this.overlay.scrollStrategies.reposition(),
+            hasBackdrop: true,
+            backdropClass: 'cdk-overlay-transparent-backdrop',
+            minWidth: 200,
+            minHeight: 50
+        });
+
+        this.overlayRef.attach(new TemplatePortal(this.overlayTemplate, this.viewContainerRef));
+
+        this.popupCloseSubscription = this.overlayRef.backdropClick().subscribe(() => this.destroyUserPopup());
+    }
+
+    logout() {
+        this.destroyUserPopup();
+        this.authService.doLogout().then(() => this.router.navigate(['login']) );
+    }
+
+    private destroyUserPopup() {
+        if (!this.overlayRef) {
+            return;
+        }
+
+        this.popupCloseSubscription.unsubscribe();
+        this.overlayRef.detach();
+    }
 }

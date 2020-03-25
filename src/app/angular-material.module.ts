@@ -18,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PortalModule } from '@angular/cdk/portal';
 
 const modules: any[] = [
   LayoutModule,
@@ -36,7 +38,9 @@ const modules: any[] = [
   MatButtonModule,
   MatIconModule,
   MatListModule,
-  MatDialogModule
+  MatDialogModule,
+  OverlayModule,
+  PortalModule
 ];
 
 @NgModule({
