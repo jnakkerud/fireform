@@ -12,8 +12,11 @@ export interface Login {
 @Injectable()
 export class AuthService {
 
-    public authenticate(login: Login): Promise<boolean> {
-        return this.doEmailLogin(login);
+    public authenticate(login?: Login): Promise<boolean> {
+        if (login) {
+            return this.doEmailLogin(login);
+        }
+        return this.doAnonymousLogin();
     }
 
     private doEmailLogin(login: Login): Promise<boolean>  {
@@ -22,7 +25,19 @@ export class AuthService {
                 .then(res => {
                     resolve(true);
                 }, err => {
+                    resolve(false);
+                });
+        });
+    }
+
+    private doAnonymousLogin(): Promise<boolean>  {
+        return new Promise<boolean>((resolve) => {
+            firebase.auth().signInAnonymously()
+                .then(res => {
+                    resolve(true);
+                }, err => {
                     // this.doLogout().then(() => {});
+                    console.log(err);
                     resolve(false);
                 });
         });
