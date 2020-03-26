@@ -11,11 +11,14 @@
         "source": "**",
         "destination": "/index.html"
       } 
-    ],
-    "functions": {
-      "predeploy": [
-        "npm --prefix functions run build"
-      ]
-    }    
+    ]   
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix functions run build"
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }
