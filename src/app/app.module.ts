@@ -17,14 +17,13 @@ import { GeneratedFormModule } from './generated-form/generated-form.component';
 import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
 import { OptionEditorModule } from './option-editor/option-editor.component';
 
-// https://www.learnhowtoprogram.com/javascript/angular-extended/firebase-introduction-and-setup
-import { masterFirebaseConfig } from './api-keys';
-export const firebaseConfig = {
-  apiKey: masterFirebaseConfig.apiKey,
-  authDomain: masterFirebaseConfig.authDomain,
-  databaseURL: masterFirebaseConfig.databaseURL,
-  projectId: masterFirebaseConfig.projectId,
-  storageBucket: masterFirebaseConfig.storageBucket
+import { firebaseConfig } from './api-keys';
+export const fbConfig = {
+  apiKey: firebaseConfig.apiKey,
+  authDomain: firebaseConfig.authDomain,
+  databaseURL: firebaseConfig.databaseURL,
+  projectId: firebaseConfig.projectId,
+  storageBucket: firebaseConfig.storageBucket
 };
 
 @NgModule({
@@ -34,7 +33,7 @@ export const firebaseConfig = {
   imports: [
     BrowserModule,
     CoreModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(fbConfig),
     AngularFireAuthModule,
     CollectionListModule,
     EditCollectionModule,
