@@ -17,6 +17,10 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
         return new Promise((resolve) => {
             this.userService.getCurrentUser()
                 .then(user => {
+                    if (!user) {
+                        this.router.navigate(['login']);
+                        return resolve(false);
+                    }
                     return resolve(true);
                 }, err => {
                     this.router.navigate(['login']);

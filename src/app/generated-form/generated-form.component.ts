@@ -12,6 +12,7 @@ import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 import { LinkService, Link } from '../core/link-service/link.service';
 import { DataService } from '../core/data-service/data.service';
+import { AuthService } from '../core/auth/auth.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -34,10 +35,21 @@ export class GeneratedFormComponent implements OnInit {
         private dynamicFormService: DynamicFormService,
         private collectionService: CollectionService,
         private linkService: LinkService,
-        private dataService: DataService
+        private dataService: DataService,
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
+        this.authService.authenticate().then(valid => {
+            if (valid) {
+                this.loadFormMetaData();
+            } else {
+                console.log('anonymous login error');
+            }
+        });
+    }
+
+    loadFormMetaData() {
         this.route.params.subscribe(p => {
             this.linkService.getLink(p.id).pipe(
                 tap(l => this.link = l),
@@ -75,13 +87,14 @@ export class GeneratedFormComponent implements OnInit {
     getFormMetadata(item: CollectionItem): Promise<DynamicFormModel> {
         return Promise.resolve<DynamicFormModel>(this.dynamicFormService.fromJSON(item.form));
     }
+
 }
 
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'form-complete',
     template: `
-    <mat-card>
+    <mat-card style="text-align: center;">
     <mat-card-title>{{title}}</mat-card-title>
     <mat-card-content>
         <div>
@@ -94,9 +107,7 @@ export class GeneratedFormComponent implements OnInit {
     </mat-card>
     `,
     styles:
-    [':host {display: flex;justify-content: center;margin: 100px 0px;}',
-    'mat-card-title,mat-card-content {display: flex;justify-content: center;  min-width: 300px}}'
-    ]
+    [':host {display: flex;justify-content: center;margin: 100px 0px;}']
 })
 export class FormCompleteComponent {
     title = '';
