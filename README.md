@@ -1,27 +1,56 @@
-# Duvola
+# Fireform
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.3.
+Fireform is a tool for rapidily creating forms that can collect information from users.  The information collected from users is stored in [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore)
 
-## Development server
+## Technologies Used
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- [Angular](https://angular.io/)
+- [Angular Material](https://material.angular.io/)
+- [Firebase](https://firebase.google.com/)
 
-## Code scaffolding
+## Getting started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Prerequisites
 
+Latest [Node.js](https://www.nodejs.org/) is installed.
+
+**1. Install Angular CLI**:
+```
+npm install -g @angular/cli
+```
+**2. Install Firebase CLI**:
+```
+npm install -g firebase-tools
+```
+**3. Create a Firebase project**:
+
+Create a new project in the [firebase console](https://console.firebase.google.com/)
+
+Add a web app and enable hosting, firestore, authentication and functions.
+
+For authentication, enable sign in providers: Email/Password and Anonymous.
+
+Create an Email/Password user that can be used to sign into Fireform.
+
+**4. Add src/app/api-keys.ts**:
+
+In [firebase console](https://console.firebase.google.com/) under project settings. Copy the config from the Firebase SDK snippet section.
+
+Place the copied config in a new file: `src/app/api-keys.ts`
+
+**5. Run**:
+```
+ng serve
+```
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Deploy
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Deploy to the Firebase web-hosted project:
 
-## Running end-to-end tests
+```
+ng deploy
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
