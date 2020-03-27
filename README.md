@@ -48,9 +48,21 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Deploy
 
+Before deploying, be sure to create the file `.firebaserc` in the project root.
+
+This file should contain the name of the firebase project ID to be deployed:  
+
+```
+{
+  "projects": {
+    "default": "[Name of firebase project ID]"
+  }
+}
+```
+
 Deploy to the Firebase web-hosted project:
 
 ```
-ng deploy
+npm run deploy
 ```
 
