@@ -22,10 +22,14 @@ type DocPredicate<T> = string | AngularFirestoreDocument<T>;
 })
 export class LinkService {
 
-    private linksCollection: AngularFirestoreCollection<Link>;
+    constructor(private afs: AngularFirestore) { }
 
-    constructor(private afs: AngularFirestore) {
-        this.linksCollection = afs.collection<Link>('links');
+    private lCollection: AngularFirestoreCollection<Link>;
+    get linksCollection(): AngularFirestoreCollection<Link> {
+        if (!this.lCollection) {
+            this.lCollection = this.afs.collection<Link>('links');
+        }
+        return this.lCollection;
     }
 
     generateLinkId(): string {

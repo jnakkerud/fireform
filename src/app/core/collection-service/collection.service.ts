@@ -17,10 +17,14 @@ export interface CollectionItem {
 })
 export class CollectionService {
 
-    private itemsCollection: AngularFirestoreCollection<CollectionItem>;
+    constructor(private afs: AngularFirestore) { }
 
-    constructor(private afs: AngularFirestore) {
-        this.itemsCollection = afs.collection<CollectionItem>('collections');
+    private iCollection: AngularFirestoreCollection<CollectionItem>;
+    get itemsCollection(): AngularFirestoreCollection<CollectionItem> {
+        if (!this.iCollection) {
+            this.iCollection = this.afs.collection<CollectionItem>('collections');
+        }
+        return this.iCollection;
     }
 
     getItems(): Observable<CollectionItem[]> {

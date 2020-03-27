@@ -7,14 +7,18 @@ import { CollectionService, CollectionItem } from '../collection-service/collect
 })
 export class RecentlyUsedService {
 
-    collectionItems: Observable<CollectionItem[]>;
 
-    constructor(collectionService: CollectionService) {
-        this.collectionItems = collectionService.getItems();
+    constructor(private collectionService: CollectionService) { }
+
+    private cItems: Observable<CollectionItem[]>;
+    get collectionItems(): Observable<CollectionItem[]> {
+        if (!this.cItems) {
+            this.cItems = this.collectionService.getItems();
+        }
+        return this.cItems;
     }
 
     public get(): Observable<CollectionItem[]>  {
-
         return new Observable((observer: Observer<CollectionItem[]>) => {
             this.collectionItems.subscribe(items => {
                 // get ID's from local storage
