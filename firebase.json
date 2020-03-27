@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/duvola",
+    "public": "dist/fireform",
     "ignore": [
       "firebase.json",
       "**/.*",

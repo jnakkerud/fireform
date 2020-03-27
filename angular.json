@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "duvola": {
+    "fireform": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/duvola",
+            "outputPath": "dist/fireform",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,19 +66,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "duvola:build",
+            "browserTarget": "fireform:build",
             "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "duvola:build:production"
+              "browserTarget": "fireform:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "duvola:build"
+            "browserTarget": "fireform:build"
           }
         },
         "test": {
@@ -115,15 +115,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "duvola:serve"
+            "devServerTarget": "fireform:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "duvola:serve:production"
+              "devServerTarget": "fireform:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "duvola"
+  "defaultProject": "fireform"
 }
