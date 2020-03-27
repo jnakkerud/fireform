@@ -10,13 +10,13 @@
         <span>FIREFORM</span>
       </a>
 
-      <ng-container *ngIf="recentlyUsedItems | async as items">
-        <mat-form-field *ngIf="showSelect">
+      <ng-container *ngIf="showSelect">
+        <mat-form-field>
           <mat-select [(value)]="selected" (selectionChange)="onSelectChange()">
             <mat-option value="all">See all collections</mat-option>
             <mat-option value="create">Create collection</mat-option>
             <mat-divider></mat-divider>
-            <mat-option *ngFor="let item of items" [value]="item.id">{{item.name}}</mat-option>
+            <mat-option *ngFor="let item of recentlyUsedItems | async" [value]="item.id">{{item.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </ng-container>
