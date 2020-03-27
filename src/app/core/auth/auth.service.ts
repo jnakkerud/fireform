@@ -23,7 +23,7 @@ export class AuthService {
         return new Promise<boolean>((resolve) => {
             firebase.auth().signInWithEmailAndPassword(login.username, login.password)
                 .then(res => {
-                    resolve(true);
+                    resolve(res?.user?.email === login.username);
                 }, err => {
                     resolve(false);
                 });

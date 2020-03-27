@@ -13,23 +13,31 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
 
     constructor(public userService: UserService, public router: Router) { }
 
-    canActivate(): Promise<boolean> {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
         return new Promise((resolve) => {
-            this.userService.getCurrentUser()
-                .then(user => {
-                    if (!user) {
-                        this.router.navigate(['login']);
-                        return resolve(false);
-                    }
-                    return resolve(true);
-                }, err => {
+            this.isLoggedIn().then(loggedIn => {
+                if (!loggedIn) {
                     this.router.navigate(['login']);
                     return resolve(false);
-                });
+                }
+                return resolve(true);
+            });
         });
     }
 
     canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-        return this.canActivate();
+        return this.canActivate(route, state);
+    }
+
+    private isLoggedIn(): Promise<boolean> {
+        return new Promise((resolve) => {
+            this.userService.getCurrentUser()
+                .then(user => {
+                    if (user?.email) {
+                        return resolve(true);
+                    }
+                    return resolve(false);
+                });
+        });
     }
 }
