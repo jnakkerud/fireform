@@ -27,7 +27,9 @@
         (cdkDropListDropped)="drop($event)">
         <div class="control-box" *ngFor="let item of controls" cdkDrag>
           <!--<div class="control-box-placeholder" *cdkDragPlaceholder>{{item.name}}</div> -->  
-          {{item.name}}
+          <mat-icon>drag_indicator</mat-icon>
+          <div>{{item.name}}</div>
+          <div></div>
         </div>
       </div>        
     </aside>
