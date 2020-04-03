@@ -12,6 +12,7 @@ import { DynamicCheckboxGroupComponent } from './components/dynamic-checkbox-gro
 import { DynamicRadioGroupComponent } from './components/dynamic-radio-group/dynamic-radio-group.component';
 import { DynamicSelectComponent } from './components/dynamic-select/dynamic-select.component';
 import { DynamicSlideToggleComponent } from './components/dynamic-slide-toggle/dynamic-slide-toggle.component';
+import { DynamicLabelComponent } from './components/dynamic-label/dynamic-label.component';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -30,7 +31,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicCheckboxGroupComponent,
     DynamicRadioGroupComponent,
     DynamicSelectComponent,
-    DynamicSlideToggleComponent
+    DynamicSlideToggleComponent,
+    DynamicLabelComponent
   ],
   exports: [
     DynamicFormComponent

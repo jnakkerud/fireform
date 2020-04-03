@@ -23,6 +23,7 @@ import { DynamicCheckboxGroupComponent } from '../../components/dynamic-checkbox
 import { DynamicRadioGroupComponent } from '../../components/dynamic-radio-group/dynamic-radio-group.component';
 import { DynamicSelectComponent } from '../../components/dynamic-select/dynamic-select.component';
 import { DynamicSlideToggleComponent } from '../../components/dynamic-slide-toggle/dynamic-slide-toggle.component';
+import { DynamicLabelComponent } from '../../components/dynamic-label/dynamic-label.component';
 
 const components = {
   date: DynamicDatepickerComponent,
@@ -31,7 +32,8 @@ const components = {
   checkboxgroup: DynamicCheckboxGroupComponent,
   radiogroup: DynamicRadioGroupComponent,
   select: DynamicSelectComponent,
-  toggle: DynamicSlideToggleComponent
+  toggle: DynamicSlideToggleComponent,
+  label: DynamicLabelComponent
 };
 
 @Directive({

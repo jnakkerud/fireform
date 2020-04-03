@@ -43,6 +43,11 @@ const FORM_JSON = `
         ]
     },
     {
+        "type": "label",
+        "id": "label_type",
+        "label": "This is an example of a label"
+    },
+    {
         "type": "radiogroup",
         "id": "radiogroup",
         "label": "Shirt size",
