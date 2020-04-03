@@ -110,6 +110,13 @@ const FORM_CONTROLS: FormConfig[] = [
             {
                 type: 'toggle',
             }
+    },
+    {
+        name: 'Label',
+        config:
+            {
+                type: 'label',
+            }
     }
 ];
 

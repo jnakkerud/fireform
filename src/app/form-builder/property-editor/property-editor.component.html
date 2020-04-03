@@ -19,30 +19,35 @@
                         <mat-option value="time">Time</mat-option>
                         <mat-option value="url">URL</mat-option>
                     </mat-select>
-                </mat-form-field>                      
+                </mat-form-field>
+                <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>                    
             </ng-template>
             <ng-template [ngSwitchCase]="'textarea'">
                 <mat-form-field>
                     <input matInput placeholder="Placeholder" formControlName="placeholder">
                 </mat-form-field>
+                <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template>
             <ng-template [ngSwitchCase]="'date'">
                 <mat-form-field>
                     <input matInput placeholder="Placeholder" formControlName="placeholder">
                 </mat-form-field>
+                <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template >
             <ng-template [ngSwitchCase]="'checkboxgroup'">
                 <option-editor arrayName="options"></option-editor>
+                <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template >
             <ng-template [ngSwitchCase]="'radiogroup'">
                 <option-editor arrayName="options"></option-editor>
+                <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template >
             <ng-template [ngSwitchCase]="'select'">
                 <option-editor arrayName="options"></option-editor>
+                <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template >                              
         </ng-container>
 
-        <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
     </form>
 </div>
 
