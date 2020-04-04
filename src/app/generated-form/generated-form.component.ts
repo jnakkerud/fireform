@@ -7,7 +7,6 @@ import { tap, concatMap } from 'rxjs/operators';
 import { AngularMaterialModule } from '../angular-material.module';
 import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
-import { DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 import { LinkService, Link } from '../core/link-service/link.service';
