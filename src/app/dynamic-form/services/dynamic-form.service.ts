@@ -51,7 +51,10 @@ export class DynamicFormService {
 
       const name = controlModel.id ? controlModel.id : controlModel.name;
 
-      group.addControl(name, this.createControl(controlModel));
+      // ignore label types
+      if (controlModel.type !== 'label') {
+        group.addControl(name, this.createControl(controlModel));
+      }
     });
 
     return group;
