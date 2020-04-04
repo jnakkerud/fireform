@@ -9,16 +9,12 @@ import { DynamicFormModel } from '../models/dynamic-form.model';
 import { ValidatorModel } from '../models/validator.model';
 
 import { DynamicFormModule } from '../dynamic-form.module';
+import { isString } from '../../core/utils';
 
 // https://github.com/udos86/ng-dynamic-forms/blob/master/packages/core/src/service/dynamic-form-validation.service.ts
 
 // export type Validator = ValidatorFn | AsyncValidatorFn;
 // export type ValidatorFactory = (args: any) => Validator;
-
-// TODO in Utils
-export function isString(value: any): value is string {
-  return typeof value === 'string';
-}
 
 export function parseReviver(key: string, value: any): any {
   const regexDateISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|([+\-])([\d|:]*))?$/;

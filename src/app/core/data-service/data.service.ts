@@ -4,14 +4,7 @@ import { AngularFirestore,  } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 
 import { CollectionItem } from '../collection-service/collection.service';
-
-// TODO Utils
-export function isDate(input: any) {
-    if (Object.prototype.toString.call(input) === '[object Date]') {
-        return true;
-    }
-    return false;
-}
+import { isDate } from '../utils';
 
 @Injectable({
     providedIn: 'root',
