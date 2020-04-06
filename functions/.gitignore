@@ -6,3 +6,6 @@
 typings/
 
 node_modules/
+
+## admin credentials
+admin-key.json
