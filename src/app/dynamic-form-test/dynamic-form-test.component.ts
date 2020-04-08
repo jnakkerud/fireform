@@ -35,6 +35,12 @@ const FORM_JSON = `
       "gridItemClass": "grid-column-1"
     },
     {
+        "type": "image",
+        "id": "description",
+        "label": "Description",
+        "name": "user-test-dir/luislkellerhasen.png"
+      },
+    {
         "type": "checkboxgroup",
         "id": "checkboxgroup",
         "label": "Favorite Fruit",
@@ -117,7 +123,7 @@ export class DynamicFormTestComponent implements OnInit {
     public onFileSelected(event) {
         const selectedFile: File = event.target.files[0];
         // Upload with collection item
-        this.storage.uploadFile({id: 'test-1', name: 'test-1'}, selectedFile);
+        this.storage.uploadFile(`user-test-dir/${selectedFile.name}`, selectedFile);
     }
 }
 

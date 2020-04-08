@@ -13,6 +13,7 @@ import { DynamicRadioGroupComponent } from './components/dynamic-radio-group/dyn
 import { DynamicSelectComponent } from './components/dynamic-select/dynamic-select.component';
 import { DynamicSlideToggleComponent } from './components/dynamic-slide-toggle/dynamic-slide-toggle.component';
 import { DynamicLabelComponent } from './components/dynamic-label/dynamic-label.component';
+import { DynamicImageComponent } from './components/dynamic-image/dynamic-image.component';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -32,7 +33,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicRadioGroupComponent,
     DynamicSelectComponent,
     DynamicSlideToggleComponent,
-    DynamicLabelComponent
+    DynamicLabelComponent,
+    DynamicImageComponent
   ],
   exports: [
     DynamicFormComponent

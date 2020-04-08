@@ -24,6 +24,7 @@ import { DynamicRadioGroupComponent } from '../../components/dynamic-radio-group
 import { DynamicSelectComponent } from '../../components/dynamic-select/dynamic-select.component';
 import { DynamicSlideToggleComponent } from '../../components/dynamic-slide-toggle/dynamic-slide-toggle.component';
 import { DynamicLabelComponent } from '../../components/dynamic-label/dynamic-label.component';
+import { DynamicImageComponent } from '../../components/dynamic-image/dynamic-image.component';
 
 const components = {
   date: DynamicDatepickerComponent,
@@ -33,7 +34,8 @@ const components = {
   radiogroup: DynamicRadioGroupComponent,
   select: DynamicSelectComponent,
   toggle: DynamicSlideToggleComponent,
-  label: DynamicLabelComponent
+  label: DynamicLabelComponent,
+  image: DynamicImageComponent
 };
 
 @Directive({

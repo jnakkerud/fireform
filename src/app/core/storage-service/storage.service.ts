@@ -12,15 +12,14 @@ export class StorageService {
 
     constructor(private storage: AngularFireStorage) {}
 
-    public uploadFile(item: CollectionItem, file: File) {
+    public uploadFile(fileLocation: string, file: File) {
         // store just the file.
-        const filePath = `formdata/${item.id}/${file.name}`;
+        const filePath = `formdata/${fileLocation}`;
         const task = this.storage.upload(filePath, file);
     }
 
-    public getDownloadURL(item: CollectionItem, fileName: string): Observable<string | null> {
-        const ref = this.storage.ref(`formdata/${item.id}/${fileName}`);
+    public getDownloadURL(fileLocation: string): Observable<string | null> {
+        const ref = this.storage.ref(`formdata/${fileLocation}`);
         return ref.getDownloadURL();
     }
-
 }
