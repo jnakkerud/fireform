@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireFunctionsModule, ORIGIN} from '@angular/fire/functions';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { HeaderComponent } from './header/header.component';
 import { CollectionService } from './collection-service/collection.service';
@@ -17,12 +18,14 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { LinkService } from './link-service/link.service';
 import { DataService } from './data-service/data.service';
 import { DownloadService } from './download-service/download.service';
+import { StorageService } from './storage-service/storage.service';
 
 @NgModule({
     imports: [
         AngularMaterialModule,
         AngularFirestoreModule,
         AngularFireFunctionsModule,
+        AngularFireStorageModule,
         ReactiveFormsModule,
         CommonModule,
         RouterModule],
@@ -37,6 +40,7 @@ import { DownloadService } from './download-service/download.service';
         LinkService,
         DownloadService,
         DataService,
+        StorageService,
         // { provide: ORIGIN, useValue: 'http://localhost:4200' }
     ],
 })
