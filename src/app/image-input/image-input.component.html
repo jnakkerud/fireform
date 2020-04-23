@@ -1,0 +1,5 @@
+<div class = "drop-area" [style.opacity] = "dragging ? 0.8 : 1" [style.background] = "dragging ? '#9ecbec' : '#f5fcff'">
+    <button type="button" mat-flat-button color="primary"(click)="fileInput.click()" class="chooser-button">Choose File</button>
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+    <span>{{filename}}</span>
+</div>

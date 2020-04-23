@@ -9,7 +9,7 @@ import { StorageService } from '../../../core/storage-service/storage.service';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'dynamic-image',
-    template: `<img [src]="profileUrl | async" />`
+    template: `<img [src]="imageUrl | async" />`
 })
 export class DynamicImageComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class DynamicImageComponent implements OnInit {
 
     @HostBinding('class') elementClass;
 
-    profileUrl: Observable<string | null>;
+    imageUrl: Observable<string | null>;
 
     constructor(private storage: StorageService) { }
 
@@ -26,7 +26,7 @@ export class DynamicImageComponent implements OnInit {
         this.elementClass = this.model.gridItemClass;
 
         // async call
-        this.profileUrl = this.storage.getDownloadURL(this.model.name);
+        this.imageUrl = this.storage.getDownloadURL(this.model.name);
     }
 
 }
