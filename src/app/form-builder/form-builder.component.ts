@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { DragDropModule, CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
 
 import { AngularMaterialModule } from '../angular-material.module';
-import { FormFieldSnippitComponent } from './form-field-snippit/form-field-snippit.component';
+import { FormFieldSnippetComponent } from './form-field-snippet/form-field-snippet.component';
 import { DynamicFormControlModelConfig, DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
@@ -159,7 +159,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
         return this.formControls;
     }
 
-    @ViewChildren(FormFieldSnippitComponent) fieldSnippets !: QueryList<FormFieldSnippitComponent>;
+    @ViewChildren(FormFieldSnippetComponent) fieldSnippets !: QueryList<FormFieldSnippetComponent>;
 
     @ViewChild(PropertyEditorComponent) propertyEditor !: PropertyEditorComponent;
 
@@ -245,7 +245,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
         ReactiveFormsModule,
         OptionEditorModule,
         CommonModule],
-    exports: [FormBuilderComponent, FormFieldSnippitComponent, PropertyEditorComponent],
-    declarations: [FormBuilderComponent, FormFieldSnippitComponent, PropertyEditorComponent],
+    exports: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent],
+    declarations: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent],
   })
   export class FormBuilderModule {}

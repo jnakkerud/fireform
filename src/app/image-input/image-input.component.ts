@@ -1,4 +1,4 @@
-import { Component, NgModule, HostBinding, HostListener } from '@angular/core';
+import { Component, NgModule, HostListener } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';

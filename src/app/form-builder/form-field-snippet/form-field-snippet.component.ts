@@ -7,13 +7,13 @@ import { DynamicFormService } from '../../dynamic-form/services/dynamic-form.ser
 
 @Component({
     // tslint:disable-next-line: component-selector
-    selector: 'form-field-snippit',
-    templateUrl: 'form-field-snippit.component.html',
-    styleUrls: ['./form-field-snippit.component.scss'],
+    selector: 'form-field-snippet',
+    templateUrl: 'form-field-snippet.component.html',
+    styleUrls: ['./form-field-snippet.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
-export class FormFieldSnippitComponent implements OnInit {
+export class FormFieldSnippetComponent implements OnInit {
 
     @Input() formField: FormField;
 
