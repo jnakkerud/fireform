@@ -18,7 +18,7 @@ export interface FormData {
     templateUrl: 'generate-link.component.html'
 })
 
-export class GenenerateLinkComponent implements OnInit {
+export class GenerateLinkComponent implements OnInit {
 
     linkId: string;
     linkUrl: string;
@@ -26,7 +26,7 @@ export class GenenerateLinkComponent implements OnInit {
     constructor(
         private linkService: LinkService,
         private collectionService: CollectionService,
-        public dialogRef: MatDialogRef<GenenerateLinkComponent>,
+        public dialogRef: MatDialogRef<GenerateLinkComponent>,
         @Inject(MAT_DIALOG_DATA) public data: FormData) { }
 
     ngOnInit(): void {
@@ -63,7 +63,7 @@ export class GenenerateLinkComponent implements OnInit {
         FormsModule,
         ReactiveFormsModule,
         CommonModule],
-    exports: [GenenerateLinkComponent],
-    declarations: [GenenerateLinkComponent]
+    exports: [GenerateLinkComponent],
+    declarations: [GenerateLinkComponent]
   })
   export class GenerateLinkModule {}

@@ -9,7 +9,7 @@ import { RecentlyUsedService } from '../core/recently-used-service/recently-used
 import { AngularMaterialModule } from '../angular-material.module';
 import { CollectionSettingsModule, CollectionSettingsComponent } from '../collection-settings/collection-settings.component';
 import { FormBuilderModule } from '../form-builder/form-builder.component';
-import { GenerateLinkModule,  GenenerateLinkComponent } from '../generate-link/generate-link.component';
+import { GenerateLinkModule,  GenerateLinkComponent } from '../generate-link/generate-link.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
 import { DownloadService } from '../core/download-service/download.service';
 
@@ -78,7 +78,7 @@ export class EditCollectionComponent {
         // show the generated link in a dialog
 
         // pass in the edit item to the dialog
-        this.dialog.open(GenenerateLinkComponent, {
+        this.dialog.open(GenerateLinkComponent, {
             width: '450px',
             data: { collectionItem: this.editItem }
         });
