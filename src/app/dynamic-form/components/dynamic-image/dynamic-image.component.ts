@@ -9,7 +9,7 @@ import { StorageService } from '../../../core/storage-service/storage.service';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'dynamic-image',
-    template: `<img [src]="imageUrl | async" />`
+    templateUrl: 'dynamic-image.component.html'
 })
 export class DynamicImageComponent implements OnInit {
 

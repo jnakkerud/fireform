@@ -19,6 +19,7 @@ import { LinkService } from './link-service/link.service';
 import { DataService } from './data-service/data.service';
 import { DownloadService } from './download-service/download.service';
 import { StorageService } from './storage-service/storage.service';
+import { StorageLocationService } from './storage-service/storage-location.service';
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import { StorageService } from './storage-service/storage.service';
         DownloadService,
         DataService,
         StorageService,
+        StorageLocationService
         // { provide: ORIGIN, useValue: 'http://localhost:4200' }
     ],
 })

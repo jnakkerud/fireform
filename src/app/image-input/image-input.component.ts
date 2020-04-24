@@ -1,4 +1,4 @@
-import { Component, NgModule, HostListener } from '@angular/core';
+import { Component, NgModule, HostListener, SkipSelf } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule, ControlValueAccessor, NG_VALUE_ACCESS
 import { AngularMaterialModule } from '../angular-material.module';
 
 import { StorageService } from '../core/storage-service/storage.service';
+import { StorageLocationService } from '../core/storage-service/storage-location.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -56,12 +57,11 @@ export class ImageInputComponent implements ControlValueAccessor {
         }
     }
 
-    constructor(private storage: StorageService) { }
-
-    // TODO use the name property
-    // "name": "user-test-dir/luislkellerhasen.png"
+    constructor(private storage: StorageService, @SkipSelf() private location: StorageLocationService) { }
 
     // TODO restrict file types?
+
+    // TODO remove the file
 
     onFileSelected(event) {
         this.handleFile(event.target.files[0]);
@@ -71,10 +71,12 @@ export class ImageInputComponent implements ControlValueAccessor {
         if (file) {
             this.file = file;
             this.filename = this.file.name;
-            this.storage.addFile(this.file);
+            console.log(`${this.location.path}/${this.filename}`);
+            // TODO upload file and wait for it to finish, add progress ?
+            /*this.storage.addFile(this.file);
             if (this.onChange) {
                 this.onChange(`${this.storage.getLocation()}/${this.file.name}`);
-            }
+            }*/
         }
     }
 

@@ -237,7 +237,9 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
 
     private selectField() {
         if (this.selectedIndex >= 0 && this.fieldSnippets.length > 0) {
-            Promise.resolve(null).then(() => this.propertyEditor.onFormField(this.fieldSnippets.toArray()[this.selectedIndex].formField));
+            Promise.resolve(null).then(() => {
+                this.propertyEditor.bindEditor(this.fieldSnippets.toArray()[this.selectedIndex].formField, this.collectionItem);
+            });
         } else if (this.fieldSnippets.length === 0 || this.selectedIndex === -1) {
             // clear the property editor
             this.propertyEditor.formField = null;

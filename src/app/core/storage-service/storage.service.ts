@@ -1,55 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AngularFireStorage } from '@angular/fire/storage';
-
-import { CollectionItem } from '../collection-service/collection.service';
-
-export interface FileLocation {
-    file: File;
-    location: string;
-}
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 
 @Injectable({
     providedIn: 'root',
 })
 export class StorageService {
 
-    private files: FileLocation[] = [];
-
-    public collectionItem: CollectionItem;
+    public locationRoot = 'formdata';
 
     constructor(private storage: AngularFireStorage) {}
 
-    public uploadFile(fileLocation: string, file: File) {
+    public uploadFile(fileLocation: string, file: File): AngularFireUploadTask {
         // store just the file.
-        const filePath = `formdata/${fileLocation}`;
-        const task = this.storage.upload(filePath, file);
+        const filePath = `${this.locationRoot}/${fileLocation}`;
+        return this.storage.upload(filePath, file);
     }
 
     public getDownloadURL(fileLocation: string): Observable<string | null> {
-        const ref = this.storage.ref(`formdata/${fileLocation}`);
+        const ref = this.storage.ref(`${this.locationRoot}/${fileLocation}`);
         return ref.getDownloadURL();
     }
 
-    public addFile(f: File) {
-        this.files.push(
-            {
-                file: f,
-                location: this.getLocation()
-            }
-        );
-    }
-
-    public getLocation(): string {
-        if (this.collectionItem) {
-            // TODO
-            return 'user-location';
-        }
-        return 'user-test-dir';
-    }
-
-    public flushFiles() {
-        // TODO foreach file, upload.
-    }
 }

@@ -5,12 +5,15 @@ import { Subscription } from 'rxjs';
 
 import { FormField } from '../form-builder.component';
 import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
+import { CollectionItem } from 'src/app/core/collection-service/collection.service';
+import { StorageLocationService } from 'src/app/core/storage-service/storage-location.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'property-editor',
     templateUrl: 'property-editor.component.html',
-    styleUrls: ['./property-editor.component.scss']
+    styleUrls: ['./property-editor.component.scss'],
+    providers: [StorageLocationService]
 })
 export class PropertyEditorComponent implements OnDestroy {
 
@@ -19,13 +22,14 @@ export class PropertyEditorComponent implements OnDestroy {
 
     subscriptions: Subscription[] = [];
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder, private storageLocation: StorageLocationService) { }
 
     ngOnDestroy() {
         this.unsubscribe();
     }
 
-    onFormField(field: FormField) {
+    bindEditor(field: FormField, collectionItem: CollectionItem) {
+        this.storageLocation.path = collectionItem.id;
         this.formField = field;
         this.createForm(field.model);
     }
