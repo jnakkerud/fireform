@@ -23,20 +23,20 @@ export interface Option {
 export interface DynamicFormControlModelConfig {
 
   type: string;                    // "input"
-  id?: string;                      // "givenName"
+  id?: string;                      // id for the control
 
   // Optional items
   inputType?: string;              // "text"
   appearance?: string;             // "outline"
   autocomplete?: string;           // aka autoFill
   gridItemClass?: string;          // "grid-column-1"
-  hideRequiredMarker?: boolean;    // false
-  label?: string;                  // "Given Name"
-  name?: string;                   // "givenName"
-  placeholder?: string;            // "Given Name"
+  label?: string;                  // form label
+  name?: string;                   // form control name, default = id
+  placeholder?: string;            // form field placeholder
   prefixIconName?: string;
   required?: boolean;              // false
   suffixIconName?: string;
+  fileName?: string;               // file name used by image control
 
   validators?: ValidatorModel[];
 
@@ -46,20 +46,20 @@ export interface DynamicFormControlModelConfig {
 export class DynamicFormControlModel {
 
   type: string;                    // "input"
-  id?: string;                     // "givenName"
+  id?: string;                     // id for the control
 
   // Optional items
   inputType?: string;               // "text"
   appearance?: string;             // "outline"
   autocomplete?: string;           // aka autoFill
   gridItemClass?: string;          // "grid-column-1"
-  hideRequiredMarker?: boolean;    // false
-  label?: string;                  // "Given Name"
-  name?: string;                   // "givenName"
-  placeholder?: string;            // "Given Name"
+  label?: string;                  // form label
+  name?: string;                   // form control name, default = id
+  placeholder?: string;            // form field placeholder
   prefixIconName?: string;
   required?: boolean;              // false
   suffixIconName?: string;
+  fileName?: string;               // file name used by image control
 
   validators?: ValidatorModel[];
 
@@ -75,13 +75,13 @@ export class DynamicFormControlModel {
     this.appearance = config.appearance || 'standard';
     this.autocomplete = config.autocomplete || 'off';
     this.gridItemClass = config.gridItemClass || null;
-    this.hideRequiredMarker = config.hideRequiredMarker || false;
     this.label = config.label || null;
     this.name = config.name || config.id;
     this.placeholder = config.placeholder || config.label;
     this.prefixIconName = config.prefixIconName || null;
     this.required = config.required || false;
     this.suffixIconName = config.suffixIconName || null;
+    this.fileName = config.fileName || null;
 
     this.validators = config.validators || null;
 

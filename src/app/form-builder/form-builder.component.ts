@@ -13,6 +13,7 @@ import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
 import { CollectionItem } from '../core/collection-service/collection.service';
 import { OptionEditorModule } from '../option-editor/option-editor.component';
+import { ImageInputModule } from '../image-input/image-input.component';
 
 export interface FormConfig {
     config: DynamicFormControlModelConfig;
@@ -116,6 +117,13 @@ const FORM_CONTROLS: FormConfig[] = [
         config:
             {
                 type: 'label',
+            }
+    },
+    {
+        name: 'Image',
+        config:
+            {
+                type: 'image',
             }
     }
 ];
@@ -244,6 +252,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
         DynamicFormModule,
         ReactiveFormsModule,
         OptionEditorModule,
+        ImageInputModule,
         CommonModule],
     exports: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent],
     declarations: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent],

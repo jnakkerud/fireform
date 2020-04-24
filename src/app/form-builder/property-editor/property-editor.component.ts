@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 
-import { Subscription, ObjectUnsubscribedError } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { FormField } from '../form-builder.component';
 import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
@@ -45,6 +45,10 @@ export class PropertyEditorComponent implements OnDestroy {
             ff.inputType = [model[0].inputType];
         }
 
+        if (type === 'image') {
+            ff.fileName = [model[0].fileName];
+        }
+
         if (type === 'checkboxgroup' || type === 'radiogroup' || type === 'select') {
 
             // seed initial option if needed
@@ -55,12 +59,12 @@ export class PropertyEditorComponent implements OnDestroy {
             }
 
             // create a array of formgroups
-            const grps: FormGroup[] = [];
+            const formGroups: FormGroup[] = [];
             for (const cfg of model[0].options) {
-                grps.push(this.formBuilder.group(cfg));
+                formGroups.push(this.formBuilder.group(cfg));
             }
 
-            ff.options = this.formBuilder.array(grps);
+            ff.options = this.formBuilder.array(formGroups);
         }
 
         this.formGroup = this.formBuilder.group(ff);

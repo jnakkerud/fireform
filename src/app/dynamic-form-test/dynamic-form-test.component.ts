@@ -38,7 +38,7 @@ const FORM_JSON = `
         "type": "image",
         "id": "description",
         "label": "Description",
-        "name": "user-test-dir/luislkellerhasen.png"
+        "fileName": "user-test-dir/luislkellerhasen.png"
       },
     {
         "type": "checkboxgroup",

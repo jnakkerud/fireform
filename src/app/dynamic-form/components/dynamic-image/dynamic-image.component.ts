@@ -26,7 +26,9 @@ export class DynamicImageComponent implements OnInit {
         this.elementClass = this.model.gridItemClass;
 
         // async call
-        this.imageUrl = this.storage.getDownloadURL(this.model.name);
+        if (this.model.fileName) {
+            this.imageUrl = this.storage.getDownloadURL(this.model.fileName);
+        }
     }
 
 }

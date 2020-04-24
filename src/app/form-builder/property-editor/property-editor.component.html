@@ -45,7 +45,10 @@
             <ng-template [ngSwitchCase]="'select'">
                 <option-editor arrayName="options"></option-editor>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
-            </ng-template >                              
+            </ng-template >
+            <ng-template [ngSwitchCase]="'image'">
+                <image-input formControlName="fileName"></image-input>
+            </ng-template >                                       
         </ng-container>
 
     </form>
