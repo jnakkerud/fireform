@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, DoCheck, KeyValueDiffers, KeyValueDiffer, KeyValueChangeRecord } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { StorageService } from '../../../core/storage-service/storage.service';
     selector: 'dynamic-image',
     templateUrl: 'dynamic-image.component.html'
 })
-export class DynamicImageComponent implements OnInit {
+export class DynamicImageComponent implements OnInit, DoCheck {
 
     @Input() formGroup: FormGroup;
     @Input() model: DynamicFormControlModel;
@@ -19,13 +19,38 @@ export class DynamicImageComponent implements OnInit {
     @HostBinding('class') elementClass;
 
     imageUrl: Observable<string | null>;
+    differ: KeyValueDiffer<any, any>;
 
-    constructor(private storage: StorageService) { }
+    constructor(private storage: StorageService, private differs: KeyValueDiffers) { }
 
-    public ngOnInit() {
+    ngDoCheck(): void {
+        // Called every time that the input properties of a component or a directive are checked on the page.
+        // Can be expensive
+
+        const changes = this.differ.diff(this.model);
+
+        if (changes) {
+            changes.forEachChangedItem((record: KeyValueChangeRecord<any, any>) => {
+                if (record.key === 'fileName' && record.currentValue !== record.previousValue) {
+                    if (record.currentValue) {
+                        this.loadImage();
+                    } else {
+                        this.imageUrl = null;
+                    }
+                }
+            });
+        }
+    }
+
+    ngOnInit() {
+        this.differ = this.differs.find(this.model).create();
+
         this.elementClass = this.model.gridItemClass;
 
-        // async call
+        this.loadImage();
+    }
+
+    private loadImage() {
         if (this.model.fileName) {
             this.imageUrl = this.storage.getDownloadURL(this.model.fileName);
         }

@@ -1,10 +1,11 @@
 import { Component, NgModule, HostListener, SkipSelf } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { AngularMaterialModule } from '../angular-material.module';
+import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
+import { AngularMaterialModule } from '../angular-material.module';
 import { StorageService } from '../core/storage-service/storage.service';
 import { StorageLocationService } from '../core/storage-service/storage-location.service';
 
@@ -24,7 +25,11 @@ import { StorageLocationService } from '../core/storage-service/storage-location
 
 export class ImageInputComponent implements ControlValueAccessor {
 
-    filename = 'Drop image file here';
+    dropMessage = 'Drop image file here';
+    filename: string;
+    removable = true;
+
+    uploadPercent: Observable<number>;
 
     onChange: (_: any) => {};
 
@@ -40,17 +45,23 @@ export class ImageInputComponent implements ControlValueAccessor {
     }
 
     // Dragleave listener
-    @HostListener('dragleave', ['$event']) public onDragLeave(evt) {
+    @HostListener('dragleave', ['$event']) onDragLeave(evt) {
         evt.preventDefault();
         evt.stopPropagation();
         this.dragging = false;
     }
 
     // Drop listener
-    @HostListener('drop', ['$event']) public ondrop(evt) {
+    @HostListener('drop', ['$event']) ondrop(evt) {
         evt.preventDefault();
         evt.stopPropagation();
         this.dragging = false;
+
+        // TODO explore better ways to disable drag
+        if (this.filename) {
+            return;
+        }
+
         const files = evt.dataTransfer.files;
         if (files.length > 0) {
             this.handleFile(files[0]);
@@ -61,8 +72,6 @@ export class ImageInputComponent implements ControlValueAccessor {
 
     // TODO restrict file types?
 
-    // TODO remove the file
-
     onFileSelected(event) {
         this.handleFile(event.target.files[0]);
     }
@@ -71,19 +80,37 @@ export class ImageInputComponent implements ControlValueAccessor {
         if (file) {
             this.file = file;
             this.filename = this.file.name;
-            console.log(`${this.location.path}/${this.filename}`);
-            // TODO upload file and wait for it to finish, add progress ?
-            /*this.storage.addFile(this.file);
-            if (this.onChange) {
-                this.onChange(`${this.storage.getLocation()}/${this.file.name}`);
-            }*/
+            const path = `${this.location.path}/${this.filename}`;
+
+            // perform the upload
+            const task = this.storage.uploadFile(path, this.file);
+
+            // TODO observe percentage changes
+            this.uploadPercent = task.percentageChanges();
+
+            // get notified when the download URL is available
+            task.snapshotChanges().pipe(
+                finalize(() =>  {
+                    // update the form model
+                    if (this.onChange) {
+                        this.onChange(path);
+                    }
+                })
+            )
+            .subscribe();
         }
     }
 
+    remove() {
+        const path = `${this.location.path}/${this.filename}`;
+        this.storage.removeFile(path).subscribe(data => {
+            this.file = this.filename = null;
+        });
+    }
+
     writeValue(value: any) {
-        console.log(value);
         // clear file input
-        this.file = null;
+        this.file = this.filename = null;
 
         if (value) {
             this.filename = value.substring(value.lastIndexOf('/') + 1);

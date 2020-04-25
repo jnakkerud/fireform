@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
+import { MatChipsModule } from '@angular/material/chips';
 
 const modules: any[] = [
   LayoutModule,
@@ -40,7 +41,8 @@ const modules: any[] = [
   MatListModule,
   MatDialogModule,
   OverlayModule,
-  PortalModule
+  PortalModule,
+  MatChipsModule
 ];
 
 @NgModule({

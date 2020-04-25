@@ -1,5 +1,15 @@
 <div class = "drop-area" [style.opacity] = "dragging ? 0.8 : 1" [style.background] = "dragging ? '#9ecbec' : '#f5fcff'">
-    <button type="button" mat-flat-button color="primary"(click)="fileInput.click()" class="chooser-button">Choose File</button>
+    <button type="button" mat-flat-button color="primary"(click)="fileInput.click()" class="chooser-button" [disabled]="filename">Choose File</button>
     <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
-    <span>{{filename}}</span>
+    <div *ngIf="filename; else showDropMessage" [style.margin-top]="'8px'">
+        <mat-chip-list>
+            <mat-chip [removable]="removable" (removed)="remove()">
+                {{filename}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+    <ng-template #showDropMessage>
+        <span>{{dropMessage}}</span>
+    </ng-template>     
 </div>
