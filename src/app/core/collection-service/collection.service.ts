@@ -10,6 +10,8 @@ export interface CollectionItem {
     description?: string;
     form?: string;
     activeLink?: string;
+    allowMultiple?: boolean;
+    trackResponses?: boolean;
 }
 
 @Injectable({

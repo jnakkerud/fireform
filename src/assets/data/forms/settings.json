@@ -1,5 +1,4 @@
 [
-
     {
       "type": "input",
       "id": "name",
@@ -24,6 +23,15 @@
       "label": "Description",  
       "placeholder": "Enter a collection description",
       "gridItemClass": "grid-column-1"
+    },
+    {
+      "type": "toggle",
+      "id": "allowMultiple",
+      "label": "Allow Multiple Responses"
+    },
+    {
+      "type": "toggle",
+      "id": "trackResponses",
+      "label": "Track responses"
     }
-  
 ]

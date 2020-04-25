@@ -1,4 +1,4 @@
-import { Component, NgModule, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, NgModule, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -8,6 +8,7 @@ import { DynamicFormService } from '../dynamic-form/services/dynamic-form.servic
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormControlModelConfig } from '../dynamic-form/models/dynamic-form-control.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import { Subscription } from 'rxjs';
 
 const SETTINGS_FORM = 'settings';
 
@@ -16,7 +17,7 @@ const SETTINGS_FORM = 'settings';
     templateUrl: 'collection-settings.component.html',
     styleUrls: ['./collection-settings.component.scss']
 })
-export class CollectionSettingsComponent implements OnInit {
+export class CollectionSettingsComponent implements OnInit, OnDestroy {
 
     @Output() cancel = new EventEmitter<void>();
 
@@ -29,13 +30,16 @@ export class CollectionSettingsComponent implements OnInit {
     set collectionItem(value: CollectionItem) {
         this.item = value;
     }
-    private item = {
+    private item: CollectionItem = {
         id: '-1',
-        name: ''
+        name: '',
+        allowMultiple: true
     };
 
     public formGroup: FormGroup;
     public formModel: DynamicFormModel;
+
+    subscription: Subscription;
 
     constructor(
         private dynamicFormService: DynamicFormService,
@@ -45,6 +49,12 @@ export class CollectionSettingsComponent implements OnInit {
         this.createForm();
     }
 
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
+
     createForm() {
         this.dynamicFormService.getFormMetadata(SETTINGS_FORM)
             .subscribe((data: DynamicFormControlModelConfig[]) => {
@@ -52,7 +62,27 @@ export class CollectionSettingsComponent implements OnInit {
                 this.formGroup = this.dynamicFormService.createGroup(this.formModel);
                 // bind the collection item to the form
                 this.formGroup.patchValue(this.collectionItem);
+
+                // respond to value changes on the form
+                this.subscribeToChanges();
             });
+    }
+
+    subscribeToChanges() {
+        this.subscription = this.formGroup.get('allowMultiple').valueChanges.subscribe(val => {
+            const trackResponses = this.formGroup.get('trackResponses');
+            if (val === false) {
+                // set tracking to true
+                trackResponses.setValue(true);
+
+                // disable
+                trackResponses.disable();
+            } else {
+                if (trackResponses.disabled) {
+                    trackResponses.enable();
+                }
+            }
+        });
     }
 
     onCancel() {
@@ -65,7 +95,9 @@ export class CollectionSettingsComponent implements OnInit {
         this.collectionService.upsertItem({
             id: this.collectionItem.id,
             name: this.formGroup.get('name').value,
-            description: this.formGroup.get('description').value
+            description: this.formGroup.get('description').value,
+            allowMultiple: this.formGroup.get('allowMultiple').value,
+            trackResponses: this.formGroup.get('trackResponses').value
         }).subscribe(item => {
             // fire submit event
             this.save.emit(item);
