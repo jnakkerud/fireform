@@ -12,6 +12,19 @@ import { CollectionService, CollectionItem } from '../core/collection-service/co
 import { LinkService, Link } from '../core/link-service/link.service';
 import { DataService } from '../core/data-service/data.service';
 import { AuthService } from '../core/auth/auth.service';
+import { TrackingUserService, TrackingUser} from '../core/tracking-user-service/tracking-user.service';
+
+function getUserToken() {
+    const queryString = window.location.search;
+    if (queryString) {
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.has('token')) {
+            // and decode it
+            return decodeURI(urlParams.get('token'));
+        }
+    }
+    return null;
+}
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -27,6 +40,7 @@ export class GeneratedFormComponent implements OnInit {
 
     collectionItem: CollectionItem = {id: '', name: ''};
     link: Link;
+    trackingUser: TrackingUser;
 
     constructor(
         private route: ActivatedRoute,
@@ -35,7 +49,8 @@ export class GeneratedFormComponent implements OnInit {
         private collectionService: CollectionService,
         private linkService: LinkService,
         private dataService: DataService,
-        private authService: AuthService
+        private authService: AuthService,
+        private trackingUserService: TrackingUserService
     ) {}
 
     ngOnInit() {
@@ -55,17 +70,63 @@ export class GeneratedFormComponent implements OnInit {
                 concatMap(l => this.collectionService.getItem(l.collectionId))
             ).subscribe(res => {
                 this.collectionItem = res;
-                this.createForm();
+                this.setupForm();
             });
         });
+    }
+
+    async setupForm() {
+        // detect the tracking user
+        if (this.collectionItem.trackResponses) {
+            await this.detectTrackingUser();
+        }
+        const canCreate = await this.canCreateForm();
+        if (canCreate) {
+            this.createForm();
+            // update the tracking user
+            this.updateTrackingUser();
+        } else {
+            // TODO show the error/warning page
+        }
     }
 
     async createForm() {
         this.formModel = await this.getFormMetadata(this.collectionItem);
         this.formGroup = this.dynamicFormService.createGroup(this.formModel);
+
+    }
+
+    detectTrackingUser(): Promise<TrackingUser>  {
+        // look for the token in the url
+        return new Promise<TrackingUser>((resolve, reject) => {
+            const token = getUserToken();
+
+            // lookup the user, if not found return a anon user
+            this.trackingUserService.lookupTrackingUserByToken(token).then(result => {
+                resolve(result);
+            });
+        });
+    }
+
+    updateTrackingUser() {
+        if (this.trackingUser) {
+            this.trackingUserService.upsert(this.trackingUser);
+        }
+    }
+
+    canCreateForm(): Promise<boolean> {
+        // allow multiple responses ? then create the form
+        // TODO look for an existing response, if existing then show 'response already submitted'
+        const allowMultiple = this.collectionItem.allowMultiple;
+        if (!allowMultiple) {
+            // this.dataService.get(trackingUser.email?);
+        }
+        return Promise.resolve(true);
     }
 
     onSubmit() {
+        // TODO add the user  to the data, if tracking is on
+
         // save the document to the collection
         this.dataService.add(this.collectionItem, this.formGroup.value);
 
@@ -83,8 +144,13 @@ export class GeneratedFormComponent implements OnInit {
         return valid;
     }
 
+    // TODO remove promise, see test form
     getFormMetadata(item: CollectionItem): Promise<DynamicFormModel> {
         return Promise.resolve<DynamicFormModel>(this.dynamicFormService.fromJSON(item.form));
+    }
+
+    generateUserToken(): string {
+        return 'TODO -> create token';
     }
 
 }
