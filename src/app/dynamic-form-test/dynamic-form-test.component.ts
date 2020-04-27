@@ -7,8 +7,6 @@ import { DynamicFormService } from '../dynamic-form/services/dynamic-form.servic
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 
-import { StorageService } from '../core/storage-service/storage.service';
-
 const FORM_JSON = `
 [
     {
@@ -100,14 +98,14 @@ export class DynamicFormTestComponent implements OnInit {
     public formGroup: FormGroup;
     public formModel: DynamicFormModel;
 
-    constructor(private dynamicFormService: DynamicFormService, private storage: StorageService) { }
+    constructor(private dynamicFormService: DynamicFormService) { }
 
     ngOnInit() {
         this.createForm();
     }
 
-    async createForm() {
-        this.formModel = await this.getFormMetadata();
+    createForm() {
+        this.formModel = this.getFormMetadata();
         this.formGroup = this.dynamicFormService.createGroup(this.formModel);
     }
 
@@ -116,15 +114,11 @@ export class DynamicFormTestComponent implements OnInit {
         console.log(this.formGroup.value);
     }
 
-    getFormMetadata(): Promise<DynamicFormModel> {
-        return Promise.resolve<DynamicFormModel>(this.dynamicFormService.fromJSON(FORM_JSON));
+
+    getFormMetadata(): DynamicFormModel {
+        return this.dynamicFormService.fromJSON(FORM_JSON);
     }
 
-    public onFileSelected(event) {
-        const selectedFile: File = event.target.files[0];
-        // Upload with collection item
-        this.storage.uploadFile(`user-test-dir/${selectedFile.name}`, selectedFile);
-    }
 }
 
 @NgModule({
