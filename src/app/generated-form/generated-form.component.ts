@@ -78,7 +78,7 @@ export class GeneratedFormComponent implements OnInit {
     async setupForm() {
         // detect the tracking user
         if (this.collectionItem.trackResponses) {
-            await this.detectTrackingUser();
+            this.trackingUser = await this.getTrackingUser();
         }
         const canCreate = await this.canCreateForm();
         if (canCreate) {
@@ -90,15 +90,14 @@ export class GeneratedFormComponent implements OnInit {
         }
     }
 
-    async createForm() {
-        this.formModel = await this.getFormMetadata(this.collectionItem);
+    createForm() {
+        this.formModel = this.dynamicFormService.fromJSON(this.collectionItem.form);
         this.formGroup = this.dynamicFormService.createGroup(this.formModel);
-
     }
 
-    detectTrackingUser(): Promise<TrackingUser>  {
-        // look for the token in the url
+    getTrackingUser(): Promise<TrackingUser>  {
         return new Promise<TrackingUser>((resolve, reject) => {
+            // look for the token in the url
             const token = getUserToken();
 
             // lookup the user, if not found return a anon user
@@ -142,15 +141,6 @@ export class GeneratedFormComponent implements OnInit {
         }
 
         return valid;
-    }
-
-    // TODO remove promise, see test form
-    getFormMetadata(item: CollectionItem): Promise<DynamicFormModel> {
-        return Promise.resolve<DynamicFormModel>(this.dynamicFormService.fromJSON(item.form));
-    }
-
-    generateUserToken(): string {
-        return 'TODO -> create token';
     }
 
 }
