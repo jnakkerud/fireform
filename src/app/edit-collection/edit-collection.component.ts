@@ -88,6 +88,10 @@ export class EditCollectionComponent {
         this.downloadService.downloadCsv(this.editItem);
     }
 
+    onSend() {
+        // TODO create dlg to send invitations
+    }
+
     saveForm(formJson: string) {
         this.editItem.form = formJson;
         this.collectionService.upsertItem(this.editItem).subscribe(item => {
