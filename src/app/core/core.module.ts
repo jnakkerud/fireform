@@ -21,6 +21,7 @@ import { DownloadService } from './download-service/download.service';
 import { StorageService } from './storage-service/storage.service';
 import { StorageLocationService } from './storage-service/storage-location.service';
 import { TrackingUserService } from './tracking-user-service/tracking-user.service';
+import { FirestoreService } from './firestore-service/firestore.service';
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import { TrackingUserService } from './tracking-user-service/tracking-user.servi
         DataService,
         StorageService,
         StorageLocationService,
-        TrackingUserService
+        TrackingUserService,
+        FirestoreService
         // { provide: ORIGIN, useValue: 'http://localhost:4200' }
     ],
 })

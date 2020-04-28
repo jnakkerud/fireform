@@ -22,6 +22,7 @@ type DocPredicate<T> = string | AngularFirestoreDocument<T>;
 })
 export class LinkService {
 
+    //  TODO refactor to use FirestoreService
     constructor(private afs: AngularFirestore) { }
 
     private lCollection: AngularFirestoreCollection<Link>;

@@ -41,6 +41,7 @@ export class GeneratedFormComponent implements OnInit {
     collectionItem: CollectionItem = {id: '', name: ''};
     link: Link;
     trackingUser: TrackingUser;
+    token: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -96,12 +97,12 @@ export class GeneratedFormComponent implements OnInit {
     }
 
     getTrackingUser(): Promise<TrackingUser>  {
-        return new Promise<TrackingUser>((resolve, reject) => {
+        return new Promise<TrackingUser>(resolve  => {
             // look for the token in the url
-            const token = getUserToken();
+            this.token = getUserToken();
 
             // lookup the user, if not found return a anon user
-            this.trackingUserService.lookupTrackingUserByToken(token).then(result => {
+            this.trackingUserService.lookupTrackingUserByToken(this.collectionItem, this.token).then(result => {
                 resolve(result);
             });
         });
@@ -109,7 +110,10 @@ export class GeneratedFormComponent implements OnInit {
 
     updateTrackingUser() {
         if (this.trackingUser) {
-            this.trackingUserService.upsert(this.trackingUser);
+            if (!this.trackingUser.collectionId) {
+                this.trackingUser.collectionId = this.collectionItem.id;
+            }
+            this.trackingUserService.upsert(this.token, this.trackingUser);
         }
     }
 
