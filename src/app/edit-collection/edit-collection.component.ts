@@ -12,6 +12,7 @@ import { FormBuilderModule } from '../form-builder/form-builder.component';
 import { GenerateLinkModule,  GenerateLinkComponent } from '../generate-link/generate-link.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
 import { DownloadService } from '../core/download-service/download.service';
+import { SendInvitationComponent, SendInvitationModule } from '../send-invitation/send-invitation.component';
 
 @Component({
     selector: 'app-edit-collection',
@@ -89,7 +90,10 @@ export class EditCollectionComponent {
     }
 
     onSend() {
-        // TODO create dlg to send invitations
+        this.dialog.open(SendInvitationComponent, {
+            width: '550px',
+            data: { collectionItem: this.editItem }
+        });
     }
 
     saveForm(formJson: string) {
@@ -126,6 +130,7 @@ export class EditCollectionComponent {
         CollectionSettingsModule,
         FormBuilderModule,
         GenerateLinkModule,
+        SendInvitationModule,
         CommonModule],
     exports: [EditCollectionComponent, DeleteConfirmationDialogComponent],
     declarations: [EditCollectionComponent, DeleteConfirmationDialogComponent]

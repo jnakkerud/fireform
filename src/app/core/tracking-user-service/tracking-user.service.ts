@@ -57,6 +57,7 @@ export class TrackingUserService {
         return encoded;
     }
 
+    // TODO return the token and token optional param
     public upsert(token: string, user: TrackingUser): Promise<void> {
         if (!token) {
             token = this.generateTrackingToken(user);

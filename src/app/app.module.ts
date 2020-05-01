@@ -17,6 +17,7 @@ import { GeneratedFormModule } from './generated-form/generated-form.component';
 import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
 import { OptionEditorModule } from './option-editor/option-editor.component';
 import { ImageInputModule } from './image-input/image-input.component';
+import { SendInvitationModule } from './send-invitation/send-invitation.component';
 
 import { firebaseConfig } from './api-keys';
 export const fbConfig = {
@@ -43,6 +44,7 @@ export const fbConfig = {
     GeneratedFormModule,
     DynamicFormTestModule,
     OptionEditorModule,
+    SendInvitationModule,
     ImageInputModule,
     HttpClientModule,
     AppRoutingModule
