@@ -113,7 +113,7 @@ export class GeneratedFormComponent implements OnInit {
             if (!this.trackingUser.collectionId) {
                 this.trackingUser.collectionId = this.collectionItem.id;
             }
-            this.trackingUserService.upsert(this.token, this.trackingUser);
+            this.trackingUserService.upsert(this.trackingUser, this.token);
         }
     }
 

@@ -5,11 +5,16 @@ import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from '../angular-material.module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { TrackingUserService } from '../core/tracking-user-service/tracking-user.service';
+import { TrackingUserService, Token } from '../core/tracking-user-service/tracking-user.service';
 import { CollectionItem } from '../core/collection-service/collection.service';
 
 export interface SendInvitationData {
     collectionItem: CollectionItem;
+}
+
+interface EmailToken {
+    email: string;
+    token: string;
 }
 
 @Component({
@@ -39,17 +44,28 @@ export class SendInvitationComponent implements OnInit {
     }
 
     sendInvitations() {
+        const tokens: EmailToken[] = [];
+
         const emails = this.form.get('email').value;
 
         const emailArray = emails.split(',');
-        for (const email of emailArray) {
+        for (const e of emailArray) {
             // For each email, update the tracking-user db
-            console.log('email', email);
+            this.trackingUserService.upsert(
+                {
+                    collectionId: this.collectionItem.id,
+                    email: e,
+                    isRegistered: true
+                }
+            ).then(t => tokens.push({email: e, token: t}));
         }
 
-        // Update should return a TrackingUser object, put in an array
-
         // TODO: Cloud Function: array of tracking users, subject line, message
+        const subject = this.form.get('subject').value;
+        const message = this.form.get('message').value;
+        console.log('subject', subject);
+        console.log('message', message);
+        // sendEmailsFunc(tokens, subject, message);
 
         // TODO: when all is done, send message via snackbar
     }

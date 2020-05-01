@@ -57,13 +57,17 @@ export class TrackingUserService {
         return encoded;
     }
 
-    // TODO return the token and token optional param
-    public upsert(token: string, user: TrackingUser): Promise<void> {
-        if (!token) {
-            token = this.generateTrackingToken(user);
+    public upsert(user: TrackingUser, token?: string): Promise<string> {
+        let trackingToken = token;
+        if (!trackingToken) {
+            trackingToken = this.generateTrackingToken(user);
         }
 
-        return this.fireStoreService.upsert(`tracking-users/${token}`, user);
+        // TODO revisit using tracking token for document ID.  Could be a prob for anonymous users ?
+        // Doc ID is limited to 1500 bytes. https://firebase.google.com/docs/firestore/quotas
+        return new Promise<string>(resolve => {
+            this.fireStoreService.upsert(`tracking-users/${trackingToken}`, user).then(_ => resolve(trackingToken));
+        });
     }
 
 }

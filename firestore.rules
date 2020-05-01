@@ -7,6 +7,9 @@ service cloud.firestore {
     match /links/{document=**} {
       allow read, write: if request.auth.uid != null;
     }
+    match /tracking-users/{document=**} {
+      allow read, write: if request.auth.uid != null;
+    }    
     match /formdata/{document=**} {
     	allow read, update, delete: if request.auth.uid != null;
 
