@@ -14,13 +14,13 @@ import { DataService } from '../core/data-service/data.service';
 import { AuthService } from '../core/auth/auth.service';
 import { TrackingUserService, TrackingUser} from '../core/tracking-user-service/tracking-user.service';
 
-function getUserToken() {
+function getTrackingIdFromUrl() {
     const queryString = window.location.search;
     if (queryString) {
         const urlParams = new URLSearchParams(queryString);
-        if (urlParams.has('token')) {
+        if (urlParams.has('t')) {
             // and decode it
-            return decodeURI(urlParams.get('token'));
+            return decodeURI(urlParams.get('t'));
         }
     }
     return null;
@@ -41,7 +41,7 @@ export class GeneratedFormComponent implements OnInit {
     collectionItem: CollectionItem = {id: '', name: ''};
     link: Link;
     trackingUser: TrackingUser;
-    token: string;
+    trackingId: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -84,8 +84,6 @@ export class GeneratedFormComponent implements OnInit {
         const canCreate = await this.canCreateForm();
         if (canCreate) {
             this.createForm();
-            // update the tracking user
-            this.updateTrackingUser();
         } else {
             // TODO show the error/warning page
         }
@@ -99,10 +97,9 @@ export class GeneratedFormComponent implements OnInit {
     getTrackingUser(): Promise<TrackingUser>  {
         return new Promise<TrackingUser>(resolve  => {
             // look for the token in the url
-            this.token = getUserToken();
-
+            this.trackingId = getTrackingIdFromUrl();
             // lookup the user, if not found return a anon user
-            this.trackingUserService.lookupTrackingUserByToken(this.collectionItem, this.token).then(result => {
+            this.trackingUserService.lookupTrackingUserById(this.collectionItem, this.trackingId).then(result => {
                 resolve(result);
             });
         });
@@ -113,7 +110,7 @@ export class GeneratedFormComponent implements OnInit {
             if (!this.trackingUser.collectionId) {
                 this.trackingUser.collectionId = this.collectionItem.id;
             }
-            this.trackingUserService.upsert(this.trackingUser, this.token);
+            this.trackingUserService.upsert(this.trackingUser, this.trackingId);
         }
     }
 
@@ -133,7 +130,12 @@ export class GeneratedFormComponent implements OnInit {
         // save the document to the collection
         this.dataService.add(this.collectionItem, this.formGroup.value);
 
+        // update the tracking user
+        // TODO only for single response users?
+        this.updateTrackingUser();
+
         // forward to completed form
+        // TODO Create completion form for single response users.
         this.router.navigate(['/formcomplete', this.collectionItem.id]);
     }
 

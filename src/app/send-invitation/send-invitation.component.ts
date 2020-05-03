@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from '../angular-material.module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { TrackingUserService, Token } from '../core/tracking-user-service/tracking-user.service';
+import { TrackingUserService } from '../core/tracking-user-service/tracking-user.service';
 import { CollectionItem } from '../core/collection-service/collection.service';
 
 export interface SendInvitationData {
