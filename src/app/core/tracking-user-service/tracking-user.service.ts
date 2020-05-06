@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { FirestoreService } from '../firestore-service/firestore.service';
 import { CollectionItem } from '../collection-service/collection.service';
-
-
-// TODO revisit, use
-/*function hashCode(s: string) {
-    return s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
-}*/
+import { FingerprintService } from '../fingerprint-service/fingerprint.service';
 
 export interface TrackingUser {
     collectionId: string;
@@ -15,29 +10,15 @@ export interface TrackingUser {
     isRegistered?: boolean;
 }
 
-export interface Fingerprint {
-    collectionId: string;
-    email?: string;
-    // for anonymous users:
-    userAgent?: string;
-    // TODO more values as fingerprinting
-}
-
-export interface TrackingInfo {
-    trackingId: string;
-    fingerprint: Fingerprint;
-}
-
 @Injectable({providedIn: 'root'})
 export class TrackingUserService {
 
-    constructor(private fireStoreService: FirestoreService) { }
+    constructor(private fireStoreService: FirestoreService, private fingerprintService: FingerprintService) { }
 
     public async lookupTrackingUserById(collectionItem: CollectionItem, trackingId?: string): Promise<TrackingUser> {
         let lookupId = trackingId;
         if (!lookupId) {
-            const info = this.generateTrackingInfo({collectionId: collectionItem.id});
-            lookupId = info.trackingId;
+            lookupId = this.generateTrackingId({collectionId: collectionItem.id});
         }
         let trackingUser = await this.fireStoreService.get<TrackingUser>(`tracking-users/${lookupId}`);
         if (!trackingUser) {
@@ -50,19 +31,10 @@ export class TrackingUserService {
         });
     }
 
-    public generateTrackingInfo(user: TrackingUser): TrackingInfo {
-        const fp = this.generateFingerprint(user);
-        return {
-            fingerprint: fp,
-            trackingId: this.generateTrackingId(user.isRegistered, fp)
-        };
-    }
-
     public upsert(user: TrackingUser, id?: string): Promise<string> {
         let trackingId = id;
         if (!trackingId) {
-            const info = this.generateTrackingInfo(user);
-            trackingId = info.trackingId;
+            trackingId = this.generateTrackingId(user);
         }
 
         return new Promise<string>(resolve => {
@@ -70,21 +42,14 @@ export class TrackingUserService {
         });
     }
 
-    // See https://stackoverflow.com/questions/47536063/how-to-recognize-user-from-different-browsers/47536192#47536192
-    private generateFingerprint(user: TrackingUser): Fingerprint {
-        // TODO.
-        return {collectionId: user.collectionId, userAgent: navigator.userAgent};
-    }
-
     // Doc ID is limited to 1500 bytes. https://firebase.google.com/docs/firestore/quotas
-    private generateTrackingId(isRegistered: boolean, fingerprint: Fingerprint): string {
+    private generateTrackingId(user: TrackingUser): string {
         let id: string;
-        if (isRegistered) {
+        if (user.isRegistered) {
             id = this.fireStoreService.generateId();
         } else {
-            // TODO hash based on fingerprint
-            const v = Object.values(fingerprint).join();
-            id = v;
+            // For an anonymous user, create a fingerprint to be used as the id
+            this.fingerprintService.getFingerprint(user.collectionId);
         }
         return id;
     }
