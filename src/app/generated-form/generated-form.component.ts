@@ -125,14 +125,21 @@ export class GeneratedFormComponent implements OnInit {
     }
 
     onSubmit() {
-        // TODO add the user  to the data, if tracking is on
+        let data = this.formGroup.value;
+
+        // add the user  to the data, if tracking is on
+        if (this.trackingUser) {
+            const user = {tracking_user: this.trackingUser.email || 'anonymous'};
+            data = {...user, ...data};
+        }
 
         // save the document to the collection
-        this.dataService.add(this.collectionItem, this.formGroup.value);
+        this.dataService.add(this.collectionItem, data);
 
-        // update the tracking user
-        // TODO only for single response users?
-        this.updateTrackingUser();
+        // update the tracking user for only single responses
+        if (!this.collectionItem.allowMultiple) {
+            this.updateTrackingUser();
+        }
 
         // forward to completed form
         // TODO Create completion form for single response users.

@@ -18,7 +18,7 @@ export class TrackingUserService {
     public async lookupTrackingUserById(collectionItem: CollectionItem, trackingId?: string): Promise<TrackingUser> {
         let lookupId = trackingId;
         if (!lookupId) {
-            lookupId = this.generateTrackingId({collectionId: collectionItem.id});
+            lookupId = await this.generateTrackingId({collectionId: collectionItem.id});
         }
         let trackingUser = await this.fireStoreService.get<TrackingUser>(`tracking-users/${lookupId}`);
         if (!trackingUser) {
@@ -31,10 +31,10 @@ export class TrackingUserService {
         });
     }
 
-    public upsert(user: TrackingUser, id?: string): Promise<string> {
+    public async upsert(user: TrackingUser, id?: string): Promise<string> {
         let trackingId = id;
         if (!trackingId) {
-            trackingId = this.generateTrackingId(user);
+            trackingId = await this.generateTrackingId(user);
         }
 
         return new Promise<string>(resolve => {
@@ -43,14 +43,12 @@ export class TrackingUserService {
     }
 
     // Doc ID is limited to 1500 bytes. https://firebase.google.com/docs/firestore/quotas
-    private generateTrackingId(user: TrackingUser): string {
-        let id: string;
+    private generateTrackingId(user: TrackingUser): Promise<string> {
         if (user.isRegistered) {
-            id = this.fireStoreService.generateId();
+            return new Promise<string>(resolve => resolve(this.fireStoreService.generateId()));
         } else {
             // For an anonymous user, create a fingerprint to be used as the id
-            this.fingerprintService.getFingerprint(user.collectionId);
+            return this.fingerprintService.getFingerprint(user.collectionId);
         }
-        return id;
     }
 }
