@@ -14,6 +14,12 @@ import { DataService } from '../core/data-service/data.service';
 import { AuthService } from '../core/auth/auth.service';
 import { TrackingUserService, TrackingUser} from '../core/tracking-user-service/tracking-user.service';
 
+export enum RESPONSE_STATUS {
+    SUCCESS,
+    ALREADY_RESPONDED,
+    ERROR
+}
+
 function getTrackingIdFromUrl() {
     const queryString = window.location.search;
     if (queryString) {
@@ -85,7 +91,8 @@ export class GeneratedFormComponent implements OnInit {
         if (canCreate) {
             this.createForm();
         } else {
-            // TODO show the error/warning page
+            // Show the error/warning page
+            this.router.navigate(['/formcomplete', this.collectionItem.id], {queryParams: {s: RESPONSE_STATUS.ALREADY_RESPONDED}});
         }
     }
 
@@ -95,14 +102,8 @@ export class GeneratedFormComponent implements OnInit {
     }
 
     getTrackingUser(): Promise<TrackingUser>  {
-        return new Promise<TrackingUser>(resolve  => {
-            // look for the token in the url
-            this.trackingId = getTrackingIdFromUrl();
-            // lookup the user, if not found return a anon user
-            this.trackingUserService.lookupTrackingUserById(this.collectionItem, this.trackingId).then(result => {
-                resolve(result);
-            });
-        });
+        this.trackingId = getTrackingIdFromUrl();
+        return this.trackingUserService.lookupTrackingUserById(this.collectionItem, this.trackingId);
     }
 
     updateTrackingUser() {
@@ -116,10 +117,14 @@ export class GeneratedFormComponent implements OnInit {
 
     canCreateForm(): Promise<boolean> {
         // allow multiple responses ? then create the form
-        // TODO look for an existing response, if existing then show 'response already submitted'
         const allowMultiple = this.collectionItem.allowMultiple;
         if (!allowMultiple) {
-            // this.dataService.get(trackingUser.email?);
+            // look for an existing response by the tracking user, if existing then show 'response already submitted'
+            return new Promise<boolean>(resolve => {
+                this.dataService.queryByTrackingUser(this.collectionItem, this.trackingUser.email || this.trackingId).then(data => {
+                    resolve(!data);
+                });
+            });
         }
         return Promise.resolve(true);
     }
@@ -129,7 +134,7 @@ export class GeneratedFormComponent implements OnInit {
 
         // add the user  to the data, if tracking is on
         if (this.trackingUser) {
-            const user = {tracking_user: this.trackingUser.email || 'anonymous'};
+            const user = {tracking_user: this.trackingUser.email || this.trackingId};
             data = {...user, ...data};
         }
 
@@ -142,8 +147,7 @@ export class GeneratedFormComponent implements OnInit {
         }
 
         // forward to completed form
-        // TODO Create completion form for single response users.
-        this.router.navigate(['/formcomplete', this.collectionItem.id]);
+        this.router.navigate(['/formcomplete', this.collectionItem.id], {queryParams: {s: RESPONSE_STATUS.SUCCESS}});
     }
 
     public isValid() {
@@ -162,30 +166,56 @@ export class GeneratedFormComponent implements OnInit {
     // tslint:disable-next-line: component-selector
     selector: 'form-complete',
     template: `
-    <mat-card style="text-align: center;">
-    <mat-card-title>{{title}}</mat-card-title>
-    <mat-card-content>
-        <div>
-        <p>Your response has been saved</p>
-        <p>
-            <a href="{{url}}">Submit another response</a>
-        </p>
-        </div>
-    </mat-card-content>
-    </mat-card>
+    <div class="card-container">
+        <ng-container *ngIf="item">
+            <mat-card style="text-align: center;">
+            <mat-card-title>{{item.name}}</mat-card-title>
+            <mat-card-content>
+                <div>
+                <h3 [ngStyle] = "{'color': messageColor}">{{message}}</h3>
+                <ng-container *ngIf="url">
+                    <p>
+                        <a href="{{url}}">Submit another response</a>
+                    </p>
+                </ng-container>
+                </div>
+            </mat-card-content>
+            </mat-card>
+        </ng-container>
+    </div>
     `,
     styles:
-    [':host {display: flex;justify-content: center;margin: 100px 0px;}']
+    [':host {display: flex;justify-content: center; height: 100vh; background-color: #ECEFF1;}',
+    '.card-container {margin: 104px 0px;}'
+    ]
 })
 export class FormCompleteComponent {
-    title = '';
-    url = '';
+    item: CollectionItem;
+    url: string;
+    message = '';
+    messageColor = 'black';
 
     constructor(private route: ActivatedRoute, private collectionService: CollectionService) {
         this.route.params.subscribe(p => {
             this.collectionService.getItem(p.id).subscribe(item => {
-                this.title = item.name;
-                this.url = `${window.location.origin}/form/${item.activeLink}`;
+                this.item = item;
+                this.url = item?.allowMultiple === false ? null : `${window.location.origin}/form/${item.activeLink}`;
+                const s = this.route.snapshot.queryParamMap.get('s');
+                if (s) {
+                    const status = +s;
+                    switch (status) {
+                        case RESPONSE_STATUS.SUCCESS:
+                            this.message = 'Your response has been saved';
+                            break;
+                        case RESPONSE_STATUS.ALREADY_RESPONDED:
+                            this.message = 'You have already submitted a response';
+                            this.messageColor = 'red';
+                            break;
+                        case RESPONSE_STATUS.ERROR:
+                            this.message = 'Error: unable to proceed';
+                            this.messageColor = 'red';
+                    }
+                }
             });
         });
     }

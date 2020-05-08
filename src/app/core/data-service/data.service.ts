@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 
 import { CollectionItem } from '../collection-service/collection.service';
 import { isDate } from '../utils';
+import { take, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -33,5 +34,18 @@ export class DataService {
 
         // See https://firebase.google.com/docs/firestore/data-model#hierarchical-data
         this.afs.collection(`formdata/${item.id}/data`).add(mergedData);
+    }
+
+    queryByTrackingUser(collectionItem: CollectionItem, user: string): Promise<any> {
+        return this.afs.collection(`formdata/${collectionItem.id}/data`, ref => ref.where('tracking_user', '==', user)).
+            valueChanges().pipe(
+                take(1),
+                map(data => {
+                    if (Array.isArray(data)) {
+                        return data.pop();
+                    }
+                    return data;
+                })
+            ).toPromise();
     }
 }
