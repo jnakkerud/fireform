@@ -15,7 +15,7 @@
 }
 
 .edit-container .mat-card {
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .cardStripe {
@@ -23,9 +23,13 @@
     color: rgba(255, 255, 255, 1);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    height: 10px;
+    height: 16px;
     left: -1px;
     position: absolute;
     top: -1px;
     width: calc(100% + 2px)    
+}
+
+.edit-container .mat-card-title {
+    margin-top: 16px;
 }

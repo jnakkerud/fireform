@@ -76,7 +76,7 @@ export class GeneratedFormComponent implements OnInit {
                 tap(l => this.link = l),
                 concatMap(l => this.collectionService.getItem(l.collectionId))
             ).subscribe(res => {
-                this.collectionItem = res;
+                this.collectionItem = {...{allowMultiple: true}, ...res};
                 this.setupForm();
             });
         });
@@ -117,8 +117,7 @@ export class GeneratedFormComponent implements OnInit {
 
     canCreateForm(): Promise<boolean> {
         // allow multiple responses ? then create the form
-        const allowMultiple = this.collectionItem.allowMultiple;
-        if (!allowMultiple) {
+        if (!this.collectionItem.allowMultiple) {
             // look for an existing response by the tracking user, if existing then show 'response already submitted'
             return new Promise<boolean>(resolve => {
                 this.dataService.queryByTrackingUser(this.collectionItem, this.trackingUser.email || this.trackingId).then(data => {
