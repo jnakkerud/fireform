@@ -35,15 +35,21 @@
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template >
             <ng-template [ngSwitchCase]="'checkboxgroup'">
-                <option-editor arrayName="options"></option-editor>
+                <div class="mat-form-field-wrapper">
+                    <option-editor arrayName="options"></option-editor>
+                </div>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template >
             <ng-template [ngSwitchCase]="'radiogroup'">
-                <option-editor arrayName="options"></option-editor>
+                <div class="mat-form-field-wrapper">
+                    <option-editor arrayName="options"></option-editor>
+                </div>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template >
             <ng-template [ngSwitchCase]="'select'">
-                <option-editor arrayName="options"></option-editor>
+                <div class="mat-form-field-wrapper">
+                    <option-editor arrayName="options"></option-editor>
+                </div>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
             </ng-template >
             <ng-template [ngSwitchCase]="'image'">

@@ -1,4 +1,4 @@
-<div [formGroup]="controlContainer.control">
+<div class="control-container" [formGroup]="controlContainer.control">
     <label>Options:</label>
     <ng-container [formArrayName]="arrayName">
         <div cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListData]="formArr.controls">
