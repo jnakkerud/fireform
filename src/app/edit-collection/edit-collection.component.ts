@@ -95,13 +95,6 @@ export class EditCollectionComponent {
         });
     }
 
-    saveForm(formJson: string) {
-        this.editItem.form = formJson;
-        this.collectionService.upsertItem(this.editItem).subscribe(item => {
-            this.editItem = item;
-        });
-    }
-
     saveSettings(item: CollectionItem) {
         this.editItem = item;
         this.toggleSettings();

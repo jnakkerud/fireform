@@ -21,7 +21,7 @@ import { DynamicFormControlModelConfig, DynamicFormControlModel } from '../dynam
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
-import { CollectionItem } from '../core/collection-service/collection.service';
+import { CollectionItem, CollectionService } from '../core/collection-service/collection.service';
 import { OptionEditorModule } from '../option-editor/option-editor.component';
 import { ImageInputModule } from '../image-input/image-input.component';
 import { takeUntil } from 'rxjs/operators';
@@ -170,6 +170,8 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
 
     @ViewChild(PropertyEditorComponent) propertyEditor !: PropertyEditorComponent;
 
+    constructor(private collectionService: CollectionService) { }
+
     ngAfterViewInit(): void {
         this.fieldSnippets.changes.pipe(takeUntil(this.destroyed)).subscribe(e => {
             this.selectField();
@@ -177,7 +179,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
     }
 
     ngOnDestroy(): void {
-        this.save();
+        this.save(this.collectionItem);
         this.destroyed.next();
         this.destroyed.complete();
     }
@@ -186,7 +188,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         if (changes.hasOwnProperty('collectionItem')) {
             const collectionItemChange = changes.collectionItem;
             if (collectionItemChange.currentValue !== collectionItemChange.previousValue) {
-                this.save();
+                this.save(collectionItemChange.previousValue);
                 this.propertyEditor.formField = null;
                 this.formFields = [];
                 this.dirty = false;
@@ -261,9 +263,12 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         }
     }
 
-    save() {
-        if (this.propertyEditor.isDirty() || this.dirty) {
-            console.log('save', this.toJson());
+    save(item: CollectionItem) {
+        if (item && (this.propertyEditor.isDirty() || this.dirty)) {
+            item.form = this.toJson();
+            this.collectionService.upsertItem(item).subscribe(data => {
+                console.log('saved', data.form);
+            });
         }
     }
 

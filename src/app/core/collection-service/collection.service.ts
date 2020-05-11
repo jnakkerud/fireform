@@ -44,7 +44,7 @@ export class CollectionService {
                 this.getItem(item.id)
                     .subscribe(res => {
                         const editResult = { ...res, ...item };
-                        console.log('editResult', editResult);
+                        console.log('upsetItem', editResult);
                         this.itemsCollection.doc(item.id).update(editResult);
                         observer.next(editResult);
                         observer.complete();
