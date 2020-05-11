@@ -1,7 +1,17 @@
-import { Component, NgModule, Input, ViewChildren, QueryList, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import {
+    Component,
+    NgModule,
+    Input,
+    ViewChildren,
+    QueryList,
+    AfterViewInit,
+    OnDestroy,
+    ViewChild,
+    OnChanges,
+    SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { DragDropModule, CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
 
@@ -14,6 +24,7 @@ import { PropertyEditorComponent } from './property-editor/property-editor.compo
 import { CollectionItem } from '../core/collection-service/collection.service';
 import { OptionEditorModule } from '../option-editor/option-editor.component';
 import { ImageInputModule } from '../image-input/image-input.component';
+import { takeUntil } from 'rxjs/operators';
 
 export interface FormConfig {
     config: DynamicFormControlModelConfig;
@@ -133,28 +144,16 @@ const FORM_CONTROLS: FormConfig[] = [
     templateUrl: 'form-builder.component.html',
     styleUrls: ['./form-builder.component.scss']
 })
-export class FormBuilderComponent implements AfterViewInit, OnDestroy {
+export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
     @Input() selectedIndex = -1;
 
-    @Input()
-    get collectionItem(): CollectionItem {
-        return this.item;
-    }
-    set collectionItem(value: CollectionItem) {
-        this.formFields = [];
-        this.item = value;
-        if (this.item && this.item.form) {
-            this.formFields = this.fromJson(this.item.form);
-            this.selectedIndex = 0;
-        }
-    }
+    @Input() collectionItem: CollectionItem;
 
     public formFields: FormField[] = [];
 
-    private item: CollectionItem;
-
-    private subscription: Subscription;
+    private destroyed = new Subject<void>();
+    private dirty = false;
 
     private formControls: FormField[];
     get controls(): FormField[] {
@@ -172,16 +171,32 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
     @ViewChild(PropertyEditorComponent) propertyEditor !: PropertyEditorComponent;
 
     ngAfterViewInit(): void {
-        this.subscription = this.fieldSnippets.changes.subscribe(e => {
+        this.fieldSnippets.changes.pipe(takeUntil(this.destroyed)).subscribe(e => {
             this.selectField();
         });
     }
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        this.save();
+        this.destroyed.next();
+        this.destroyed.complete();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.hasOwnProperty('collectionItem')) {
+            const collectionItemChange = changes.collectionItem;
+            if (collectionItemChange.currentValue !== collectionItemChange.previousValue) {
+                this.save();
+                this.propertyEditor.formField = null;
+                this.formFields = [];
+                this.dirty = false;
+                this.initializeFormFields();
+            }
+        }
     }
 
     drop(event: CdkDragDrop<FormField[]>) {
+        this.dirty = true;
         if (event.previousContainer === event.container) {
             this.selectedIndex = event.currentIndex;
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -243,6 +258,19 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy {
         } else if (this.fieldSnippets.length === 0 || this.selectedIndex === -1) {
             // clear the property editor
             this.propertyEditor.formField = null;
+        }
+    }
+
+    save() {
+        if (this.propertyEditor.isDirty() || this.dirty) {
+            console.log('save', this.toJson());
+        }
+    }
+
+    private initializeFormFields() {
+        if (this.collectionItem && this.collectionItem.form) {
+            this.formFields = this.fromJson(this.collectionItem.form);
+            this.selectedIndex = 0;
         }
     }
 }

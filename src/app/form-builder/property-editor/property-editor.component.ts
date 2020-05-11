@@ -18,7 +18,17 @@ import { StorageLocationService } from 'src/app/core/storage-service/storage-loc
 export class PropertyEditorComponent implements OnDestroy {
 
     formGroup: FormGroup;
-    formField: FormField;
+
+    // tslint:disable-next-line: variable-name
+    private _formField: FormField;
+    get formField(): FormField {
+        return this._formField;
+    }
+    set formField(ff: FormField | null) {
+        this.unsubscribe();
+        this.formGroup = null;
+        this._formField = ff;
+    }
 
     subscriptions: Subscription[] = [];
 
@@ -34,8 +44,15 @@ export class PropertyEditorComponent implements OnDestroy {
         this.createForm(field.model);
     }
 
+    isDirty() {
+        if (this.formGroup) {
+            return this.formGroup.dirty;
+        }
+        return false;
+    }
+
     private createForm(model: DynamicFormModel) {
-        this.unsubscribe();
+        // this.unsubscribe();
 
         // form builder, label and placeholder
         const ff: {[k: string]: any} = {};

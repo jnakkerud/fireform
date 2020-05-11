@@ -21,7 +21,7 @@ import { SendInvitationComponent, SendInvitationModule } from '../send-invitatio
 })
 
 export class EditCollectionComponent {
-    editItem: CollectionItem = {id: '', name: ''};
+    editItem: CollectionItem;
     showEditor = false;
 
     // We need a setter here cause the CollectionSettingsComponent is hidden initially
@@ -77,7 +77,6 @@ export class EditCollectionComponent {
 
     onGenerateLink() {
         // show the generated link in a dialog
-
         // pass in the edit item to the dialog
         this.dialog.open(GenerateLinkComponent, {
             width: '450px',
