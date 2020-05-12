@@ -8,7 +8,8 @@ import {
     OnDestroy,
     ViewChild,
     OnChanges,
-    SimpleChanges } from '@angular/core';
+    SimpleChanges,
+    HostListener} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -172,6 +173,11 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
 
     constructor(private collectionService: CollectionService) { }
 
+    @HostListener('window:beforeunload')
+    beforeunloadHandler() {
+        this.save(this.collectionItem);
+    }
+
     ngAfterViewInit(): void {
         this.fieldSnippets.changes.pipe(takeUntil(this.destroyed)).subscribe(e => {
             this.selectField();
@@ -266,9 +272,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
     save(item: CollectionItem) {
         if (item && (this.propertyEditor.isDirty() || this.dirty)) {
             item.form = this.toJson();
-            this.collectionService.upsertItem(item).subscribe(data => {
-                console.log('saved', data.form);
-            });
+            this.collectionService.upsertItem(item).subscribe();
         }
     }
 
