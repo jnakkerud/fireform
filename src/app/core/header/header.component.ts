@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
         private route: ActivatedRoute,
         private userService: UserService,
         private authService: AuthService,
-        private rencentlyUsedService: RecentlyUsedService) { }
+        private recentlyUsedService: RecentlyUsedService) { }
 
     ngOnInit() {
         // Detect global router changes and set drop down if needed
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
         if (id && id !== 'create') {
             this.showSelect = true;
             if (!this.recentlyUsedItems) {
-                this.recentlyUsedItems = this.rencentlyUsedService.get();
+                this.recentlyUsedItems = this.recentlyUsedService.get();
             }
 
             this.selected = id;
