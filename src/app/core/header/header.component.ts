@@ -75,7 +75,7 @@ export class HeaderComponent implements OnInit {
     }
 
     openUserPanel() {
-        this.userService.getCurrentUser().then(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             if (user) {
                 // console.log('panel opened: ' + JSON.stringify(user));
                 this.userEmail = user.email;

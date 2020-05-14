@@ -6,16 +6,18 @@ import {
     CanActivate,
     CanActivateChild } from '@angular/router';
 
-import { UserService } from './user.service';
+import { map, take } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanActivateChild {
 
-    constructor(public userService: UserService, public router: Router) { }
+    constructor(private afAuth: AngularFireAuth, public router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
         return new Promise((resolve) => {
-            this.isLoggedIn().then(loggedIn => {
+            this.isLoggedIn().subscribe(loggedIn => {
                 if (!loggedIn) {
                     this.router.navigate(['login']);
                     return resolve(false);
@@ -29,15 +31,10 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
         return this.canActivate(route, state);
     }
 
-    private isLoggedIn(): Promise<boolean> {
-        return new Promise((resolve) => {
-            this.userService.getCurrentUser()
-                .then(user => {
-                    if (user?.email) {
-                        return resolve(true);
-                    }
-                    return resolve(false);
-                });
-        });
+    isLoggedIn(): Observable<boolean> {
+        return this.afAuth.authState.pipe(
+            take(1),
+            map(user => !!user)
+        );
     }
 }

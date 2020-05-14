@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { firebase } from '@firebase/app';
+import { BehaviorSubject } from 'rxjs';
 
 export interface User {
     email: string;
@@ -13,18 +14,19 @@ export interface User {
 @Injectable()
 export class UserService {
 
-    user: User;
+    user: BehaviorSubject<User> = new BehaviorSubject(null);
 
     constructor(private afAuth: AngularFireAuth) {
         this.afAuth.authState.subscribe(authUser => {
-            // Extract the subset from authUser
-            this.user = (({ email, isAnonymous, refreshToken, uid }) => ({ email, isAnonymous, refreshToken, uid }))(authUser);
+            if (authUser) {
+                this.user.next((({ email, isAnonymous, refreshToken, uid }) => ({ email, isAnonymous, refreshToken, uid }))(authUser));
+            } else {
+                this.user.next(null);
+            }
         });
     }
 
-    getCurrentUser(): Promise<User> {
-        return new Promise<User>((resolve) => {
-            resolve(this.user);
-        });
+    getCurrentUser(): BehaviorSubject<User | null> {
+        return this.user;
     }
 }
