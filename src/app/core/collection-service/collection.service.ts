@@ -4,6 +4,16 @@ import { map, take } from 'rxjs/operators';
 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
+export interface Point {
+    value: string | number | boolean;   // data value to match
+    points: number;
+}
+
+export interface GradeResponse {
+    field: string;
+    point: Point[];
+}
+
 export interface CollectionItem {
     id: string;
     name: string;
@@ -12,6 +22,7 @@ export interface CollectionItem {
     activeLink?: string;
     allowMultiple?: boolean;
     trackResponses?: boolean;
+    gradeResponse?: GradeResponse[];
 }
 
 @Injectable({
