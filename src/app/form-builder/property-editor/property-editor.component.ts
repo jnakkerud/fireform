@@ -52,7 +52,6 @@ export class PropertyEditorComponent implements OnDestroy {
     }
 
     private createForm(model: DynamicFormModel) {
-        // this.unsubscribe();
 
         // form builder, label and placeholder
         const ff: {[k: string]: any} = {};

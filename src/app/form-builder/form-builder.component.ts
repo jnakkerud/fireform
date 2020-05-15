@@ -13,6 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { DragDropModule, CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
 
@@ -25,7 +26,7 @@ import { PropertyEditorComponent } from './property-editor/property-editor.compo
 import { CollectionItem, CollectionService } from '../core/collection-service/collection.service';
 import { OptionEditorModule } from '../option-editor/option-editor.component';
 import { ImageInputModule } from '../image-input/image-input.component';
-import { takeUntil } from 'rxjs/operators';
+import { GradeEditorComponent } from './grade-editor/grade-editor.component';
 
 export interface FormConfig {
     config: DynamicFormControlModelConfig;
@@ -293,7 +294,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         OptionEditorModule,
         ImageInputModule,
         CommonModule],
-    exports: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent],
-    declarations: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent],
+    exports: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent, GradeEditorComponent],
+    declarations: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent, GradeEditorComponent],
   })
   export class FormBuilderModule {}
