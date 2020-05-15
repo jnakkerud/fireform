@@ -8,6 +8,11 @@ import { isDate } from '../utils';
 import { take, map, concatMap, filter, reduce, pluck } from 'rxjs/operators';
 import { from, pairs, Observable } from 'rxjs';
 
+interface AdditionalData {
+    timestamp: firebase.firestore.FieldValue;
+    grade?: number;
+}
+
 export function totalGrade(gradeResponse: GradeResponse[]): Observable<number> {
     return from(gradeResponse).pipe(
         concatMap(g => from(g.point).pipe(pluck('points'))),
@@ -15,18 +20,12 @@ export function totalGrade(gradeResponse: GradeResponse[]): Observable<number> {
     );
 }
 
-export function grade(gradeResponse: GradeResponse[], data: any ): Observable<number> {
-
-    // 1) iterate over the array of grade responses
-    // find the matching field in the data object
-
-    // 2) Now take the Point array from the matched GradeResponse and match the value
-    // or values from the matched field in the data object.  Accumulate the total
-
-    // 3) add up all the sub-totals together to arrive at a grand total which is the grade
+export function grade(gradeResponse: GradeResponse[], data: any): Observable<number> {
 
     const dataPairs = pairs(data);
 
+    // filter by matching the field in the data object
+    // to the GradeResponse, merge the result
     const filtered = from(gradeResponse).pipe(
         concatMap(g => dataPairs.pipe(
             filter(pair => g.field === pair[0]),
@@ -34,6 +33,7 @@ export function grade(gradeResponse: GradeResponse[], data: any ): Observable<nu
         )
     ));
 
+    // match the values, then calculate a total
     const res = filtered.pipe(
         concatMap(val => from(val.g.point).pipe(
             filter(point => val.p.includes(point.value)),
@@ -52,7 +52,7 @@ export class DataService {
 
     constructor(private afs: AngularFirestore) {}
 
-    add(item: CollectionItem, data: any) {
+    public async add(item: CollectionItem, data: any) {
         // Note that dates have to be converted to firestore Timestamp
         const validData = {};
 
@@ -64,15 +64,15 @@ export class DataService {
             validData[key] = val;
         });
 
+        // add a timestamp
+        const additionalData: AdditionalData = {timestamp: firebase.firestore.FieldValue.serverTimestamp()};
+
         if (item.gradeResponse) {
-            // TODO grade the response
+            additionalData.grade = await this.gradeResponse(item.gradeResponse, data);
         }
 
-        // add a timestamp and TODO add grade
-        const ts = {timestamp: firebase.firestore.FieldValue.serverTimestamp()};
-
         // merge
-        const mergedData = {...ts, ...validData};
+        const mergedData = {...additionalData, ...validData};
 
         // TODO return data
 
@@ -91,5 +91,9 @@ export class DataService {
                     return data;
                 })
             ).toPromise();
+    }
+
+    private gradeResponse(gradeResponse: GradeResponse[], data: any): Promise<number> {
+        return grade(gradeResponse, data).toPromise();
     }
 }
