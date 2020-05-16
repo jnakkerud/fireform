@@ -19,6 +19,8 @@ export class PropertyEditorComponent implements OnDestroy {
 
     formGroup: FormGroup;
 
+    collectionItem: CollectionItem;
+
     // tslint:disable-next-line: variable-name
     private _formField: FormField;
     get formField(): FormField {

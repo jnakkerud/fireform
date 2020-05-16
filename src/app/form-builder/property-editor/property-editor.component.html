@@ -21,13 +21,14 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
-                <!--<grade-editor></grade-editor>-->              
+                <grade-editor fieldType="text" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
             </ng-template>
             <ng-template [ngSwitchCase]="'textarea'">
                 <mat-form-field>
                     <input matInput placeholder="Placeholder" formControlName="placeholder">
                 </mat-form-field>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
+                <grade-editor fieldType="text" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
             </ng-template>
             <ng-template [ngSwitchCase]="'date'">
                 <mat-form-field>

@@ -6,15 +6,20 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
     
-        <mat-form-field>
-          <mat-label>Value</mat-label>
-          <input matInput>
-        </mat-form-field>
-    
-        <mat-form-field>
-          <mat-label>Points</mat-label>
-          <input matInput type="number" min="1">
-        </mat-form-field>
-    
+        <form [formGroup]="group">
+        <ng-container [ngSwitch]="fieldType">
+            <ng-template [ngSwitchCase]="'text'">
+                <mat-form-field>
+                    <mat-label>Value</mat-label>
+                    <input formControlName="matchValue" matInput>
+                </mat-form-field>
+            
+                <mat-form-field>
+                    <mat-label>Points</mat-label>
+                    <input matInput formControlName="points" type="number" min="1">
+                </mat-form-field>
+            </ng-template>
+        </ng-container>
+        </form>
     </mat-expansion-panel>    
 </mat-accordion>
