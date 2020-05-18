@@ -15,7 +15,7 @@ interface AdditionalData {
 
 export function totalGrade(gradeResponse: GradeResponse[]): Observable<number> {
     return from(gradeResponse).pipe(
-        concatMap(g => from(g.point).pipe(pluck('points'))),
+        concatMap(g => from(g.points).pipe(pluck('point'))),
         reduce((acc, val) => acc + val)
     );
 }
@@ -35,9 +35,9 @@ export function grade(gradeResponse: GradeResponse[], data: any): Observable<num
 
     // match the values, then calculate a total
     const res = filtered.pipe(
-        concatMap(val => from(val.g.point).pipe(
+        concatMap(val => from(val.g.points).pipe(
             filter(point => val.p.includes(point.value)),
-            map(v => v.points)
+            map(v => v.point)
         )),
         reduce((acc, val) => acc + val)
     );

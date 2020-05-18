@@ -6,13 +6,12 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 
 export interface Point {
     value: string | number | boolean;   // data value to match
-    points: number;
+    point: number;
 }
 
 export interface GradeResponse {
     field: string;
-    // TODO change to points
-    point: Point[];
+    points: Point[];
 }
 
 export interface CollectionItem {

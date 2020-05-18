@@ -46,7 +46,7 @@ export class GradeEditorComponent {
         if (!this._gradeResponse) {
             this._gradeResponse = {
                 field: this.formField.fieldId,
-                point: []
+                points: []
             };
         }
         return this._gradeResponse;
@@ -71,7 +71,7 @@ export class GradeEditorComponent {
 
         if (this.fieldType === 'text') {
             // TODO seed the empty array
-            const points = this.gradeResponse.point;
+            const points = this.gradeResponse.points;
 
             this.group = this.formBuilder.group({
                 matchValue: [''],
