@@ -53,6 +53,15 @@ export class FormField {
         }
         return m;
     }
+
+    get fieldId(): string {
+        const m = this.model[0];
+        if (m.id) {
+            return m.id;
+        }
+        // generate a temp id
+        return '';
+    }
 }
 
 /** Clamps a number between zero and a maximum. */

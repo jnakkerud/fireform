@@ -1,11 +1,12 @@
 <mat-accordion class="example-headers-align">
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened) = "onOpen()">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Grade Response
           </mat-panel-title>
         </mat-expansion-panel-header>
     
+        <ng-container *ngIf="group">
         <form [formGroup]="group">
         <ng-container [ngSwitch]="fieldType">
             <ng-template [ngSwitchCase]="'text'">
@@ -19,7 +20,20 @@
                     <input matInput formControlName="points" type="number" min="1">
                 </mat-form-field>
             </ng-template>
+            <ng-template [ngSwitchCase]="'options'">
+                <div formArrayName="options" class="ff-selection-list">
+                    <section *ngFor="let option of options.controls; let i = index" [formGroupName]="i" class="fields-section">
+                        <input hidden formControlName="value">                        
+                        <mat-label>{{option.get('label').value}}</mat-label>                        
+                        <mat-form-field class="points-field">
+                            <mat-label>Points</mat-label>
+                            <input matInput formControlName="points" type="number" min="1">
+                        </mat-form-field>                        
+                    </section>
+                </div>                
+            </ng-template>
         </ng-container>
         </form>
+    </ng-container>
     </mat-expansion-panel>    
 </mat-accordion>

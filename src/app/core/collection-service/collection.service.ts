@@ -11,6 +11,7 @@ export interface Point {
 
 export interface GradeResponse {
     field: string;
+    // TODO change to points
     point: Point[];
 }
 
