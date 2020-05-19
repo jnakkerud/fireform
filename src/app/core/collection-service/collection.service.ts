@@ -44,6 +44,7 @@ export class CollectionService {
         return this.itemsCollection.valueChanges();
     }
 
+    // TODO support Promise
     upsertItem(item: CollectionItem): Observable<CollectionItem> {
         if (item.id === '-1') {
             // create a new ID
@@ -62,6 +63,10 @@ export class CollectionService {
                     }, err => observer.error(err));
             });
         }
+    }
+
+    update(item: CollectionItem): Promise<void> {
+        return this.itemsCollection.doc(item.id).update(item);
     }
 
     getItem(id: string): Observable<CollectionItem> {

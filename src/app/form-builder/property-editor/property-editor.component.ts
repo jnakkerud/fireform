@@ -1,5 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, AbstractControl, FormArray } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -15,7 +15,7 @@ import { StorageLocationService } from 'src/app/core/storage-service/storage-loc
     styleUrls: ['./property-editor.component.scss'],
     providers: [StorageLocationService]
 })
-export class PropertyEditorComponent implements OnDestroy {
+export class PropertyEditorComponent implements OnDestroy, OnInit {
 
     formGroup: FormGroup;
 
@@ -34,7 +34,13 @@ export class PropertyEditorComponent implements OnDestroy {
 
     subscriptions: Subscription[] = [];
 
+    public dirty: boolean;
+
     constructor(private formBuilder: FormBuilder, private storageLocation: StorageLocationService) { }
+
+    ngOnInit() {
+        this.dirty = false;
+    }
 
     ngOnDestroy() {
         this.unsubscribe();
@@ -45,13 +51,6 @@ export class PropertyEditorComponent implements OnDestroy {
         this.storageLocation.path = collectionItem.id;
         this.formField = field;
         this.createForm(field.model);
-    }
-
-    isDirty() {
-        if (this.formGroup) {
-            return this.formGroup.dirty;
-        }
-        return false;
     }
 
     private createForm(model: DynamicFormModel) {
@@ -99,7 +98,7 @@ export class PropertyEditorComponent implements OnDestroy {
     }
 
     private subscribeValueChange(control: AbstractControl, key: string) {
-        this.subscriptions.push(control.valueChanges.subscribe(val => { this.formField.model[0][key] = val; }));
+        this.subscriptions.push(control.valueChanges.subscribe(val => { this.formField.model[0][key] = val; this.dirty = true; }));
     }
 
     private unsubscribe() {

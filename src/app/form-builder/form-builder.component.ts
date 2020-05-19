@@ -183,9 +183,16 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
 
     constructor(private collectionService: CollectionService) { }
 
-    @HostListener('window:beforeunload')
-    beforeunloadHandler() {
-        this.save(this.collectionItem);
+    @HostListener('window:beforeunload', ['$event'])
+    beforeunloadHandler(event: Event) {
+        // Will prompt a user of true,  can be a string value for older browsers
+        if (this.isDirty()) {
+            event.preventDefault();
+            this.save(this.collectionItem);
+            const message: any = typeof event.returnValue === 'boolean' ? this.isDirty() : 'Leave form?';
+            return (event.returnValue = message);
+        }
+        return null;
     }
 
     ngAfterViewInit(): void {
@@ -279,11 +286,17 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         }
     }
 
-    save(item: CollectionItem) {
-        if (item && (this.propertyEditor.isDirty() || this.dirty)) {
+    async save(item: CollectionItem) {
+        if (item && this.isDirty()) {
             item.form = this.toJson();
-            this.collectionService.upsertItem(item).subscribe();
+            await this.collectionService.update(item);
+            this.dirty = false;
+            this.propertyEditor.dirty = false;
         }
+    }
+
+    private isDirty(): boolean {
+        return (this.propertyEditor.dirty || this.dirty);
     }
 
     private initializeFormFields() {
