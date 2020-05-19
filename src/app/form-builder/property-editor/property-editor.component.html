@@ -59,7 +59,10 @@
             </ng-template >
             <ng-template [ngSwitchCase]="'image'">
                 <image-input formControlName="fileName"></image-input>
-            </ng-template >                                       
+            </ng-template >
+            <ng-template [ngSwitchCase]="'toggle'">
+                <grade-editor [formField]="formField" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
+            </ng-template >                                                
         </ng-container>
 
     </form>

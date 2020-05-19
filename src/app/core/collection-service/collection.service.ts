@@ -5,8 +5,8 @@ import { map, take } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 export interface Point {
-    value: string | number | boolean;   // data value to match
-    point: number;
+    value?: string | number | boolean;   // data value to match
+    point?: number;
 }
 
 export interface GradeResponse {

@@ -69,12 +69,18 @@ export class GradeEditorComponent {
     // TODO refactor for better readability ?
     createForm() {
 
-        if (this.fieldType === 'text') {
-            // TODO seed the empty array
-            const points = this.gradeResponse.points;
+        // TODO seed the empty array
+        const points = this.gradeResponse.points;
 
+        if (this.fieldType === 'text') {
             this.group = this.formBuilder.group({
                 matchValue: [''],
+                points: ['']
+            });
+        } else if (this.fieldType === 'boolean') {
+            // points[0] = {value: true};
+            this.group = this.formBuilder.group({
+                matchValue: ['true'],
                 points: ['']
             });
         } else if (this.fieldType === 'options') {
