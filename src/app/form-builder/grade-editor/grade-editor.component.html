@@ -12,22 +12,22 @@
             <ng-template [ngSwitchCase]="'text'">
                 <mat-form-field>
                     <mat-label>Value</mat-label>
-                    <input formControlName="matchValue" matInput>
+                    <input formControlName="value" matInput>
                 </mat-form-field>
             
                 <mat-form-field>
                     <mat-label>Points</mat-label>
-                    <input matInput formControlName="points" type="number" min="1">
+                    <input matInput formControlName="point" type="number" min="1">
                 </mat-form-field>
             </ng-template>
             <ng-template [ngSwitchCase]="'boolean'">
-                <mat-radio-group formControlName="matchValue">
+                <mat-radio-group formControlName="value">
                     <mat-radio-button value="true">True</mat-radio-button>
                     <mat-radio-button value="false">False</mat-radio-button>
                 </mat-radio-group>
                 <mat-form-field>
                     <mat-label>Points</mat-label>
-                    <input matInput formControlName="points" type="number" min="1">
+                    <input matInput formControlName="point" type="number" min="1">
                 </mat-form-field>
             </ng-template>            
             <ng-template [ngSwitchCase]="'options'">
@@ -37,7 +37,7 @@
                         <mat-label>{{option.get('label').value}}</mat-label>                        
                         <mat-form-field class="points-field">
                             <mat-label>Points</mat-label>
-                            <input matInput formControlName="points" type="number" min="1">
+                            <input matInput formControlName="point" type="number" min="1">
                         </mat-form-field>                        
                     </section>
                 </div>                

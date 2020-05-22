@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl, FormArray } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -7,6 +7,7 @@ import { FormField } from '../form-builder.component';
 import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
 import { CollectionItem } from 'src/app/core/collection-service/collection.service';
 import { StorageLocationService } from 'src/app/core/storage-service/storage-location.service';
+import { PropertyEditor, FormBuilderStore } from '../form-builder-store.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -15,11 +16,9 @@ import { StorageLocationService } from 'src/app/core/storage-service/storage-loc
     styleUrls: ['./property-editor.component.scss'],
     providers: [StorageLocationService]
 })
-export class PropertyEditorComponent implements OnDestroy, OnInit {
+export class PropertyEditorComponent implements OnDestroy, PropertyEditor {
 
     formGroup: FormGroup;
-
-    collectionItem: CollectionItem;
 
     // tslint:disable-next-line: variable-name
     private _formField: FormField;
@@ -34,23 +33,24 @@ export class PropertyEditorComponent implements OnDestroy, OnInit {
 
     subscriptions: Subscription[] = [];
 
-    public dirty: boolean;
-
-    constructor(private formBuilder: FormBuilder, private storageLocation: StorageLocationService) { }
-
-    ngOnInit() {
-        this.dirty = false;
-    }
+    constructor(
+        private formBuilder: FormBuilder,
+        private storageLocation: StorageLocationService,
+        private formBuilderStore: FormBuilderStore) { }
 
     ngOnDestroy() {
         this.unsubscribe();
     }
 
     bindEditor(field: FormField, collectionItem: CollectionItem) {
-        this.collectionItem = collectionItem;
+        this.formBuilderStore.bindPropertyEditor(this);
         this.storageLocation.path = collectionItem.id;
         this.formField = field;
         this.createForm(field.model);
+    }
+
+    isDirty(): boolean {
+        return this.formGroup.dirty;
     }
 
     private createForm(model: DynamicFormModel) {
@@ -98,7 +98,7 @@ export class PropertyEditorComponent implements OnDestroy, OnInit {
     }
 
     private subscribeValueChange(control: AbstractControl, key: string) {
-        this.subscriptions.push(control.valueChanges.subscribe(val => { this.formField.model[0][key] = val; this.dirty = true; }));
+        this.subscriptions.push(control.valueChanges.subscribe(val => { this.formField.model[0][key] = val; }));
     }
 
     private unsubscribe() {

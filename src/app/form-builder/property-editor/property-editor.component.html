@@ -21,14 +21,14 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
-                <grade-editor [formField]="formField" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
+                <grade-editor [formField]="formField" [formGroup]="formGroup"></grade-editor>
             </ng-template>
             <ng-template [ngSwitchCase]="'textarea'">
                 <mat-form-field>
                     <input matInput placeholder="Placeholder" formControlName="placeholder">
                 </mat-form-field>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
-                <grade-editor [formField]="formField" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
+                <grade-editor [formField]="formField" [formGroup]="formGroup"></grade-editor>
             </ng-template>
             <ng-template [ngSwitchCase]="'date'">
                 <mat-form-field>
@@ -41,27 +41,27 @@
                     <option-editor arrayName="options"></option-editor>
                 </div>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
-                <grade-editor [formField]="formField" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
+                <grade-editor [formField]="formField" [formGroup]="formGroup"></grade-editor>
             </ng-template >
             <ng-template [ngSwitchCase]="'radiogroup'">
                 <div class="mat-form-field-wrapper">
                     <option-editor arrayName="options"></option-editor>
                 </div>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
-                <grade-editor [formField]="formField" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
+                <grade-editor [formField]="formField" [formGroup]="formGroup"></grade-editor>
             </ng-template >
             <ng-template [ngSwitchCase]="'select'">
                 <div class="mat-form-field-wrapper">
                     <option-editor arrayName="options"></option-editor>
                 </div>
                 <mat-slide-toggle formControlName="required">Required</mat-slide-toggle>
-                <grade-editor [formField]="formField" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
+                <grade-editor [formField]="formField" [formGroup]="formGroup"></grade-editor>
             </ng-template >
             <ng-template [ngSwitchCase]="'image'">
                 <image-input formControlName="fileName"></image-input>
             </ng-template >
             <ng-template [ngSwitchCase]="'toggle'">
-                <grade-editor [formField]="formField" [formGroup]="formGroup" [collectionItem]="collectionItem"></grade-editor>
+                <grade-editor [formField]="formField" [formGroup]="formGroup"></grade-editor>
             </ng-template >                                                
         </ng-container>
 

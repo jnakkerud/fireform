@@ -6,7 +6,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 
 export interface Point {
     value?: string | number | boolean;   // data value to match
-    point?: number;
+    point?: number | null;
 }
 
 export interface GradeResponse {

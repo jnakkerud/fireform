@@ -1,10 +1,19 @@
-import { Component, OnInit, Input, KeyValueDiffers } from '@angular/core';
+import { Component, Input, KeyValueDiffers, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
-import { CollectionItem, GradeResponse } from 'src/app/core/collection-service/collection.service';
+import { GradeResponse } from 'src/app/core/collection-service/collection.service';
 import { FormField } from '../form-builder.component';
+import { FormBuilderStore, GradeEditor } from '../form-builder-store.service';
+import { filter, map, tap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 
 type FieldType = 'text' | 'options' | 'boolean';
+
+interface Option {
+    value?: string;
+    point?: number;
+    label?: string;
+}
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -12,15 +21,15 @@ type FieldType = 'text' | 'options' | 'boolean';
     templateUrl: 'grade-editor.component.html',
     styleUrls: ['./grade-editor.component.scss']
 })
-export class GradeEditorComponent {
+export class GradeEditorComponent implements OnInit, GradeEditor {
 
     @Input() formField: FormField;
 
     @Input() formGroup: FormGroup;
 
-    @Input() collectionItem: CollectionItem;
-
     group: FormGroup;
+
+    gradeResponse: GradeResponse;
 
     get fieldType(): FieldType {
         switch ( this.formField.type) {
@@ -40,59 +49,33 @@ export class GradeEditorComponent {
         return this.group.get('options') as FormArray;
     }
 
-    // tslint:disable-next-line: variable-name
-    private _gradeResponse: GradeResponse;
-    get gradeResponse(): GradeResponse {
-        if (!this._gradeResponse) {
-            this._gradeResponse = {
-                field: this.formField.fieldId,
-                points: []
-            };
-        }
-        return this._gradeResponse;
-    }
-    set gradeResponse(gradeResponse: GradeResponse) {
-        this._gradeResponse = gradeResponse;
-    }
+    constructor(private formBuilder: FormBuilder, private kvDiffers: KeyValueDiffers, private formBuilderStore: FormBuilderStore) { }
 
-    constructor(private formBuilder: FormBuilder, private kvDiffers: KeyValueDiffers) { }
+    ngOnInit() {
+        this.formBuilderStore.bindGradeEditor(this);
+    }
 
     onOpen() {
         if (!this.group) {
-            if (this.collectionItem?.gradeResponse) {
-                this.gradeResponse = this.collectionItem.gradeResponse.find(gr => gr.field === this.formField.fieldId);
-            }
             this.createForm();
         }
     }
 
-    // TODO refactor for better readability ?
     createForm() {
-
-        // TODO seed the empty array
+        this.gradeResponse = this.formBuilderStore.getGradeResponse();
         const points = this.gradeResponse.points;
 
-        if (this.fieldType === 'text') {
-            this.group = this.formBuilder.group({
-                matchValue: [''],
-                points: ['']
-            });
-        } else if (this.fieldType === 'boolean') {
-            // points[0] = {value: true};
-            this.group = this.formBuilder.group({
-                matchValue: ['true'],
-                points: ['']
-            });
-        } else if (this.fieldType === 'options') {
+        if (this.fieldType === 'options') {
             // create a array of form groups
             const model = this.formField.model[0];
 
             const formGroups: FormGroup[] = [];
-            for (const cfg of model.options) {
+            for (const option of model.options) {
+                const pt = points.find(point => point.value === option.value);
                 formGroups.push(this.formBuilder.group({
-                    label: [cfg.label],
-                    value: [cfg.value],
-                    points: ['']
+                    label: [option.label],
+                    value: [option.value],
+                    point: [pt ? pt.point : '']
                 }));
             }
 
@@ -100,21 +83,20 @@ export class GradeEditorComponent {
                 options: this.formBuilder.array(formGroups)
             });
 
-            // Listen for changes to the options array of {label, value}
+            // Listen for changes to the options control of {label, value}
             const optionsControl = this.formGroup.get('options');
-            // console.log('optionsControl', optionsControl.value)
             const arrayDiffer = this.kvDiffers.find(optionsControl.value).create<string, string>();
             // TODO Not sure why have to do this hack !!
             arrayDiffer.diff(optionsControl.value);
 
-            optionsControl.valueChanges.subscribe(optionsArray => {
+            optionsControl.valueChanges.subscribe(() => {
                 const diff = arrayDiffer.diff(optionsControl.value);
                 if (diff) {
-                    diff.forEachAddedItem((record) => {
+                    diff.forEachAddedItem(() => {
                         this.options.push(this.formBuilder.group({
                             label: [''],
                             value: [''],
-                            points: ['']
+                            point: ['']
                         }));
                     });
                     diff.forEachRemovedItem(record => {
@@ -125,9 +107,37 @@ export class GradeEditorComponent {
                     });
                 }
             });
-
+        } else {
+            this.group = this.formBuilder.group({
+                value: [points[0].value],
+                point: [points[0].point]
+            });
         }
-
     }
 
+    isDirty(): boolean {
+        if (this.group) {
+            return this.group.dirty;
+        }
+        return false;
+    }
+
+    updatedGradeResponse(): Promise<GradeResponse> {
+        return new Promise<GradeResponse>(resolve => {
+            const val = this.group.value;
+            if (val.hasOwnProperty('options')) {
+                this.gradeResponse.points = [];
+                const options = from(val.options) as Observable<Option>;
+                options.pipe(
+                    filter(option => (typeof option.point === 'number') && (option.point > 0)),
+                    map(option => ({value: option.value, point: option.point})),
+                    tap(v =>  this.gradeResponse.points.push(v))
+                ).subscribe(() => resolve(this.gradeResponse));
+
+            } else {
+                this.gradeResponse.points[0] = val;
+                resolve(this.gradeResponse);
+            }
+        });
+    }
 }

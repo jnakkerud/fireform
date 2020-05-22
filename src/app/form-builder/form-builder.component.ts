@@ -8,8 +8,7 @@ import {
     OnDestroy,
     ViewChild,
     OnChanges,
-    SimpleChanges,
-    HostListener} from '@angular/core';
+    SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -23,10 +22,11 @@ import { DynamicFormControlModelConfig, DynamicFormControlModel } from '../dynam
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
-import { CollectionItem, CollectionService } from '../core/collection-service/collection.service';
+import { CollectionItem } from '../core/collection-service/collection.service';
 import { OptionEditorModule } from '../option-editor/option-editor.component';
 import { ImageInputModule } from '../image-input/image-input.component';
 import { GradeEditorComponent } from './grade-editor/grade-editor.component';
+import { FormBuilderStore } from './form-builder-store.service';
 
 export interface FormConfig {
     config: DynamicFormControlModelConfig;
@@ -36,35 +36,18 @@ export interface FormConfig {
 export class FormField {
     type: string;
     name: string;
+    fieldId: string;
     model: DynamicFormModel;
 
     constructor(formConfig: FormConfig) {
         this.name = formConfig.name;
         this.type = formConfig.config.type;
         this.model = [new DynamicFormControlModel(formConfig.config)];
-    }
-
-    get resolveModel(): DynamicFormControlModel {
-        // resolve and validate the model
-        const m = this.model[0];
-        if (!m.id) {
-            const label = m.label;
-            m.id = label ? label.split(' ').join('_').toLowerCase() : Math.random().toString(36).substr(2, 9);
-        }
-        return m;
-    }
-
-    get fieldId(): string {
-        const m = this.model[0];
-        if (m.id) {
-            return m.id;
-        }
-        // generate a temp id
-        return '';
+        this.fieldId = this.model[0].id ? this.model[0].id : '_' + Math.random().toString(36).substr(2, 9);
     }
 }
 
-/** Clamps a number between zero and a maximum. */
+// Clamps a number between zero and a maximum.
 function clamp(value: number, max: number): number {
     return Math.max(0, Math.min(max, value));
 }
@@ -74,7 +57,6 @@ function clone(formField: FormField): FormField {
         { config:
             {
                 type: formField.type,
-                id: '',
                 label: `${formField.name} Label`
             }
         }
@@ -153,7 +135,8 @@ const FORM_CONTROLS: FormConfig[] = [
 @Component({
     selector: 'app-form-builder',
     templateUrl: 'form-builder.component.html',
-    styleUrls: ['./form-builder.component.scss']
+    styleUrls: ['./form-builder.component.scss'],
+    providers: [FormBuilderStore]
 })
 export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges {
 
@@ -161,10 +144,9 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
 
     @Input() collectionItem: CollectionItem;
 
-    public formFields: FormField[] = [];
+    formFields: FormField[] = [];
 
     private destroyed = new Subject<void>();
-    private dirty = false;
 
     private formControls: FormField[];
     get controls(): FormField[] {
@@ -181,19 +163,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
 
     @ViewChild(PropertyEditorComponent) propertyEditor !: PropertyEditorComponent;
 
-    constructor(private collectionService: CollectionService) { }
-
-    @HostListener('window:beforeunload', ['$event'])
-    beforeunloadHandler(event: Event) {
-        // Will prompt a user of true,  can be a string value for older browsers
-        if (this.isDirty()) {
-            event.preventDefault();
-            this.save(this.collectionItem);
-            const message: any = typeof event.returnValue === 'boolean' ? this.isDirty() : 'Leave form?';
-            return (event.returnValue = message);
-        }
-        return null;
-    }
+    constructor(private formBuilderStore: FormBuilderStore) { }
 
     ngAfterViewInit(): void {
         this.fieldSnippets.changes.pipe(takeUntil(this.destroyed)).subscribe(e => {
@@ -202,7 +172,6 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
     }
 
     ngOnDestroy(): void {
-        this.save(this.collectionItem);
         this.destroyed.next();
         this.destroyed.complete();
     }
@@ -211,17 +180,16 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         if (changes.hasOwnProperty('collectionItem')) {
             const collectionItemChange = changes.collectionItem;
             if (collectionItemChange.currentValue !== collectionItemChange.previousValue) {
-                this.save(collectionItemChange.previousValue);
+                this.formBuilderStore.setCollectionItem(collectionItemChange.currentValue);
                 this.propertyEditor.formField = null;
                 this.formFields = [];
-                this.dirty = false;
                 this.initializeFormFields();
+                this.formBuilderStore.setFormFields(this.formFields);
             }
         }
     }
 
     drop(event: CdkDragDrop<FormField[]>) {
-        this.dirty = true;
         if (event.previousContainer === event.container) {
             this.selectedIndex = event.currentIndex;
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -242,23 +210,6 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
             const from = clamp(event.previousIndex, currentArray.length - 1);
             currentArray.splice(from, 1);
         }
-    }
-
-    toJson(): string {
-        const model = [];
-
-        for (const ff of this.formFields) {
-            model.push(ff.resolveModel);
-        }
-
-        const formJson = JSON.stringify(model, (key, value) => {
-            // Filtering out null properties
-            if (value === null) {
-                return undefined;
-            }
-            return value;
-        });
-        return formJson;
     }
 
     fromJson(fromJson: string): FormField[] {
@@ -286,19 +237,6 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         }
     }
 
-    async save(item: CollectionItem) {
-        if (item && this.isDirty()) {
-            item.form = this.toJson();
-            await this.collectionService.update(item);
-            this.dirty = false;
-            this.propertyEditor.dirty = false;
-        }
-    }
-
-    private isDirty(): boolean {
-        return (this.propertyEditor.dirty || this.dirty);
-    }
-
     private initializeFormFields() {
         if (this.collectionItem && this.collectionItem.form) {
             this.formFields = this.fromJson(this.collectionItem.form);
@@ -318,5 +256,6 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         CommonModule],
     exports: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent, GradeEditorComponent],
     declarations: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent, GradeEditorComponent],
+    providers: [FormBuilderStore]
   })
   export class FormBuilderModule {}
