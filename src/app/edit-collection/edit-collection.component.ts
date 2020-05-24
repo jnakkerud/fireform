@@ -42,7 +42,7 @@ export class EditCollectionComponent {
         private downloadService: DownloadService,
         private recentlyUsedService: RecentlyUsedService) {
         this.route.params.subscribe(p => {
-            this.collectionService.getItem(p.id).subscribe(item => {
+            this.collectionService.getItem(p.id).then(item => {
                 this.editItem = item;
                 this.recentlyUsedService.set(this.editItem.id);
             });

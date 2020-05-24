@@ -98,7 +98,7 @@ export class CollectionSettingsComponent implements OnInit, OnDestroy {
             description: this.formGroup.get('description').value,
             allowMultiple: this.formGroup.get('allowMultiple').value,
             trackResponses: this.formGroup.get('trackResponses').value
-        }).subscribe(item => {
+        }).then(item => {
             // fire submit event
             this.save.emit(item);
         });

@@ -196,7 +196,7 @@ export class FormCompleteComponent {
 
     constructor(private route: ActivatedRoute, private collectionService: CollectionService) {
         this.route.params.subscribe(p => {
-            this.collectionService.getItem(p.id).subscribe(item => {
+            this.collectionService.getItem(p.id).then(item => {
                 this.item = item;
                 this.url = item?.allowMultiple === false ? null : `${window.location.origin}/form/${item.activeLink}`;
                 const s = this.route.snapshot.queryParamMap.get('s');

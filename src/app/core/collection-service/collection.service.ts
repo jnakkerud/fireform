@@ -44,38 +44,36 @@ export class CollectionService {
         return this.itemsCollection.valueChanges();
     }
 
-    // TODO support Promise
-    upsertItem(item: CollectionItem): Observable<CollectionItem> {
-        if (item.id === '-1') {
-            // create a new ID
-            item.id = this.afs.createId();
-            this.itemsCollection.doc(item.id).set(item);
-            return of(item);
-        } else {
-            return new Observable((observer: Observer<CollectionItem>) => {
+    upsertItem(item: CollectionItem): Promise<CollectionItem> {
+        return new Promise<CollectionItem>(resolve => {
+            if (item.id === '-1') {
+                // create a new ID
+                item.id = this.afs.createId();
+                this.itemsCollection.doc(item.id).set(item);
+                resolve(item);
+            } else {
                 this.getItem(item.id)
-                    .subscribe(res => {
+                    .then(res => {
                         const editResult = { ...res, ...item };
                         console.log('upsetItem', editResult);
                         this.itemsCollection.doc(item.id).update(editResult);
-                        observer.next(editResult);
-                        observer.complete();
-                    }, err => observer.error(err));
-            });
-        }
+                        resolve(editResult);
+                    }, err => console.log(err));
+            }
+        });
     }
 
     update(item: CollectionItem): Promise<void> {
         return this.itemsCollection.doc(item.id).update(item);
     }
 
-    getItem(id: string): Observable<CollectionItem> {
+    getItem(id: string): Promise<CollectionItem> {
         return this.itemsCollection.doc<CollectionItem>(id).valueChanges().pipe(
             take(1),
             map(item => {
               return item;
             })
-        );
+        ).toPromise();
     }
 
     removeItem(item: CollectionItem): Promise<void> {

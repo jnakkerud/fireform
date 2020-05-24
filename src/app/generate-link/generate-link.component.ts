@@ -50,7 +50,7 @@ export class GenerateLinkComponent implements OnInit {
         const editItem = this.data.collectionItem;
         if (!editItem.activeLink) {
             editItem.activeLink = this.linkId;
-            this.collectionService.upsertItem(editItem).subscribe();
+            this.collectionService.upsertItem(editItem);
         }
         this.linkService.upsertLink(this.linkId, editItem.id);
     }
