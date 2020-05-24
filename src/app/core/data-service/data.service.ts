@@ -52,7 +52,7 @@ export class DataService {
 
     constructor(private afs: AngularFirestore) {}
 
-    public async add(item: CollectionItem, data: any) {
+    public async add(item: CollectionItem, data: any): Promise<any> {
         // Note that dates have to be converted to firestore Timestamp
         const validData = {};
 
@@ -68,16 +68,17 @@ export class DataService {
         const additionalData: AdditionalData = {timestamp: firebase.firestore.FieldValue.serverTimestamp()};
 
         if (item.gradeResponse) {
-            additionalData.grade = await this.gradeResponse(item.gradeResponse, data);
+            const gr = await this.gradeResponse(item.gradeResponse, data);
+            additionalData.grade = gr || 0;
         }
 
         // merge
         const mergedData = {...additionalData, ...validData};
 
-        // TODO return data
-
         // See https://firebase.google.com/docs/firestore/data-model#hierarchical-data
         this.afs.collection(`formdata/${item.id}/data`).add(mergedData);
+
+        return new Promise<any>(resolve => resolve(mergedData));
     }
 
     queryByTrackingUser(collectionItem: CollectionItem, user: string): Promise<any> {
