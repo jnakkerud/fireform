@@ -5,9 +5,9 @@ import { FormsModule, ReactiveFormsModule, ControlValueAccessor, NG_VALUE_ACCESS
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { AngularMaterialModule } from '../angular-material.module';
-import { StorageService } from '../core/storage-service/storage.service';
-import { StorageLocationService } from '../core/storage-service/storage-location.service';
+import { AngularMaterialModule } from '../../angular-material.module';
+import { StorageService } from '../../core/storage-service/storage.service';
+import { StorageLocationService } from '../../core/storage-service/storage-location.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -124,14 +124,3 @@ export class ImageInputComponent implements ControlValueAccessor {
     registerOnTouched(fn: any) {
     }
 }
-
-@NgModule({
-    imports: [
-        AngularMaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CommonModule],
-    exports: [ImageInputComponent],
-    declarations: [ImageInputComponent],
-})
-export class ImageInputModule { }

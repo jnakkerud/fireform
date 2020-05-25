@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormArray, ControlContai
 
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 
-import { AngularMaterialModule } from '../angular-material.module';
+import { AngularMaterialModule } from '../../angular-material.module';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -68,15 +68,3 @@ export class OptionEditorComponent implements OnInit {
         this.moveOption(event.previousIndex, event.currentIndex);
     }
 }
-
-@NgModule({
-    imports: [
-        AngularMaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        DragDropModule,
-        CommonModule],
-    exports: [OptionEditorComponent],
-    declarations: [OptionEditorComponent],
-  })
-export class OptionEditorModule {}

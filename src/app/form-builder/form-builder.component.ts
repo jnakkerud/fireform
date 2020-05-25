@@ -23,8 +23,8 @@ import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
 import { CollectionItem } from '../core/collection-service/collection.service';
-import { OptionEditorModule } from '../option-editor/option-editor.component';
-import { ImageInputModule } from '../image-input/image-input.component';
+import { OptionEditorComponent } from './option-editor/option-editor.component';
+import { ImageInputComponent } from './image-input/image-input.component';
 import { GradeEditorComponent } from './grade-editor/grade-editor.component';
 import { FormBuilderStore } from './form-builder-store.service';
 
@@ -251,11 +251,19 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         DragDropModule,
         DynamicFormModule,
         ReactiveFormsModule,
-        OptionEditorModule,
-        ImageInputModule,
         CommonModule],
-    exports: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent, GradeEditorComponent],
-    declarations: [FormBuilderComponent, FormFieldSnippetComponent, PropertyEditorComponent, GradeEditorComponent],
+    exports: [FormBuilderComponent,
+        FormFieldSnippetComponent,
+        PropertyEditorComponent,
+        GradeEditorComponent,
+        OptionEditorComponent,
+        ImageInputComponent],
+    declarations: [FormBuilderComponent,
+        FormFieldSnippetComponent,
+        PropertyEditorComponent,
+        GradeEditorComponent,
+        OptionEditorComponent,
+        ImageInputComponent],
     providers: [FormBuilderStore]
   })
   export class FormBuilderModule {}
