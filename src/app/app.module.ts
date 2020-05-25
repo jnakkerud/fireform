@@ -10,11 +10,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { CoreModule } from './core/core.module';
 import { CollectionsModule } from './collections/collections.module';
-import { EditCollectionModule } from './edit-collection/edit-collection.component';
-import { GenerateLinkModule } from './generate-link/generate-link.component';
 import { GeneratedFormModule } from './generated-form/generated-form.component';
 import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
-import { SendInvitationModule } from './send-invitation/send-invitation.component';
 
 import { firebaseConfig } from './api-keys';
 export const fbConfig = {
@@ -35,11 +32,8 @@ export const fbConfig = {
     AngularFireModule.initializeApp(fbConfig),
     AngularFireAuthModule,
     CollectionsModule,
-    EditCollectionModule,
-    GenerateLinkModule,
     GeneratedFormModule,
     DynamicFormTestModule,
-    SendInvitationModule,
     HttpClientModule,
     AppRoutingModule
   ],

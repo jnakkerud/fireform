@@ -1,4 +1,3 @@
-// TODO create a Collections module that contains collection-settings, edit-collection and create-collection, place under this directory
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,6 +9,11 @@ import { CollectionListComponent } from './collection-list/collection-list.compo
 import { CollectionSettingsComponent } from './collection-settings/collection-settings.component';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
+import { EditCollectionComponent } from './edit-collection/edit-collection.component';
+import { DeleteConfirmationDialogComponent } from './edit-collection/delete-confirmation-dialog.component';
+import { FormBuilderModule } from '../form-builder/form-builder.component';
+import { GenerateLinkModule } from '../generate-link/generate-link.component';
+import { SendInvitationModule } from '../send-invitation/send-invitation.component';
 
 @NgModule({
     imports: [
@@ -17,9 +21,22 @@ import { CreateCollectionComponent } from './create-collection/create-collection
         CommonModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
+        FormBuilderModule,
         DynamicFormModule,
+        GenerateLinkModule,
+        SendInvitationModule,
         AngularMaterialModule],
-    exports: [CollectionListComponent, CollectionSettingsComponent, CreateCollectionComponent],
-    declarations: [CollectionListComponent, CollectionSettingsComponent, CreateCollectionComponent],
+    exports: [
+        CollectionListComponent,
+        CollectionSettingsComponent,
+        CreateCollectionComponent,
+        EditCollectionComponent,
+        DeleteConfirmationDialogComponent],
+    declarations: [
+        CollectionListComponent,
+        CollectionSettingsComponent,
+        CreateCollectionComponent,
+        EditCollectionComponent,
+        DeleteConfirmationDialogComponent],
 })
 export class CollectionsModule {}

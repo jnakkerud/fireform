@@ -1,19 +1,15 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
-import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
-import { LinkService } from '../core/link-service/link.service';
-import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
-import { AngularMaterialModule } from '../angular-material.module';
-import { CollectionSettingsComponent } from '../collections/collection-settings/collection-settings.component';
-import { FormBuilderModule } from '../form-builder/form-builder.component';
-import { GenerateLinkModule,  GenerateLinkComponent } from '../generate-link/generate-link.component';
+import { CollectionService, CollectionItem } from '../../core/collection-service/collection.service';
+import { LinkService } from '../../core/link-service/link.service';
+import { RecentlyUsedService } from '../../core/recently-used-service/recently-used.service';
+import { CollectionSettingsComponent } from '../collection-settings/collection-settings.component';
+import { GenerateLinkComponent } from '../../generate-link/generate-link.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
-import { DownloadService } from '../core/download-service/download.service';
-import { SendInvitationComponent, SendInvitationModule } from '../send-invitation/send-invitation.component';
-import { CollectionsModule } from '../collections/collections.module';
+import { DownloadService } from '../../core/download-service/download.service';
+import { SendInvitationComponent } from '../../send-invitation/send-invitation.component';
 
 @Component({
     selector: 'app-edit-collection',
@@ -104,8 +100,6 @@ export class EditCollectionComponent {
     async deleteAll(): Promise<void[]> {
         const p1 = this.collectionService.removeItem(this.editItem);
 
-        // https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
-
         // delete links
         let p2 =  Promise.resolve();
         if (this.editItem.activeLink) {
@@ -115,17 +109,3 @@ export class EditCollectionComponent {
         return Promise.all([p1, p2]);
     }
 }
-
-@NgModule({
-    imports: [
-        RouterModule,
-        AngularMaterialModule,
-        CollectionsModule,
-        FormBuilderModule,
-        GenerateLinkModule,
-        SendInvitationModule,
-        CommonModule],
-    exports: [EditCollectionComponent, DeleteConfirmationDialogComponent],
-    declarations: [EditCollectionComponent, DeleteConfirmationDialogComponent]
-  })
-  export class EditCollectionModule {}
