@@ -9,7 +9,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { CoreModule } from './core/core.module';
-import { CollectionListModule } from './collection-list/collection-list.component';
+import { CollectionListModule } from './collections/collection-list.component';
 import { EditCollectionModule } from './edit-collection/edit-collection.component';
 import { CreateCollectionModule } from './create-collection/create-collection.component';
 import { GenerateLinkModule } from './generate-link/generate-link.component';
