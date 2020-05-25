@@ -1,13 +1,10 @@
-import { Component, NgModule, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
-import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
-import { AngularMaterialModule } from '../angular-material.module';
-import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
-import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
-import { DynamicFormControlModelConfig } from '../dynamic-form/models/dynamic-form-control.model';
-import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import { CollectionService, CollectionItem } from '../../core/collection-service/collection.service';
+import { DynamicFormService } from '../../dynamic-form/services/dynamic-form.service';
+import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
+import { DynamicFormControlModelConfig } from '../../dynamic-form/models/dynamic-form-control.model';
 import { Subscription } from 'rxjs';
 
 const SETTINGS_FORM = 'settings';
@@ -118,14 +115,3 @@ export class CollectionSettingsComponent implements OnInit, OnDestroy {
         return (this.item.id === '-1' ? 'Next' : 'Save');
     }
 }
-
-@NgModule({
-    imports: [
-        AngularMaterialModule,
-        ReactiveFormsModule,
-        DynamicFormModule,
-        CommonModule],
-    exports: [CollectionSettingsComponent],
-    declarations: [CollectionSettingsComponent],
-  })
-  export class CollectionSettingsModule {}

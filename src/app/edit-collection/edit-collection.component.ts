@@ -7,12 +7,13 @@ import { CollectionService, CollectionItem } from '../core/collection-service/co
 import { LinkService } from '../core/link-service/link.service';
 import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
 import { AngularMaterialModule } from '../angular-material.module';
-import { CollectionSettingsModule, CollectionSettingsComponent } from '../collection-settings/collection-settings.component';
+import { CollectionSettingsComponent } from '../collections/collection-settings/collection-settings.component';
 import { FormBuilderModule } from '../form-builder/form-builder.component';
 import { GenerateLinkModule,  GenerateLinkComponent } from '../generate-link/generate-link.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
 import { DownloadService } from '../core/download-service/download.service';
 import { SendInvitationComponent, SendInvitationModule } from '../send-invitation/send-invitation.component';
+import { CollectionsModule } from '../collections/collections.module';
 
 @Component({
     selector: 'app-edit-collection',
@@ -119,7 +120,7 @@ export class EditCollectionComponent {
     imports: [
         RouterModule,
         AngularMaterialModule,
-        CollectionSettingsModule,
+        CollectionsModule,
         FormBuilderModule,
         GenerateLinkModule,
         SendInvitationModule,

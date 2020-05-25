@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 
 import { CollectionItem } from '../core/collection-service/collection.service';
-import { CollectionSettingsModule } from '../collection-settings/collection-settings.component';
+import { CollectionsModule } from '../collections/collections.module';
 
 @Component({
     selector: 'app-create-collection',
@@ -30,7 +30,7 @@ export class CreateCollectionComponent {
 @NgModule({
     imports: [
         RouterModule,
-        CollectionSettingsModule,
+        CollectionsModule,
         CommonModule],
     exports: [CreateCollectionComponent],
     declarations: [CreateCollectionComponent],
