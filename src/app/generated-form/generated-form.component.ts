@@ -10,7 +10,7 @@ import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 import { LinkService, Link } from '../core/link-service/link.service';
-import { DataService } from '../core/data-service/data.service';
+import { DataService, totalGrade } from '../core/data-service/data.service';
 import { AuthService } from '../core/auth/auth.service';
 import { TrackingUserService, TrackingUser} from '../core/tracking-user-service/tracking-user.service';
 
@@ -30,6 +30,11 @@ function getTrackingIdFromUrl() {
         }
     }
     return null;
+}
+
+interface ResultParam {
+    s: number;
+    g?: number;
 }
 
 @Component({
@@ -128,7 +133,7 @@ export class GeneratedFormComponent implements OnInit {
         return Promise.resolve(true);
     }
 
-    onSubmit() {
+    async onSubmit() {
         let data = this.formGroup.value;
 
         // add the user  to the data, if tracking is on
@@ -138,15 +143,20 @@ export class GeneratedFormComponent implements OnInit {
         }
 
         // save the document to the collection
-        this.dataService.add(this.collectionItem, data);
+        const result = await this.dataService.add(this.collectionItem, data);
 
         // update the tracking user for only single responses
         if (!this.collectionItem.allowMultiple) {
             this.updateTrackingUser();
         }
 
+        const params: ResultParam = {s: RESPONSE_STATUS.SUCCESS};
+        if (result.grade) {
+            params.g = result.grade;
+        }
+
         // forward to completed form
-        this.router.navigate(['/formcomplete', this.collectionItem.id], {queryParams: {s: RESPONSE_STATUS.SUCCESS}});
+        this.router.navigate(['/formcomplete', this.collectionItem.id], {queryParams: params});
     }
 
     public isValid() {
@@ -172,6 +182,9 @@ export class GeneratedFormComponent implements OnInit {
             <mat-card-content>
                 <div>
                 <h3 [ngStyle] = "{'color': messageColor}">{{message}}</h3>
+                <ng-container *ngIf="scoreMessage">
+                    <h4>{{scoreMessage}}</h4>
+                </ng-container>
                 <ng-container *ngIf="url">
                     <p>
                         <a href="{{url}}">Submit another response</a>
@@ -185,7 +198,7 @@ export class GeneratedFormComponent implements OnInit {
     `,
     styles:
     [':host {display: flex;justify-content: center; height: 100vh; background-color: #ECEFF1;}',
-    '.card-container {margin: 104px 0px;}'
+    '.card-container {margin: 104px 0px;'
     ]
 })
 export class FormCompleteComponent {
@@ -193,6 +206,8 @@ export class FormCompleteComponent {
     url: string;
     message = '';
     messageColor = 'black';
+
+    scoreMessage: string;
 
     constructor(private route: ActivatedRoute, private collectionService: CollectionService) {
         this.route.params.subscribe(p => {
@@ -214,6 +229,12 @@ export class FormCompleteComponent {
                             this.message = 'Error: unable to proceed';
                             this.messageColor = 'red';
                     }
+                }
+                const g = this.route.snapshot.queryParamMap.get('g');
+                if (g) {
+                    totalGrade(item.gradeResponse).subscribe(total => {
+                        this.scoreMessage = `You scored ${g} out of ${total} points`;
+                    });
                 }
             });
         });
