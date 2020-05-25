@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { CollectionListComponent } from './collection-list/collection-list.component';
@@ -14,14 +13,17 @@ import { DeleteConfirmationDialogComponent } from './edit-collection/delete-conf
 import { FormBuilderModule } from '../form-builder/form-builder.component';
 import { GenerateLinkModule } from '../generate-link/generate-link.component';
 import { SendInvitationModule } from '../send-invitation/send-invitation.component';
+import { CollectionsRoutingModule } from './collections-routing.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
     imports: [
         RouterModule,
         CommonModule,
-        BrowserAnimationsModule,
         ReactiveFormsModule,
+        CoreModule,
         FormBuilderModule,
+        CollectionsRoutingModule,
         DynamicFormModule,
         GenerateLinkModule,
         SendInvitationModule,

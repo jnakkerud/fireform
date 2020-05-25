@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CollectionListComponent } from './collections/collection-list/collection-list.component';
-import { EditCollectionComponent } from './collections/edit-collection/edit-collection.component';
-import { CreateCollectionComponent } from './collections/create-collection/create-collection.component';
 import { LoginComponent } from './core/login/login.component';
 import { AuthGuardService } from './core/auth/auth-guard.service';
 import { GeneratedFormComponent, FormCompleteComponent } from './generated-form/generated-form.component';
@@ -16,11 +13,7 @@ const routes: Routes = [
   {
     path: 'collections',
     canActivateChild: [AuthGuardService],
-    children: [
-      { path: '', component: CollectionListComponent },
-      { path: 'create', component: CreateCollectionComponent },
-      { path: ':id', component: EditCollectionComponent },
-    ],
+    loadChildren: () => import('./collections/collections.module').then(m => m.CollectionsModule)
   },
   { path: 'form/:id', component: GeneratedFormComponent },
   { path: 'formcomplete/:id', component: FormCompleteComponent },

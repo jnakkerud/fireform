@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import {  AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-login',

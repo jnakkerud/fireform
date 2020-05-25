@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -9,7 +10,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { CoreModule } from './core/core.module';
-import { CollectionsModule } from './collections/collections.module';
 import { GeneratedFormModule } from './generated-form/generated-form.component';
 import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
 
@@ -28,10 +28,10 @@ export const fbConfig = {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CoreModule,
     AngularFireModule.initializeApp(fbConfig),
     AngularFireAuthModule,
-    CollectionsModule,
     GeneratedFormModule,
     DynamicFormTestModule,
     HttpClientModule,
