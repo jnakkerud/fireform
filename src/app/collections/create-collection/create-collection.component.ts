@@ -1,9 +1,7 @@
-import { Component, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { CollectionItem } from '../core/collection-service/collection.service';
-import { CollectionsModule } from '../collections/collections.module';
+import { CollectionItem } from '../../core/collection-service/collection.service';
 
 @Component({
     selector: 'app-create-collection',
@@ -26,13 +24,3 @@ export class CreateCollectionComponent {
         this.router.navigate(['/collections', newItem.id]);
     }
 }
-
-@NgModule({
-    imports: [
-        RouterModule,
-        CollectionsModule,
-        CommonModule],
-    exports: [CreateCollectionComponent],
-    declarations: [CreateCollectionComponent],
-  })
-  export class CreateCollectionModule {}

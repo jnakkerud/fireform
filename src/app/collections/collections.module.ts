@@ -9,6 +9,7 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { CollectionSettingsComponent } from './collection-settings/collection-settings.component';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import { CreateCollectionComponent } from './create-collection/create-collection.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
         ReactiveFormsModule,
         DynamicFormModule,
         AngularMaterialModule],
-    exports: [CollectionListComponent, CollectionSettingsComponent],
-    declarations: [CollectionListComponent, CollectionSettingsComponent],
+    exports: [CollectionListComponent, CollectionSettingsComponent, CreateCollectionComponent],
+    declarations: [CollectionListComponent, CollectionSettingsComponent, CreateCollectionComponent],
 })
 export class CollectionsModule {}

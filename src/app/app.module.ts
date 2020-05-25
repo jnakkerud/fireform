@@ -11,7 +11,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { CoreModule } from './core/core.module';
 import { CollectionsModule } from './collections/collections.module';
 import { EditCollectionModule } from './edit-collection/edit-collection.component';
-import { CreateCollectionModule } from './create-collection/create-collection.component';
 import { GenerateLinkModule } from './generate-link/generate-link.component';
 import { GeneratedFormModule } from './generated-form/generated-form.component';
 import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
@@ -37,7 +36,6 @@ export const fbConfig = {
     AngularFireAuthModule,
     CollectionsModule,
     EditCollectionModule,
-    CreateCollectionModule,
     GenerateLinkModule,
     GeneratedFormModule,
     DynamicFormTestModule,
