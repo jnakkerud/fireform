@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit {
         if (this.selected === 'all') {
             this.router.navigate(['/']);
         } else if (this.selected === 'create') {
-            this.router.navigate(['/createCollection']);
+            this.router.navigate(['/collections/create']);
         } else {
             this.router.navigate(['/collections', this.selected]);
         }

@@ -13,12 +13,12 @@ const routes: Routes = [
   { path: '', redirectTo: 'collections', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'test-form', component: DynamicFormTestComponent},
-  { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   {
     path: 'collections',
     canActivateChild: [AuthGuardService],
     children: [
       { path: '', component: CollectionListComponent },
+      { path: 'create', component: CreateCollectionComponent },
       { path: ':id', component: EditCollectionComponent },
     ],
   },
