@@ -9,7 +9,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { CoreModule } from './core/core.module';
-import { CollectionListModule } from './collections/collection-list.component';
+import { CollectionsModule } from './collections/collections.module';
 import { EditCollectionModule } from './edit-collection/edit-collection.component';
 import { CreateCollectionModule } from './create-collection/create-collection.component';
 import { GenerateLinkModule } from './generate-link/generate-link.component';
@@ -35,7 +35,7 @@ export const fbConfig = {
     CoreModule,
     AngularFireModule.initializeApp(fbConfig),
     AngularFireAuthModule,
-    CollectionListModule,
+    CollectionsModule,
     EditCollectionModule,
     CreateCollectionModule,
     GenerateLinkModule,
