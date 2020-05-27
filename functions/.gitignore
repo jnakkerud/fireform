@@ -9,3 +9,6 @@ node_modules/
 
 ## admin credentials
 admin-key.json
+
+## email credentials
+email-credentials.ts

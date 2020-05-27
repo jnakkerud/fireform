@@ -2,11 +2,14 @@ import { Component, OnInit, NgModule, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { AngularFireFunctions } from '@angular/fire/functions';
+
 import { AngularMaterialModule } from '../angular-material.module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { TrackingUserService } from '../core/tracking-user-service/tracking-user.service';
-import { CollectionItem } from '../core/collection-service/collection.service';
+import { CollectionItem, CollectionService } from '../core/collection-service/collection.service';
+import { LinkService } from '../core/link-service/link.service';
 
 export interface SendInvitationData {
     collectionItem: CollectionItem;
@@ -36,6 +39,9 @@ export class SendInvitationComponent implements OnInit {
 
     constructor(
         private trackingUserService: TrackingUserService,
+        private linkService: LinkService,
+        private collectionService: CollectionService,
+        private fns: AngularFireFunctions,
         public dialogRef: MatDialogRef<SendInvitationComponent>,
         @Inject(MAT_DIALOG_DATA) public data: SendInvitationData) { }
 
@@ -60,14 +66,34 @@ export class SendInvitationComponent implements OnInit {
             ).then(t => tokens.push({email: e, token: t}));
         }
 
-        // TODO: Cloud Function: array of tracking users, subject line, message
         const subject = this.form.get('subject').value;
         const message = this.form.get('message').value;
-        console.log('subject', subject);
-        console.log('message', message);
-        // sendEmailsFunc(tokens, subject, message);
+
+        let linkId = this.collectionItem.activeLink;
+        if (!linkId) {
+            linkId = this.linkService.generateLinkId();
+            this.saveLink(this.collectionItem, linkId);
+        }
+        const url = `${window.location.origin}/form/${linkId}`;
+
+        const callable = this.fns.httpsCallable('sendMail');
+        const result = callable({
+            subject,
+            message,
+            url,
+            tokens
+        });
 
         // TODO: when all is done, send message via snackbar
+        result.subscribe(x => console.log('Send mail complete', x));
+    }
+
+    saveLink(editItem: CollectionItem, linkId: string) {
+        if (!editItem.activeLink) {
+            editItem.activeLink = linkId;
+            this.collectionService.upsertItem(editItem);
+        }
+        this.linkService.upsertLink(linkId, editItem.id);
     }
 }
 
