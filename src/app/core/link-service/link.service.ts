@@ -5,25 +5,21 @@ import { map, take } from 'rxjs/operators';
 
 import {
     AngularFirestore,
-    AngularFirestoreCollection,
-    AngularFirestoreDocument } from '@angular/fire/firestore';
+    AngularFirestoreCollection} from '@angular/fire/firestore';
 
-import * as firebase from 'firebase/app';
+import { FirestoreService } from '../firestore-service/firestore.service';
 
 export interface Link {
     id: string;
     collectionId: string;
 }
 
-type DocPredicate<T> = string | AngularFirestoreDocument<T>;
-
 @Injectable({
     providedIn: 'root',
 })
 export class LinkService {
 
-    //  TODO refactor to use FirestoreService
-    constructor(private afs: AngularFirestore) { }
+    constructor(private afs: AngularFirestore, private firestoreService: FirestoreService) { }
 
     private lCollection: AngularFirestoreCollection<Link>;
     get linksCollection(): AngularFirestoreCollection<Link> {
@@ -34,43 +30,8 @@ export class LinkService {
     }
 
     generateLinkId(): string {
-        return this.afs.createId();
+        return this.firestoreService.generateId();
     }
-
-    // Firebase Server Timestamp
-    get timestamp() {
-        return firebase.firestore.FieldValue.serverTimestamp();
-    }
-
-    doc<T>(ref: DocPredicate<T>): AngularFirestoreDocument<T> {
-        return typeof ref === 'string' ? this.afs.doc<T>(ref) : ref;
-    }
-
-    set<T>(ref: DocPredicate<T>, data: any): Promise<void> {
-        const timestamp = this.timestamp;
-        return this.doc(ref).set({
-            ...data,
-            updatedAt: timestamp,
-            createdAt: timestamp,
-        });
-    }
-
-    update<T>(ref: DocPredicate<T>, data: any): Promise<void> {
-        return this.doc(ref).update({
-            ...data,
-            updatedAt: this.timestamp,
-        });
-    }
-
-    async upsert<T>(ref: DocPredicate<T>, data: any): Promise<void> {
-        const doc = this.doc(ref)
-          .snapshotChanges()
-          .pipe(take(1))
-          .toPromise();
-
-        const snap = await doc;
-        return snap.payload.exists ? this.update(ref, data) : this.set(ref, data);
-      }
 
     getLink(linkId: string): Observable<Link> {
         return this.linksCollection.doc<Link>(linkId).valueChanges().pipe(
@@ -82,7 +43,7 @@ export class LinkService {
     }
 
     upsertLink(linkId: string, cId: string): Promise<void> {
-        return this.upsert(`links/${linkId}`, {
+        return this.firestoreService.upsert(`links/${linkId}`, {
             id: linkId,
             collectionId: cId
         });
