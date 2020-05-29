@@ -86,7 +86,9 @@ export class GradeEditorComponent implements OnInit, GradeEditor {
             // Listen for changes to the options control of {label, value}
             const optionsControl = this.formGroup.get('options');
             const arrayDiffer = this.kvDiffers.find(optionsControl.value).create<string, string>();
-            // TODO Not sure why have to do this hack !!
+
+            // !! Need to do a diff here to seed the differ,
+            // as first diff will compare against an empty object
             arrayDiffer.diff(optionsControl.value);
 
             optionsControl.valueChanges.subscribe(() => {

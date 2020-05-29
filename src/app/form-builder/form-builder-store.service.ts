@@ -137,7 +137,8 @@ export class FormBuilderStore implements OnDestroy {
     setFormFields(formFields: FormField[]) {
         this.formFields = formFields;
         this.formFieldsDiffer = this.kvDiffers.find(this.formFields).create();
-        // TODO Not sure why have to do this hack !!
+        // !! Need to do a diff here to seed the differ,
+        // as first diff will compare against an empty object
         this.formFieldsDiffer.diff(this.formFields);
     }
 
