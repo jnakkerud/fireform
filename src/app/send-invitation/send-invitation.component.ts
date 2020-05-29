@@ -49,15 +49,13 @@ export class SendInvitationComponent implements OnInit {
         this.collectionItem = this.data.collectionItem;
     }
 
-    sendInvitations() {
+    async sendInvitations() {
         const tokens: EmailToken[] = [];
-
         const emails = this.form.get('email').value;
-
         const emailArray = emails.split(',');
         for (const e of emailArray) {
             // For each email, update the tracking-user db
-            this.trackingUserService.upsert(
+            await this.trackingUserService.upsert(
                 {
                     collectionId: this.collectionItem.id,
                     email: e,

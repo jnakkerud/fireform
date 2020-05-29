@@ -1,10 +1,10 @@
 import * as functions from 'firebase-functions'
 
-import { credentials, fromUser } from '../email-credentials';
+import * as emailAuth from './email-auth';
+import * as nodemailer from 'nodemailer';
 
-const nodemailer = require('nodemailer');
 const admin = require('firebase-admin');
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp();
 
 import { firestore } from 'firebase-admin';
 
@@ -20,7 +20,7 @@ interface EmailOptions {
     tokens: EmailToken[];
 }
 
-const transporter = nodemailer.createTransport(credentials);
+const transporter = nodemailer.createTransport(emailAuth.auth);
 
 const json2csv = require("json2csv").parse;
 
@@ -51,17 +51,16 @@ function send(mailOptions: any) {
         transporter.sendMail(mailOptions, (err: any, info: any) => {
             if (err) {
                 console.log("error: ", err);
-                return reject(err);
+                reject(err);
             } else {
-                return resolve();
+                resolve();
             }
         });
     });
 };
 
 // See basic example: https://github.com/firebase/functions-samples/tree/master/typescript-getting-started
-export const downloadCSV = functions.https.onCall((data, context) => {
-
+exports.downloadCSV = functions.https.onCall((data) => {
     const collectionId = data.collectionId;
 
     const db = admin.firestore()
@@ -81,14 +80,13 @@ export const downloadCSV = functions.https.onCall((data, context) => {
    .catch((err: any) => console.log(err) )
 });
 
-export const sendMail = functions.https.onCall((data, context) => {
-      
+exports.sendMail = functions.https.onCall((data) => {
     const emailOptions: EmailOptions = data as EmailOptions;    
     const tokens = emailOptions.tokens;
 
     return Promise.all(tokens.map(async (emailToken) => {
         await send({
-            from: fromUser,
+            from: emailAuth.fromUser,
             to: emailToken.email,
             subject: emailOptions.subject, 
             html: `<p style="font-size: 16px;">${emailOptions.message}</p>
@@ -97,5 +95,4 @@ export const sendMail = functions.https.onCall((data, context) => {
             `
         });
     }));
-
 });

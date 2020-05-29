@@ -38,7 +38,7 @@ export class TrackingUserService {
         }
 
         return new Promise<string>(resolve => {
-            this.fireStoreService.upsert(`tracking-users/${trackingId}`, user).then(_ => resolve(trackingId));
+            this.fireStoreService.upsert(`tracking-users/${trackingId}`, user).then(() => resolve(trackingId));
         });
     }
 
