@@ -1,13 +1,20 @@
-import { Component, NgModule, HostListener, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, HostListener, SkipSelf } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { AngularMaterialModule } from '../../angular-material.module';
 import { StorageService } from '../../core/storage-service/storage.service';
 import { StorageLocationService } from '../../core/storage-service/storage-location.service';
+
+function isValid(file: File): boolean {
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (validTypes.indexOf( file.type ) === -1) {
+        alert('Invalid File Type');
+        return false;
+    }
+    return true;
+}
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -57,7 +64,6 @@ export class ImageInputComponent implements ControlValueAccessor {
         evt.stopPropagation();
         this.dragging = false;
 
-        // TODO explore better ways to disable drag
         if (this.filename) {
             return;
         }
@@ -70,14 +76,12 @@ export class ImageInputComponent implements ControlValueAccessor {
 
     constructor(private storage: StorageService, @SkipSelf() private location: StorageLocationService) { }
 
-    // TODO restrict file types?
-
     onFileSelected(event) {
         this.handleFile(event.target.files[0]);
     }
 
     handleFile(file: File) {
-        if (file) {
+        if (isValid(file)) {
             this.file = file;
             this.filename = this.file.name;
             const path = `${this.location.path}/${this.filename}`;
@@ -123,4 +127,5 @@ export class ImageInputComponent implements ControlValueAccessor {
 
     registerOnTouched(fn: any) {
     }
+
 }

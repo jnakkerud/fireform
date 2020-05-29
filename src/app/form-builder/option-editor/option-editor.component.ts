@@ -1,10 +1,7 @@
-import { Component, OnInit, NgModule, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormArray, ControlContainer, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormArray, ControlContainer, FormGroup } from '@angular/forms';
 
-import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
-
-import { AngularMaterialModule } from '../../angular-material.module';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
     // tslint:disable-next-line: component-selector
