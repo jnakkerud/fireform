@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
@@ -21,6 +21,7 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit {
 
     selected: string;
+    activeUrl: string;
     showSelect: boolean;
     recentlyUsedItems: Observable<CollectionItem[]>;
 
@@ -45,9 +46,8 @@ export class HeaderComponent implements OnInit {
             .subscribe(() => {
                 let active = this.route;
                 while (active.firstChild) { active = active.firstChild; }
-                active.params.subscribe((params: Params) => {
-                    this.handleParam(params.id);
-                });
+                this.handleParam(active.snapshot.params.id);
+                this.activeUrl = active.snapshot.url.join('');
             });
     }
 
@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit {
         if (this.selected === 'all') {
             this.router.navigate(['/']);
         } else if (this.selected === 'create') {
-            this.router.navigate(['/collections/create']);
+            this.router.navigate(['/collections/create'], {queryParams: {returnUrl: this.activeUrl}});
         } else {
             this.router.navigate(['/collections', this.selected]);
         }

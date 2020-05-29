@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { CollectionItem } from '../../core/collection-service/collection.service';
 
@@ -9,14 +9,15 @@ import { CollectionItem } from '../../core/collection-service/collection.service
 })
 export class CreateCollectionComponent {
 
-    private returnUrl: string;
-
-    constructor(private router: Router) { }
+    constructor(private router: Router, private route: ActivatedRoute) { }
 
     onCancel() {
-        // TODO back to originating view
-        // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        this.router.navigate(['/']);
+        const returnUrl = this.route.snapshot.queryParams?.returnUrl || '/';
+        if (returnUrl === '/') {
+            this.router.navigate(['/']);
+        } else {
+            this.router.navigate(['/collections', returnUrl]);
+        }
     }
 
     onNext(newItem: CollectionItem) {

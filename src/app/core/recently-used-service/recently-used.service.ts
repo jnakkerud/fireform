@@ -7,7 +7,6 @@ import { CollectionService, CollectionItem } from '../collection-service/collect
 })
 export class RecentlyUsedService {
 
-
     constructor(private collectionService: CollectionService) { }
 
     private cItems: Observable<CollectionItem[]>;
