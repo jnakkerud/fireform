@@ -6,6 +6,7 @@ import { tap, concatMap } from 'rxjs/operators';
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
+import { ConvertorsMap } from '../dynamic-form/services/dynamic-form-convertors';
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
@@ -143,7 +144,7 @@ export class GeneratedFormComponent implements OnInit {
         }
 
         // save the document to the collection
-        const result = await this.dataService.add(this.collectionItem, data);
+        const result = await this.dataService.add(this.collectionItem, data, this.getConvertors());
 
         // update the tracking user for only single responses
         if (!this.collectionItem.allowMultiple) {
@@ -167,6 +168,11 @@ export class GeneratedFormComponent implements OnInit {
         }
 
         return valid;
+    }
+
+    private getConvertors(): ConvertorsMap | undefined {
+        const cv = this.dynamicFormService.getConvertors(this.formModel);
+        return cv.size > 0 ? cv : undefined;
     }
 
 }

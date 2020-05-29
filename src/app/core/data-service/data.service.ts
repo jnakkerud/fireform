@@ -4,9 +4,10 @@ import { AngularFirestore,  } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 
 import { CollectionItem, GradeResponse } from '../collection-service/collection.service';
-import { isDate } from '../utils';
+
 import { take, map, concatMap, filter, reduce, pluck } from 'rxjs/operators';
 import { from, pairs, Observable } from 'rxjs';
+import { ConvertorsMap, Convertor } from '../../dynamic-form/services/dynamic-form-convertors';
 
 interface AdditionalData {
     timestamp: firebase.firestore.FieldValue;
@@ -52,23 +53,28 @@ export class DataService {
 
     constructor(private afs: AngularFirestore) {}
 
-    public async add(item: CollectionItem, data: any): Promise<any> {
-        // Note that dates have to be converted to firestore Timestamp
-        const validData = {};
+    public async add(item: CollectionItem, data: any, convertors?: ConvertorsMap): Promise<any> {
 
-        Object.keys(data).forEach(key => {
-            let val = data[key];
-            if (isDate(val)) {
-                val = firebase.firestore.Timestamp.fromDate(val);
-            }
-            validData[key] = val;
-        });
+        // convert data as needed. For example, javascript Date needs to
+        // be converted to a firestore Date
+        let validData = Object.assign({}, data);
+        if (convertors) {
+            validData = {};
+            Object.keys(data).forEach(key => {
+                let val = data[key];
+                const convertor: Convertor = convertors.get(key);
+                if (convertor) {
+                    val = convertor(val);
+                }
+                validData[key] = val;
+            });
+        }
 
         // add a timestamp
         const additionalData: AdditionalData = {timestamp: firebase.firestore.FieldValue.serverTimestamp()};
 
         if (item.gradeResponse) {
-            const gr = await this.gradeResponse(item.gradeResponse, data);
+            const gr = await this.gradeResponse(item.gradeResponse, validData);
             additionalData.grade = gr || 0;
         }
 

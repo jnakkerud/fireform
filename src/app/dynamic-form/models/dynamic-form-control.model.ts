@@ -4,7 +4,7 @@ import { ValidatorModel } from './validator.model';
 
 export interface DynamicFormControlCustomEvent {
   type: string;                    // 'click' string
-  id: string;                      // 'organisation.name'
+  id: string;                      // 'organization.name'
   directive: string;               // 'matSuffix'
   name: string;                    // 'search'
 }
