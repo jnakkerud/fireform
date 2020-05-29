@@ -60,7 +60,6 @@ export class HeaderComponent implements OnInit {
             }
 
             this.selected = id;
-            // TODO make sure id is in recently selected
         }
     }
 
