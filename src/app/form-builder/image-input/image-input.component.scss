@@ -2,8 +2,12 @@
     border: 2px dashed #ccc;
     border-radius: 20px;
     padding: 24px;
-  }
+}
 
-  .chooser-button {
-      margin-right: 16px;
-  }
+.chooser-button {
+    margin-right: 16px;
+}
+
+.drop-area mat-progress-bar {
+    padding-top: 8px;
+}

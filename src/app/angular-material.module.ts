@@ -23,6 +23,7 @@ import { PortalModule } from '@angular/cdk/portal';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const modules: any[] = [
   LayoutModule,
@@ -46,7 +47,8 @@ const modules: any[] = [
   PortalModule,
   MatChipsModule,
   MatExpansionModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatProgressBarModule
 ];
 
 @NgModule({

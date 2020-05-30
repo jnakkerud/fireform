@@ -89,12 +89,12 @@ export class ImageInputComponent implements ControlValueAccessor {
             // perform the upload
             const task = this.storage.uploadFile(path, this.file);
 
-            // TODO observe percentage changes
             this.uploadPercent = task.percentageChanges();
 
             // get notified when the download URL is available
             task.snapshotChanges().pipe(
                 finalize(() =>  {
+                    this.uploadPercent = null;
                     // update the form model
                     if (this.onChange) {
                         this.onChange(path);
@@ -108,7 +108,11 @@ export class ImageInputComponent implements ControlValueAccessor {
     remove() {
         const path = `${this.location.path}/${this.filename}`;
         this.storage.removeFile(path).subscribe(data => {
-            this.file = this.filename = null;
+            this.onChange(this.file = this.filename = null);
+        },
+        err => {
+            console.error('Error removing file from server', err.message);
+            this.onChange(this.file = this.filename = null);
         });
     }
 

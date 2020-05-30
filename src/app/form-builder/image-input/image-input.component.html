@@ -11,5 +11,8 @@
     </div>
     <ng-template #showDropMessage>
         <span>{{dropMessage}}</span>
-    </ng-template>     
+    </ng-template>
+    <ng-container *ngIf="uploadPercent | async as pct">
+        <mat-progress-bar mode="determinate" [value]="pct"></mat-progress-bar>
+    </ng-container>           
 </div>
