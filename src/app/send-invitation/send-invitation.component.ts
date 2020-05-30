@@ -2,6 +2,8 @@ import { Component, OnInit, NgModule, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 import { AngularMaterialModule } from '../angular-material.module';
@@ -42,6 +44,7 @@ export class SendInvitationComponent implements OnInit {
         private linkService: LinkService,
         private collectionService: CollectionService,
         private fns: AngularFireFunctions,
+        private snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<SendInvitationComponent>,
         @Inject(MAT_DIALOG_DATA) public data: SendInvitationData) { }
 
@@ -82,8 +85,9 @@ export class SendInvitationComponent implements OnInit {
             tokens
         });
 
-        // TODO: when all is done, send message via snackbar
-        result.subscribe(x => console.log('Send mail complete', x));
+        result.subscribe(x => this.snackBar.open('Email sent', 'Success!', {
+            duration: 3000,
+        }));
     }
 
     saveLink(editItem: CollectionItem, linkId: string) {
