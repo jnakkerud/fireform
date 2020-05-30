@@ -11,7 +11,7 @@ node_modules/
 admin-key.json
 
 ## email credentials
-src/email-auth.ts
+email-credentials.json
 
 ## Log files
 firebase-debug.log

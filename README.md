@@ -66,3 +66,49 @@ Deploy to the Firebase web-hosted project:
 npm run deploy
 ```
 
+## Cloud Functions
+
+Fireform uses [Cloud Functions for Firebase](https://firebase.google.com/docs/functions) defined in `functions/src/index.ts`
+
+### Testing Cloud Functions
+
+Cloud functions can be tested locally:
+
+Make sure that you have created an `admin-key.json` in the `functions` directory.  Instructions to create the file can be found [here](https://firebase.google.com/docs/admin/setup). This step is only done once.
+
+1. Uncomment the last line in the providers section in `src/app/core/core.module.ts`
+
+2. Run the application:
+```
+ng serve
+```
+
+3. Add the following environment variable:
+
+```
+export GOOGLE_APPLICATION_CREDENTIALS="<fireform-project>/functions/admin-key.json"
+```
+
+4. Run the firebase server from the functions directory:
+```
+npm run serve
+```
+
+### Email configuration
+
+Fireform uses a cloud function for sending email invitations.
+
+In order to send emails from Fireform, you will need to provide a valid email configuration.  Fireform uses [Nodemailer](https://nodemailer.com/) with the [Mailgun transport](https://www.npmjs.com/package/nodemailer-mailgun-transport).  If you have a [Mailgun](https://www.mailgun.com/homepage/) account then simply create a `functions/email-credentials.json` file that contains your credentials like:
+```
+  {
+    "auth": {
+      "api_key": "mailgun-api-key",
+      "domain": "yourdomain.com"
+    },
+    "fromUser": "Fireform <user@emaildomain.com>"
+  }
+```
+
+It is possible to use other transports with [Nodemailer](https://nodemailer.com/), like gmail or SMTP.  To support other transports, you will need to modify `functions/src/email-auth.ts`
+
+
