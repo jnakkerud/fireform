@@ -26,3 +26,13 @@ body {
   pre {
     font-size: 14px;
   }
+
+// Override checkbox list item used in dynamic form fields 
+.ff-selection-list .mat-list-item .mat-list-item-content, .ff-selection-list .mat-list-option .mat-list-item-content {
+    padding-left: 8px !important;
+}
+
+// Override checkbox list item used in dynamic form fields 
+.ff-selection-list .mat-list-item, .ff-selection-list .mat-list-option {
+  font-size: 14px !important;
+}

@@ -2,10 +2,8 @@
 @import './app-theme';
 @import './styles/general';
 
-
 // Include material core styles.
 @include mat-core();
-
 
 // Define the light theme.
 $fireform-primary: mat-palette($mat-blue-grey);
