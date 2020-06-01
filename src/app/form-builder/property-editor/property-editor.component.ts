@@ -50,7 +50,10 @@ export class PropertyEditorComponent implements OnDestroy, PropertyEditor {
     }
 
     isDirty(): boolean {
-        return this.formGroup.dirty;
+        if (this.formGroup) {
+            return this.formGroup.dirty;
+        }
+        return false;
     }
 
     private createForm(model: DynamicFormModel) {
