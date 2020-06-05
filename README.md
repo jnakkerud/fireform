@@ -89,14 +89,23 @@ ng serve
 export GOOGLE_APPLICATION_CREDENTIALS="<fireform-project>/functions/admin-key.json"
 ```
 
-4. Run the firebase server from the functions directory:
+4. Email configuration should already be deployed. To use the configuration locally, provide a `.runtimeconfig.json` in the functions directory:
+
+```
+firebase functions:config:get > .runtimeconfig.json
+# If using Windows PowerShell, replace the above with:
+# firebase functions:config:get | ac .runtimeconfig.json
+firebase functions:shell
+```
+
+5. Run the firebase server from the functions directory:
 ```
 npm run serve
 ```
 
 ### Email configuration
 
-Fireform uses a cloud function for sending email invitations.
+Fireform uses a cloud function for sending email invitations. 
 
 In order to send emails from Fireform, you will need to provide a valid email configuration.  Fireform uses [Nodemailer](https://nodemailer.com/) with the [Mailgun transport](https://www.npmjs.com/package/nodemailer-mailgun-transport).  If you have a [Mailgun](https://www.mailgun.com/homepage/) account then simply create a `functions/email-credentials.json` file that contains your credentials like:
 ```

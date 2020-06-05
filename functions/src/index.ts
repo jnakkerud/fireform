@@ -1,4 +1,4 @@
-import * as functions from 'firebase-functions'
+import * as functions from 'firebase-functions';
 
 import * as emailAuth from './email-auth';
 import * as nodemailer from 'nodemailer';
@@ -37,7 +37,7 @@ function convert(data: any) {
                 val = ts.toLocaleDateString();
             }
         } else if (Array.isArray(val)) {
-            // array values: comma delimted quotes
+            // array values: comma delimited quotes
             val = val.join();
         }
         validData[key] = val;

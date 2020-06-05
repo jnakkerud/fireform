@@ -6,8 +6,9 @@
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "deploy": "npm run config && firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "config": "test -f email-credentials.json && firebase functions:config:unset env && firebase functions:config:set env=\"$(cat email-credentials.json)\" || echo \"Please add the file email-credentials.json before deploy.\""
   },
   "engines": {
     "node": "8"

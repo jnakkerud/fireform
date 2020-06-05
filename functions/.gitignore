@@ -13,5 +13,8 @@ admin-key.json
 ## email credentials
 email-credentials.json
 
+## local emulation config
+.runtimeconfig.json
+
 ## Log files
 firebase-debug.log
