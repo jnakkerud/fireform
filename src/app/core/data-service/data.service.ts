@@ -5,7 +5,7 @@ import * as firebase from 'firebase/app';
 
 import { CollectionItem, GradeResponse } from '../collection-service/collection.service';
 
-import { take, map, concatMap, filter, reduce, pluck } from 'rxjs/operators';
+import { take, map, concatMap, filter, reduce, pluck, max } from 'rxjs/operators';
 import { from, pairs, Observable } from 'rxjs';
 import { ConvertorsMap, Convertor } from '../../dynamic-form/services/dynamic-form-convertors';
 
@@ -16,7 +16,7 @@ interface AdditionalData {
 
 export function totalGrade(gradeResponse: GradeResponse[]): Observable<number> {
     return from(gradeResponse).pipe(
-        concatMap(g => from(g.points).pipe(pluck('point'))),
+        concatMap(g => from(g.points).pipe(pluck('point'), max())),
         reduce((acc, val) => acc + val)
     );
 }
