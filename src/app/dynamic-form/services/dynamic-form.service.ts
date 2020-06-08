@@ -10,6 +10,13 @@ import { DynamicFormModule } from '../dynamic-form.module';
 import { isString } from '../../core/utils';
 import { ConvertorsMap, NUMBER_CONVERTOR, DATE_CONVERTOR } from './dynamic-form-convertors';
 
+function isFormControl(type: string): boolean {
+  if (type === 'label' || type === 'image') {
+    return false;
+  }
+  return true;
+}
+
 export function parseReviver(key: string, value: any): any {
   const regexDateISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|([+\-])([\d|:]*))?$/;
   return isString(value) && regexDateISO.test(value) ? new Date(value) : value;
@@ -40,8 +47,7 @@ export class DynamicFormService {
 
       const name = controlModel.id ? controlModel.id : controlModel.name;
 
-      // ignore label types
-      if (controlModel.type !== 'label') {
+      if (isFormControl(controlModel.type)) {
         group.addControl(name, this.createControl(controlModel));
       }
     });
