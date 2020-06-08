@@ -1,5 +1,5 @@
 <mat-accordion class="example-headers-align">
-    <mat-expansion-panel (opened) = "onOpen()">
+    <mat-expansion-panel #expansionPanel (opened) = "onOpen()">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Grade Response
@@ -7,43 +7,43 @@
         </mat-expansion-panel-header>
     
         <ng-container *ngIf="group">
-        <form [formGroup]="group">
-        <ng-container [ngSwitch]="fieldType">
-            <ng-template [ngSwitchCase]="'text'">
-                <mat-form-field>
-                    <mat-label>Value</mat-label>
-                    <input formControlName="value" matInput>
-                </mat-form-field>
-            
-                <mat-form-field>
-                    <mat-label>Points</mat-label>
-                    <input matInput formControlName="point" type="number" min="1">
-                </mat-form-field>
-            </ng-template>
-            <ng-template [ngSwitchCase]="'boolean'">
-                <mat-radio-group formControlName="value">
-                    <mat-radio-button value="true">True</mat-radio-button>
-                    <mat-radio-button value="false">False</mat-radio-button>
-                </mat-radio-group>
-                <mat-form-field>
-                    <mat-label>Points</mat-label>
-                    <input matInput formControlName="point" type="number" min="1">
-                </mat-form-field>
-            </ng-template>            
-            <ng-template [ngSwitchCase]="'options'">
-                <div formArrayName="options" class="ff-selection-list">
-                    <section *ngFor="let option of options.controls; let i = index" [formGroupName]="i" class="fields-section">
-                        <input hidden formControlName="value">                        
-                        <mat-label>{{option.get('label').value}}</mat-label>                        
-                        <mat-form-field class="points-field">
+            <form [formGroup]="group">
+                <ng-container [ngSwitch]="fieldType">
+                    <ng-template [ngSwitchCase]="'text'">
+                        <mat-form-field>
+                            <mat-label>Value</mat-label>
+                            <input formControlName="value" matInput>
+                        </mat-form-field>
+                    
+                        <mat-form-field>
                             <mat-label>Points</mat-label>
                             <input matInput formControlName="point" type="number" min="1">
-                        </mat-form-field>                        
-                    </section>
-                </div>                
-            </ng-template>
+                        </mat-form-field>
+                    </ng-template>
+                    <ng-template [ngSwitchCase]="'boolean'">
+                        <mat-radio-group formControlName="value">
+                            <mat-radio-button value="true">True</mat-radio-button>
+                            <mat-radio-button value="false">False</mat-radio-button>
+                        </mat-radio-group>
+                        <mat-form-field>
+                            <mat-label>Points</mat-label>
+                            <input matInput formControlName="point" type="number" min="1">
+                        </mat-form-field>
+                    </ng-template>            
+                    <ng-template [ngSwitchCase]="'options'">
+                        <div formArrayName="options" class="ff-selection-list">
+                            <section *ngFor="let option of options.controls; let i = index" [formGroupName]="i" class="fields-section">
+                                <input hidden formControlName="value">                        
+                                <mat-label>{{option.get('label').value}}</mat-label>                        
+                                <mat-form-field class="points-field">
+                                    <mat-label>Points</mat-label>
+                                    <input matInput formControlName="point" type="number" min="1">
+                                </mat-form-field>                        
+                            </section>
+                        </div>                
+                    </ng-template>
+                </ng-container>
+            </form>
         </ng-container>
-        </form>
-    </ng-container>
     </mat-expansion-panel>    
 </mat-accordion>

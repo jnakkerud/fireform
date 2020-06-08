@@ -1,11 +1,13 @@
-import { Component, Input, KeyValueDiffers, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, KeyValueDiffers, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+
+import { filter, map, tap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 import { GradeResponse } from 'src/app/core/collection-service/collection.service';
 import { FormField } from '../form-builder.component';
 import { FormBuilderStore, GradeEditor } from '../form-builder-store.service';
-import { filter, map, tap } from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
 
 type FieldType = 'text' | 'options' | 'boolean';
 
@@ -49,12 +51,17 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
         return this.group.get('options') as FormArray;
     }
 
+    @ViewChild('expansionPanel') expansionPanel !: MatExpansionPanel;
+
     constructor(private formBuilder: FormBuilder, private kvDiffers: KeyValueDiffers, private formBuilderStore: FormBuilderStore) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.hasOwnProperty('formField')) {
-            this.group = null;
             this.formBuilderStore.bindGradeEditor(this);
+            this.group = null;
+            if (this.expansionPanel && this.expansionPanel.expanded) {
+                this.expansionPanel.close();
+            }
         }
     }
 
