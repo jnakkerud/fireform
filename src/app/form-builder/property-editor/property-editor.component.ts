@@ -43,9 +43,9 @@ export class PropertyEditorComponent implements OnDestroy, PropertyEditor {
     }
 
     bindEditor(field: FormField, collectionItem: CollectionItem) {
-        this.formBuilderStore.bindPropertyEditor(this);
         this.storageLocation.path = collectionItem.id;
         this.formField = field;
+        this.formBuilderStore.bindPropertyEditor(this);
         this.createForm(field.model);
     }
 

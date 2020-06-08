@@ -1,4 +1,4 @@
-import { Component, Input, KeyValueDiffers, OnInit } from '@angular/core';
+import { Component, Input, KeyValueDiffers, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 import { GradeResponse } from 'src/app/core/collection-service/collection.service';
@@ -21,7 +21,7 @@ interface Option {
     templateUrl: 'grade-editor.component.html',
     styleUrls: ['./grade-editor.component.scss']
 })
-export class GradeEditorComponent implements OnInit, GradeEditor {
+export class GradeEditorComponent implements OnChanges, GradeEditor {
 
     @Input() formField: FormField;
 
@@ -51,8 +51,11 @@ export class GradeEditorComponent implements OnInit, GradeEditor {
 
     constructor(private formBuilder: FormBuilder, private kvDiffers: KeyValueDiffers, private formBuilderStore: FormBuilderStore) { }
 
-    ngOnInit() {
-        this.formBuilderStore.bindGradeEditor(this);
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.hasOwnProperty('formField')) {
+            this.group = null;
+            this.formBuilderStore.bindGradeEditor(this);
+        }
     }
 
     onOpen() {
