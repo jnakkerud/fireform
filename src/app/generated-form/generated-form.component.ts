@@ -139,7 +139,7 @@ export class GeneratedFormComponent implements OnInit {
 
         // add the user  to the data, if tracking is on
         if (this.trackingUser) {
-            const user = {tracking_user: this.trackingUser.email || this.trackingId};
+            const user = {tracking_user: this.trackingUser.email || 'anonymous'};
             data = {...user, ...data};
         }
 

@@ -91,7 +91,7 @@ exports.sendMail = functions.https.onCall((data) => {
             subject: emailOptions.subject, 
             html: `<p style="font-size: 16px;">${emailOptions.message}</p>
                 <br />
-                <a href="${emailOptions.url}?s=${emailToken.token}">Survey form</a>
+                <a href="${emailOptions.url}?t=${encodeURI(emailToken.token)}">Survey form</a>
             `
         });
     }));
