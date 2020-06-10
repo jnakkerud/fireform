@@ -1,8 +1,6 @@
 :host {
     display: flex;
     justify-content: center;
-    height: 100vh;
-    background-color: #ECEFF1;
 }
 
 .edit-container {
@@ -32,4 +30,8 @@
 
 .edit-container .mat-card-title {
     margin-top: 16px;
+}
+
+.button-row {
+    padding-bottom: 24px;
 }

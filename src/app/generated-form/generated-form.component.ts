@@ -1,5 +1,5 @@
-import { Component, OnInit, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, NgModule, Inject, OnDestroy } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { tap, concatMap } from 'rxjs/operators';
@@ -45,7 +45,7 @@ interface ResultParam {
     styleUrls: ['./generated-form.component.scss']
 })
 
-export class GeneratedFormComponent implements OnInit {
+export class GeneratedFormComponent implements OnInit, OnDestroy {
 
     public formGroup: FormGroup;
     public formModel: DynamicFormModel;
@@ -63,10 +63,12 @@ export class GeneratedFormComponent implements OnInit {
         private linkService: LinkService,
         private dataService: DataService,
         private authService: AuthService,
-        private trackingUserService: TrackingUserService
+        private trackingUserService: TrackingUserService,
+        @Inject(DOCUMENT) private document?: any
     ) {}
 
     ngOnInit() {
+        this.document.body.classList.add('body-background-color');
         this.authService.authenticate().then(valid => {
             if (valid) {
                 this.loadFormMetaData();
@@ -74,6 +76,10 @@ export class GeneratedFormComponent implements OnInit {
                 console.log('anonymous login error');
             }
         });
+    }
+
+    ngOnDestroy(): void {
+        this.document.body.classList.remove('body-background-color');
     }
 
     loadFormMetaData() {
