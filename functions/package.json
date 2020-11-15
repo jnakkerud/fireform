@@ -11,7 +11,7 @@
     "config": "test -f email-credentials.json && firebase functions:config:unset env && firebase functions:config:set env=\"$(cat email-credentials.json)\" || echo \"Please add the file email-credentials.json before deploy.\""
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "main": "lib/index.js",
   "dependencies": {
