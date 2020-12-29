@@ -25,6 +25,7 @@ import { DynamicSelectComponent } from '../../components/dynamic-select/dynamic-
 import { DynamicSlideToggleComponent } from '../../components/dynamic-slide-toggle/dynamic-slide-toggle.component';
 import { DynamicLabelComponent } from '../../components/dynamic-label/dynamic-label.component';
 import { DynamicImageComponent } from '../../components/dynamic-image/dynamic-image.component';
+import { DynamicLocationComponent } from '../../components/dynamic-location/dynamic-location.component';
 
 const components = {
   date: DynamicDatepickerComponent,
@@ -35,7 +36,8 @@ const components = {
   select: DynamicSelectComponent,
   toggle: DynamicSlideToggleComponent,
   label: DynamicLabelComponent,
-  image: DynamicImageComponent
+  image: DynamicImageComponent,
+  location: DynamicLocationComponent,
 };
 
 @Directive({

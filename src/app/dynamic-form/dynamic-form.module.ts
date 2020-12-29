@@ -14,6 +14,7 @@ import { DynamicSelectComponent } from './components/dynamic-select/dynamic-sele
 import { DynamicSlideToggleComponent } from './components/dynamic-slide-toggle/dynamic-slide-toggle.component';
 import { DynamicLabelComponent } from './components/dynamic-label/dynamic-label.component';
 import { DynamicImageComponent } from './components/dynamic-image/dynamic-image.component';
+import { DynamicLocationComponent } from './components/dynamic-location/dynamic-location.component';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -34,7 +35,8 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicSelectComponent,
     DynamicSlideToggleComponent,
     DynamicLabelComponent,
-    DynamicImageComponent
+    DynamicImageComponent,
+    DynamicLocationComponent
   ],
   exports: [
     DynamicFormComponent

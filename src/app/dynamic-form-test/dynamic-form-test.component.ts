@@ -54,6 +54,11 @@ const FORM_JSON = `
         "label": "This is an example of a label"
     },
     {
+        "type": "location",
+        "id": "location",
+        "label": "Location (Lat/Long)"
+    },
+    {
         "type": "radiogroup",
         "id": "radiogroup",
         "label": "Shirt size",
