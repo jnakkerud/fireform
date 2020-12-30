@@ -8,7 +8,7 @@ import { ValidatorModel } from '../models/validator.model';
 
 import { DynamicFormModule } from '../dynamic-form.module';
 import { isString } from '../../core/utils';
-import { ConvertorsMap, NUMBER_CONVERTOR, DATE_CONVERTOR } from './dynamic-form-convertors';
+import { ConvertorsMap, NUMBER_CONVERTOR, DATE_CONVERTOR, LOCATION_CONVERTOR } from './dynamic-form-convertors';
 
 function isFormControl(type: string): boolean {
   if (type === 'label' || type === 'image') {
@@ -116,6 +116,11 @@ export class DynamicFormService {
       if (controlModel.type === 'date') {
         convertors.set(controlModel.id, DATE_CONVERTOR);
       }
+
+      if (controlModel.type === 'location') {
+        convertors.set(controlModel.id, LOCATION_CONVERTOR);
+      }
+
     });
 
     return convertors;

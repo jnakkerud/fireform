@@ -16,3 +16,9 @@ export const DATE_CONVERTOR: Convertor = (value: any) => {
     }
     return value;
 };
+
+// TODO test
+export const LOCATION_CONVERTOR: Convertor = (value: any) => {
+    const ary = value.split(',');
+    return new firebase.firestore.GeoPoint(ary[0], ary[1]);
+};
