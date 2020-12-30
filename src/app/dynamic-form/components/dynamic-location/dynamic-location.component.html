@@ -9,10 +9,7 @@
             <input matInput [autocomplete]="model.autocomplete" [formControlName]="model.id"
                 [placeholder]="model.placeholder" [required]="model.required" [type]="model.inputType"/>
 
-            <ng-container *ngFor="let validator of model.validators;" ngProjectAs="mat-error">
-                <mat-error *ngIf="formGroup.controls[model.id].hasError(validator.propertyName)">
-                    {{ validator.message }} </mat-error>
-            </ng-container>
+            <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
 
         </mat-form-field>
     </mat-card-content>

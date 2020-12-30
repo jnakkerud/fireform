@@ -1,27 +1,54 @@
 import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 
 import { DynamicFormControlCustomEvent, DynamicFormControlModel } from '../../models/dynamic-form-control.model';
 
+function isLatitude(lat: any) {
+    return isFinite(lat) && Math.abs(lat) <= 90;
+  }
+  
+function isLongitude(lng: any) {
+    return isFinite(lng) && Math.abs(lng) <= 180;
+  }
+
+export function latitudeLongitudeValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+        let valid = !control.value;
+        if (control.value) {            
+            const ary = control.value.split(',');
+            if (Array.isArray(ary)) {
+                valid = isLatitude(ary[0]) && isLongitude(ary[1]);
+            }
+        }
+        return valid? null : { latitudeLongitudeValidator: { value: control.value } };
+    };
+}
+
 @Component({
-  // tslint:disable-next-line: component-selector
-  selector: 'dynamic-location',
-  templateUrl: 'dynamic-location.component.html'
+    // tslint:disable-next-line: component-selector
+    selector: 'dynamic-location',
+    templateUrl: 'dynamic-location.component.html'
 })
 export class DynamicLocationComponent implements OnInit {
 
-  @Input() formGroup: FormGroup;
-  @Input() model: DynamicFormControlModel;
+    @Input() formGroup: FormGroup;
+    @Input() model: DynamicFormControlModel;
 
-  @Output() customEvent = new EventEmitter<DynamicFormControlCustomEvent>();
+    @Output() customEvent = new EventEmitter<DynamicFormControlCustomEvent>();
 
-  @HostBinding('class') elementClass;
+    @HostBinding('class') elementClass;
 
-  public ngOnInit() {
-    this.elementClass = this.model.gridItemClass;
+    formControl: AbstractControl;
 
-    // TODO add lat/long validator
-    // TODO show error message 
-  }
+    public ngOnInit() {
+        this.elementClass = this.model.gridItemClass;
 
+        this.formControl = this.formGroup.get(this.model.id);
+        this.formControl.setValidators(latitudeLongitudeValidator());
+        this.formControl.updateValueAndValidity();
+    }
+
+    getErrorMessage() {
+        return 'Incorrect format for latitude and longitude';
+    }
 }
