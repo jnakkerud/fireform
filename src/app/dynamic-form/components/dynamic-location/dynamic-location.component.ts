@@ -19,10 +19,9 @@ export class DynamicLocationComponent implements OnInit {
 
   public ngOnInit() {
     this.elementClass = this.model.gridItemClass;
-  }
 
-  public iconSuffixClickHandler() {
-    this.customEvent.emit({ type: 'click', id: this.model.id, directive: 'matSuffix', name: this.model.suffixIconName });
+    // TODO add lat/long validator
+    // TODO show error message 
   }
 
 }

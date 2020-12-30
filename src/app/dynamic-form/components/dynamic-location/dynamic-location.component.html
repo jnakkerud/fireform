@@ -6,17 +6,8 @@
                 <mat-label> {{ model.label }} </mat-label>
             </ng-container>
 
-            <span *ngIf="model.prefixIconName" matPrefix>
-                <mat-icon matPrefix> {{ model.prefixIconName }} </mat-icon>
-            </span>
-
             <input matInput [autocomplete]="model.autocomplete" [formControlName]="model.id"
-                [placeholder]="model.placeholder" [required]="model.required" [type]="model.inputType" />
-
-            <span *ngIf="model.suffixIconName" matSuffix>
-                <mat-icon matSuffix class="crm-suffix-icon" (click)="iconSuffixClickHandler()">
-                    {{ model.suffixIconName }} </mat-icon>
-            </span>
+                [placeholder]="model.placeholder" [required]="model.required" [type]="model.inputType"/>
 
             <ng-container *ngFor="let validator of model.validators;" ngProjectAs="mat-error">
                 <mat-error *ngIf="formGroup.controls[model.id].hasError(validator.propertyName)">
