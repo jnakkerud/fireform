@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { FireformLibComponent } from './fireform-lib.component';
+import { FireFormLibComponent } from './fireform-lib.component';
 
 
 
 @NgModule({
-  declarations: [FireformLibComponent],
+  declarations: [FireFormLibComponent],
   imports: [
   ],
-  exports: [FireformLibComponent]
+  exports: [FireFormLibComponent]
 })
-export class FireformLibModule { }
+export class FireFormLibModule { }

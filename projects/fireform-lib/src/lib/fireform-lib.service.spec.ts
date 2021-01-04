@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FireformLibService } from './fireform-lib.service';
+import { FireFormLibService } from './fireform-lib.service';
 
-describe('FireformLibService', () => {
-  let service: FireformLibService;
+describe('FireFormLibService', () => {
+  let service: FireFormLibService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FireformLibService);
+    service = TestBed.inject(FireFormLibService);
   });
 
   it('should be created', () => {

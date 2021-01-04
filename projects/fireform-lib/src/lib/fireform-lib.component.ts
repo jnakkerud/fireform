@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class FireformLibComponent implements OnInit {
+export class FireFormLibComponent implements OnInit {
 
   constructor() { }
 

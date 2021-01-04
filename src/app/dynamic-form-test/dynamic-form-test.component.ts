@@ -7,6 +7,8 @@ import { DynamicFormService } from '../dynamic-form/services/dynamic-form.servic
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 
+import { FireFormLibModule } from 'fireform-lib';
+
 const FORM_JSON = `
 [
     {
@@ -131,6 +133,7 @@ export class DynamicFormTestComponent implements OnInit {
         AngularMaterialModule,
         ReactiveFormsModule,
         DynamicFormModule,
+        FireFormLibModule,
         CommonModule],
     exports: [DynamicFormTestComponent],
     declarations: [DynamicFormTestComponent],
