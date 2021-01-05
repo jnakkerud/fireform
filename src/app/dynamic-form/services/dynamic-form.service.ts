@@ -7,7 +7,7 @@ import { DynamicFormModel } from '../models/dynamic-form.model';
 import { ValidatorModel } from '../models/validator.model';
 
 import { DynamicFormModule } from '../dynamic-form.module';
-import { isString } from '../../core/utils';
+import { isString } from '../utils';
 import { ConvertorsMap, NUMBER_CONVERTOR, DATE_CONVERTOR, LOCATION_CONVERTOR } from './dynamic-form-convertors';
 
 function isFormControl(type: string): boolean {

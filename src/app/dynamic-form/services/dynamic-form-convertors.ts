@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 
-import { isDate } from '../../core/utils';
+import { isDate } from '../utils';
 
 export type Convertor = (value: any) => any;
 
