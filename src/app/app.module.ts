@@ -11,7 +11,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { CoreModule } from './core/core.module';
 
-// TODO feature or widget modules moved to routing module ?
+// TODO Lazy load in AppRoutingModule ???
 import { GeneratedFormModule } from './generated-form/generated-form.component';
 import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
 import { LoginModule } from './login/login.component';
