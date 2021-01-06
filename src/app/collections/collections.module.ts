@@ -14,14 +14,12 @@ import { FormBuilderModule } from '../form-builder/form-builder.component';
 import { GenerateLinkModule } from '../generate-link/generate-link.component';
 import { SendInvitationModule } from '../send-invitation/send-invitation.component';
 import { CollectionsRoutingModule } from './collections-routing.module';
-import { CoreModule } from '../core/core.module';
 
 @NgModule({
     imports: [
         RouterModule,
         CommonModule,
         ReactiveFormsModule,
-        CoreModule,
         FormBuilderModule,
         CollectionsRoutingModule,
         DynamicFormModule,

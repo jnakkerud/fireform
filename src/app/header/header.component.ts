@@ -1,3 +1,7 @@
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
@@ -7,10 +11,12 @@ import { Observable, Subscription } from 'rxjs';
 import { Overlay, OverlayRef, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 
-import { CollectionItem } from '../collection-service/collection.service';
-import { RecentlyUsedService } from '../recently-used-service/recently-used.service';
-import { UserService } from '../auth/user.service';
-import { AuthService } from '../auth/auth.service';
+import { CollectionItem } from '../core/collection-service/collection.service';
+import { RecentlyUsedService } from '../core/recently-used-service/recently-used.service';
+import { UserService } from '../core/auth/user.service';
+import { AuthService } from '../core/auth/auth.service';
+
+import { AngularMaterialModule } from '../angular-material.module';
 
 @Component({
     selector: 'app-header',
@@ -143,3 +149,13 @@ export class HeaderComponent implements OnInit {
         this.overlayRef.detach();
     }
 }
+
+@NgModule({
+    imports: [
+        AngularMaterialModule,
+        RouterModule,
+        CommonModule],
+    exports: [HeaderComponent],
+    declarations: [HeaderComponent],
+  })
+export class HeaderModule {}

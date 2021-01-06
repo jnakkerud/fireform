@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './core/login/login.component';
+import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './core/auth/auth-guard.service';
 import { GeneratedFormComponent, FormCompleteComponent } from './generated-form/generated-form.component';
 import { DynamicFormTestComponent } from './dynamic-form-test/dynamic-form-test.component';

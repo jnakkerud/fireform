@@ -1,8 +1,15 @@
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../core/auth/auth.service';
+
+import { AngularMaterialModule } from '../angular-material.module';
 
 @Component({
     selector: 'app-login',
@@ -42,3 +49,14 @@ export class LoginComponent implements OnInit {
         }
     }
 }
+
+@NgModule({
+    imports: [
+        AngularMaterialModule,
+        RouterModule,
+        ReactiveFormsModule,
+        CommonModule],
+    exports: [LoginComponent],
+    declarations: [LoginComponent],
+  })
+export class LoginModule {}

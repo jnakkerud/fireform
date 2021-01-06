@@ -10,8 +10,13 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { CoreModule } from './core/core.module';
+
+// TODO feature or widget modules moved to routing module ?
 import { GeneratedFormModule } from './generated-form/generated-form.component';
 import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
+import { LoginModule } from './login/login.component';
+
+import { HeaderModule } from './header/header.component';
 
 import { firebaseConfig } from './api-keys';
 export const fbConfig = {
@@ -34,6 +39,8 @@ export const fbConfig = {
     AngularFireAuthModule,
     GeneratedFormModule,
     DynamicFormTestModule,
+    HeaderModule,
+    LoginModule,
     HttpClientModule,
     AppRoutingModule
   ],
