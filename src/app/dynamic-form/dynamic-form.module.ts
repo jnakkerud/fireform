@@ -16,11 +16,11 @@ import { DynamicLabelComponent } from './components/dynamic-label/dynamic-label.
 import { DynamicImageComponent } from './components/dynamic-image/dynamic-image.component';
 import { DynamicLocationComponent } from './components/dynamic-location/dynamic-location.component';
 
-import { AngularMaterialModule } from '../angular-material.module';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   imports: [
-    AngularMaterialModule,
+    MaterialModule,
     CommonModule,
     ReactiveFormsModule
   ],
@@ -42,6 +42,4 @@ import { AngularMaterialModule } from '../angular-material.module';
     DynamicFormComponent
   ]
 })
-export class DynamicFormModule {
-
-}
+export class DynamicFormModule {}
