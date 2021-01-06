@@ -1,7 +1,16 @@
 /*
  * Public API Surface of fireform-lib
  */
-
-export * from './lib/fireform-lib.service';
-export * from './lib/fireform-lib.component';
+export * from './lib/directives/dynamic-control/dynamic-control.directive';
+export * from './lib/containers/dynamic-form/dynamic-form.component';
+export * from './lib/components/dynamic-datepicker/dynamic-datepicker.component';
+export * from './lib/components/dynamic-input/dynamic-input.component';
+export * from './lib/components/dynamic-textarea/dynamic-textarea.component';
+export * from './lib/components/dynamic-checkbox-group/dynamic-checkbox-group.component';
+export * from './lib/components/dynamic-radio-group/dynamic-radio-group.component';
+export * from './lib/components/dynamic-select/dynamic-select.component';
+export * from './lib/components/dynamic-slide-toggle/dynamic-slide-toggle.component';
+export * from './lib/components/dynamic-label/dynamic-label.component';
+export * from './lib/components/dynamic-image/dynamic-image.component';
+export * from './lib/components/dynamic-location/dynamic-location.component';
 export * from './lib/fireform-lib.module';

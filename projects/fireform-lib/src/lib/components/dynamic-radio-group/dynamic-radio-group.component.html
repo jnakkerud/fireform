@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-subtitle>{{model.label}}</mat-card-subtitle>
+  <mat-card-content>
+    <ng-container [formGroup]="formGroup">
+
+      <mat-radio-group [formControlName]="model.id" class="dynamic-radio-group">
+        <mat-radio-button class="dynamic-radio-button" *ngFor="let option of model.options" [value]="option.value">
+          {{option.label}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+    </ng-container>
+  </mat-card-content>
+</mat-card>
