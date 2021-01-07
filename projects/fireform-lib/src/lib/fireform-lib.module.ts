@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+// TODO needed ?
+import { HttpClientModule } from '@angular/common/http';
+
 import { DynamicControlDirective } from './directives/dynamic-control/dynamic-control.directive';
 import { DynamicFormComponent } from './containers/dynamic-form/dynamic-form.component';
 
@@ -24,7 +27,8 @@ import { MaterialModule } from './material.module';
   imports: [
     MaterialModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   declarations: [
     DynamicControlDirective,
