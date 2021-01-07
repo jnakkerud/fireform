@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 
-import { isDate } from '../utils';
+import { isDate } from '../../dynamic-form/utils';
 
 export type Convertor = (value: any) => any;
 

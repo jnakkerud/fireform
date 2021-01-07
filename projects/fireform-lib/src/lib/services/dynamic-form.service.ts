@@ -8,7 +8,6 @@ import { ValidatorModel } from '../models/validator.model';
 
 import {  FireFormLibModule } from '../fireform-lib.module';
 import { isString } from '../utils';
-import { ConvertorsMap, NUMBER_CONVERTOR, DATE_CONVERTOR, LOCATION_CONVERTOR } from './dynamic-form-convertors';
 
 function isFormControl(type: string): boolean {
   if (type === 'label' || type === 'image') {
@@ -104,28 +103,6 @@ export class DynamicFormService {
     }
 
   }
-
-  public getConvertors(formModel: DynamicFormModel): ConvertorsMap {
-    const convertors: ConvertorsMap = new Map();
-
-    formModel.forEach(controlModel => {
-      if (controlModel.type === 'input' && controlModel.inputType === 'number') {
-        convertors.set(controlModel.id, NUMBER_CONVERTOR);
-      }
-
-      if (controlModel.type === 'date') {
-        convertors.set(controlModel.id, DATE_CONVERTOR);
-      }
-
-      if (controlModel.type === 'location') {
-        convertors.set(controlModel.id, LOCATION_CONVERTOR);
-      }
-
-    });
-
-    return convertors;
-  }
-
 
   public fromJSON(json: string | object[]): DynamicFormModel | never {
     const formModelJSON = isString(json) ? JSON.parse(json, parseReviver) : json;

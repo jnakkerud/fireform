@@ -7,7 +7,7 @@ import { CollectionItem, GradeResponse } from '../collection-service/collection.
 
 import { take, map, concatMap, filter, reduce, pluck, max } from 'rxjs/operators';
 import { from, pairs, Observable } from 'rxjs';
-import { ConvertorsMap, Convertor } from '../../dynamic-form/services/dynamic-form-convertors';
+import { ConvertorsMap, Convertor } from '../convertors/convertors';
 
 interface AdditionalData {
     timestamp: firebase.firestore.FieldValue;

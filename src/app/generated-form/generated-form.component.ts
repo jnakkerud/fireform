@@ -6,7 +6,8 @@ import { tap, concatMap } from 'rxjs/operators';
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
-import { ConvertorsMap } from '../dynamic-form/services/dynamic-form-convertors';
+import { ConvertorsMap } from '../core/convertors/convertors';
+import { ConvertorFactoryService } from '../core/convertors/convertor-factory.service';
 import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
@@ -59,6 +60,7 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private dynamicFormService: DynamicFormService,
+        private convertorFactory: ConvertorFactoryService,
         private collectionService: CollectionService,
         private linkService: LinkService,
         private dataService: DataService,
@@ -177,7 +179,7 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
     }
 
     private getConvertors(): ConvertorsMap | undefined {
-        const cv = this.dynamicFormService.getConvertors(this.formModel);
+        const cv = this.convertorFactory.getConvertors(this.formModel);
         return cv.size > 0 ? cv : undefined;
     }
 
