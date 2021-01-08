@@ -5,11 +5,9 @@ import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { tap, concatMap } from 'rxjs/operators';
 
 import { AngularMaterialModule } from '../angular-material.module';
-import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
-import { ConvertorsMap } from '../core/convertors/convertors';
-import { ConvertorFactoryService } from '../core/convertors/convertor-factory.service';
-import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
-import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import { FireFormLibModule, DynamicFormModel, DynamicFormService } from 'fireform-lib';
+import { ConvertorsMap } from '../core/data-service/convertors';
+import { ConvertorFactoryService } from './convertor-factory.service';
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 import { LinkService, Link } from '../core/link-service/link.service';
 import { DataService, totalGrade } from '../core/data-service/data.service';
@@ -260,7 +258,7 @@ export class FormCompleteComponent {
         AngularMaterialModule,
         RouterModule,
         ReactiveFormsModule,
-        DynamicFormModule,
+        FireFormLibModule,
         CommonModule],
     exports: [GeneratedFormComponent, FormCompleteComponent],
     declarations: [GeneratedFormComponent, FormCompleteComponent],

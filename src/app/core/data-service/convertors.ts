@@ -1,10 +1,15 @@
 import firebase from 'firebase/app';
 
-import { isDate } from '../../dynamic-form/utils';
-
 export type Convertor = (value: any) => any;
 
 export type ConvertorsMap = Map<string, Convertor>;
+
+export function isDate(input: any) {
+    if (Object.prototype.toString.call(input) === '[object Date]') {
+        return true;
+    }
+    return false;
+}
 
 export const NUMBER_CONVERTOR: Convertor = (value: any) => {
     return Number(value || 0);

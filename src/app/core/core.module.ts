@@ -18,8 +18,6 @@ import { StorageLocationService } from './storage-service/storage-location.servi
 import { TrackingUserService } from './tracking-user-service/tracking-user.service';
 import { FirestoreService } from './firestore-service/firestore.service';
 import { FingerprintService } from './fingerprint-service/fingerprint.service';
-import { ConvertorFactoryService } from './convertors/convertor-factory.service';
-
 @NgModule({
     imports: [
         AngularFirestoreModule,
@@ -39,8 +37,7 @@ import { ConvertorFactoryService } from './convertors/convertor-factory.service'
         StorageLocationService,
         TrackingUserService,
         FirestoreService,
-        FingerprintService,
-        ConvertorFactoryService
+        FingerprintService
         // { provide: ORIGIN, useValue: 'http://localhost:4200' }
     ],
 })
