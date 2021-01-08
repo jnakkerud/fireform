@@ -3,11 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from '../angular-material.module';
-import { DynamicFormService } from '../dynamic-form/services/dynamic-form.service';
-import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
-import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
-
-//import { FireFormLibModule } from 'fireform-lib';
+import { DynamicFormService, DynamicFormModel, FireFormLibModule } from 'fireform-lib';
 
 const FORM_JSON = `
 [
@@ -132,8 +128,7 @@ export class DynamicFormTestComponent implements OnInit {
     imports: [
         AngularMaterialModule,
         ReactiveFormsModule,
-        DynamicFormModule,
-        //FireFormLibModule,
+        FireFormLibModule,
         CommonModule],
     exports: [DynamicFormTestComponent],
     declarations: [DynamicFormTestComponent],

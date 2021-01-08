@@ -15,4 +15,5 @@ export * from './lib/components/dynamic-image/dynamic-image.component';
 export * from './lib/components/dynamic-location/dynamic-location.component';
 export { ImageService } from './lib/components/dynamic-image/image.service';
 export { DynamicFormService } from './lib/services/dynamic-form.service';
+export { DynamicFormModel } from './lib/models/dynamic-form.model';
 export * from './lib/fireform-lib.module';
