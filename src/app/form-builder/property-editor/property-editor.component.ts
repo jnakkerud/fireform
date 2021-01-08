@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { FormField } from '../form-builder.component';
-import { DynamicFormModel } from '../../dynamic-form/models/dynamic-form.model';
+import { DynamicFormModel } from 'fireform-lib';
 import { CollectionItem } from 'src/app/core/collection-service/collection.service';
 import { StorageLocationService } from 'src/app/core/storage-service/storage-location.service';
 import { PropertyEditor, FormBuilderStore } from '../form-builder-store.service';

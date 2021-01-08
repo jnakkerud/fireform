@@ -18,9 +18,10 @@ import { DragDropModule, CdkDragDrop, moveItemInArray, copyArrayItem } from '@an
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { FormFieldSnippetComponent } from './form-field-snippet/form-field-snippet.component';
-import { DynamicFormControlModelConfig, DynamicFormControlModel } from '../dynamic-form/models/dynamic-form-control.model';
-import { DynamicFormModel } from '../dynamic-form/models/dynamic-form.model';
-import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import {DynamicFormControlModelConfig, 
+        DynamicFormControlModel,
+        DynamicFormModel,
+        FireFormLibModule} from 'fireform-lib';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
 import { CollectionItem } from '../core/collection-service/collection.service';
 import { OptionEditorComponent } from './option-editor/option-editor.component';
@@ -249,7 +250,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
     imports: [
         AngularMaterialModule,
         DragDropModule,
-        DynamicFormModule,
+        FireFormLibModule,
         ReactiveFormsModule,
         CommonModule],
     exports: [FormBuilderComponent,
