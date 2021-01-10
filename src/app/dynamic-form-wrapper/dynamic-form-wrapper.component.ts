@@ -42,9 +42,7 @@ export class DynamicFormWrapperComponent implements OnInit {
 
         console.log('After:', data);
 
-        // TODO
-        // See https://github.com/jmw5598/angular-generic-crud-service/tree/master/src/app
-        // DataService ... generic
+        // TODO:  Update data based on configurable collection. See FirestoreService
     }
 
 
