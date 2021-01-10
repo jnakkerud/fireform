@@ -7,7 +7,8 @@ import { tap, concatMap } from 'rxjs/operators';
 import { AngularMaterialModule } from '../angular-material.module';
 import { FireFormLibModule, DynamicFormModel, DynamicFormService } from 'fireform-lib';
 import { ConvertorsMap } from '../core/data-service/convertors';
-import { ConvertorFactoryService } from './convertor-factory.service';
+import { ConvertorFactoryService } from '../dynamic-form-wrapper/convertor-factory.service';
+import { DynamicFormWrapperModule } from '../dynamic-form-wrapper/dynamic-form-wrapper.module';
 import { CollectionService, CollectionItem } from '../core/collection-service/collection.service';
 import { LinkService, Link } from '../core/link-service/link.service';
 import { DataService, totalGrade } from '../core/data-service/data.service';
@@ -259,6 +260,7 @@ export class FormCompleteComponent {
         RouterModule,
         ReactiveFormsModule,
         FireFormLibModule,
+        DynamicFormWrapperModule,
         CommonModule],
     exports: [GeneratedFormComponent, FormCompleteComponent],
     declarations: [GeneratedFormComponent, FormCompleteComponent],

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
-import { DynamicFormWrapperModule } from '../dynamic-form-wrapper/dynamic-form-wrapper.component';
+import { DynamicFormWrapperModule } from '../dynamic-form-wrapper/dynamic-form-wrapper.module';
 
 const FORM_JSON = `
 [
@@ -96,8 +96,6 @@ const FORM_JSON = `
 })
 export class DynamicFormTestComponent {
     public config = FORM_JSON;
-
-    // TODO Image service 
 }
 @NgModule({
     imports: [

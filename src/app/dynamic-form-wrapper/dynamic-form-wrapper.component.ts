@@ -1,23 +1,17 @@
-import { Component, OnInit, NgModule, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import { DataTransformFactory } from './data-transform-factory.service';
 
-import { AngularMaterialModule } from '../angular-material.module';
 import { DynamicFormService, 
     DynamicFormModel, 
-    FireFormLibModule, 
-    DynamicFormControlModelConfig,
-    ImageService } from 'fireform-lib';
-
-import { DownloadImageService } from './download-image.service';
-
+    DynamicFormControlModelConfig } from 'fireform-lib';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'ff-form',
     templateUrl: 'dynamic-form-wrapper.component.html',
     styleUrls: ['./dynamic-form-wrapper.component.scss'],
+    providers: [DataTransformFactory]
 })
 export class DynamicFormWrapperComponent implements OnInit {
 
@@ -29,7 +23,7 @@ export class DynamicFormWrapperComponent implements OnInit {
 
     @Input() title: string;
 
-    constructor(private dynamicFormService: DynamicFormService) { }
+    constructor(private dynamicFormService: DynamicFormService, private dataTransform: DataTransformFactory) { }
 
     ngOnInit() {
         this.createForm();
@@ -44,8 +38,9 @@ export class DynamicFormWrapperComponent implements OnInit {
         // save the document to the collection
         console.log('Before:', this.formGroup.value);
 
-        // TODO convertors
-        // DataTransformFactory
+        const data = this.dataTransform.transform(this.formGroup.value, this.formModel);
+
+        console.log('After:', data);
 
         // TODO
         // See https://github.com/jmw5598/angular-generic-crud-service/tree/master/src/app
@@ -59,15 +54,3 @@ export class DynamicFormWrapperComponent implements OnInit {
 
 }
 
-@NgModule({
-    imports: [
-        AngularMaterialModule,
-        ReactiveFormsModule,
-        FireFormLibModule,
-        AngularFireStorageModule,
-        CommonModule],
-    exports: [DynamicFormWrapperComponent],
-    declarations: [DynamicFormWrapperComponent],
-    providers: [{provide: ImageService, useClass: DownloadImageService}]
-  })
-export class DynamicFormWrapperModule {}

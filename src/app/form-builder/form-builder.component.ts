@@ -28,6 +28,7 @@ import { OptionEditorComponent } from './option-editor/option-editor.component';
 import { ImageInputComponent } from './image-input/image-input.component';
 import { GradeEditorComponent } from './grade-editor/grade-editor.component';
 import { FormBuilderStore } from './form-builder-store.service';
+import { DynamicFormWrapperModule } from '../dynamic-form-wrapper/dynamic-form-wrapper.module';
 
 export interface FormConfig {
     config: DynamicFormControlModelConfig;
@@ -249,6 +250,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
 @NgModule({
     imports: [
         AngularMaterialModule,
+        DynamicFormWrapperModule,
         DragDropModule,
         FireFormLibModule,
         ReactiveFormsModule,
