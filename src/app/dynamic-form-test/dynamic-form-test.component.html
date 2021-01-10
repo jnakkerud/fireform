@@ -1,17 +1,3 @@
-<ng-container *ngIf="formGroup">
-    <div class="ff-form-container">
-        <mat-card>
-            <mat-card-content>
-                <h1>Test Form</h1>
-            </mat-card-content>
-        </mat-card>
-        <dynamic-form (keyup.enter)="onSubmit()" autocomplete="off" [className]="'nested-grid-container'"
-            [formGroup]="formGroup" [model]="formModel">
-        </dynamic-form>
+<ff-form [modelConfig]='config' title='Test Form'>
 
-        <div class="button-row">
-            <button mat-button (click)="onSubmit()">Submit</button>
-        </div>
-
-    </div>
-</ng-container>
+</ff-form>
