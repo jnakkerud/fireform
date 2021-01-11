@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DynamicFormModel } from 'fireform-lib';
+import { DynamicFormModel } from 'dynamic-form-lib';
 
 import { ConvertorsMap, DATE_CONVERTOR, LOCATION_CONVERTOR, NUMBER_CONVERTOR } from '../core/data-service/convertors';
 

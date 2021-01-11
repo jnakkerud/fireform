@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, '../../coverage/fireform-lib'),
+      dir: require('path').join(__dirname, '../../coverage/dynamic-form-lib'),
       subdir: '.',
       reporters: [
         { type: 'html' },

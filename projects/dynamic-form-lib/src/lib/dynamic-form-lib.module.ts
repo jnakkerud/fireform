@@ -49,4 +49,4 @@ import { MaterialModule } from './material.module';
   ],
   providers: [ImageService]
 })
-export class FireFormLibModule {}
+export class DynamicFormLibModule {}

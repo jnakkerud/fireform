@@ -2,7 +2,7 @@ import { Injectable, KeyValueDiffers, KeyValueDiffer, OnDestroy, NgZone } from '
 
 import { CollectionItem, CollectionService, GradeResponse } from '../core/collection-service/collection.service';
 import { FormField } from './form-builder.component';
-import { DynamicFormControlModel } from 'fireform-lib';
+import { DynamicFormControlModel } from 'dynamic-form-lib';
 import { Observable, fromEvent, of as observableOf, Subscription } from 'rxjs';
 import { Platform } from '@angular/cdk/platform';
 

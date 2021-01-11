@@ -3,7 +3,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { FormField } from '../form-builder.component';
-import { DynamicFormService } from 'fireform-lib';
+import { DynamicFormService } from 'dynamic-form-lib';
 
 @Component({
     // tslint:disable-next-line: component-selector

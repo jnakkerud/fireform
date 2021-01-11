@@ -5,7 +5,7 @@ import { DataTransformFactory } from './data-transform-factory.service';
 
 import { DynamicFormService, 
     DynamicFormModel, 
-    DynamicFormControlModelConfig } from 'fireform-lib';
+    DynamicFormControlModelConfig } from 'dynamic-form-lib';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'ff-form',

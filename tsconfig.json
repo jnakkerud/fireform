@@ -19,9 +19,9 @@
       "dom"
     ],
     "paths": {
-      "fireform-lib": [
-        "dist/fireform-lib/fireform-lib",
-        "dist/fireform-lib"
+      "dynamic-form-lib": [
+        "dist/dynamic-form-lib/dynamic-form-lib",
+        "dist/dynamic-form-lib"
       ]
     }
   },

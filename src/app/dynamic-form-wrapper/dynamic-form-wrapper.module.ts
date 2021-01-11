@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AngularMaterialModule } from '../angular-material.module';
-import { FireFormLibModule, ImageService } from 'fireform-lib';
+import { DynamicFormLibModule, ImageService } from 'dynamic-form-lib';
 
 import { DownloadImageService } from './download-image.service';
 import { DynamicFormWrapperComponent } from './dynamic-form-wrapper.component';
@@ -15,7 +15,7 @@ import { ConvertorFactoryService } from './convertor-factory.service';
     imports: [
         AngularMaterialModule,
         ReactiveFormsModule,
-        FireFormLibModule,
+        DynamicFormLibModule,
         AngularFireStorageModule,
         CommonModule],
     exports: [DynamicFormWrapperComponent],

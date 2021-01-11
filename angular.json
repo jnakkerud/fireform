@@ -124,38 +124,38 @@
         }
       }
     },
-    "fireform-lib": {
+    "dynamic-form-lib": {
       "projectType": "library",
-      "root": "projects/fireform-lib",
-      "sourceRoot": "projects/fireform-lib/src",
+      "root": "projects/dynamic-form-lib",
+      "sourceRoot": "projects/dynamic-form-lib/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/fireform-lib/tsconfig.lib.json",
-            "project": "projects/fireform-lib/ng-package.json"
+            "tsConfig": "projects/dynamic-form-lib/tsconfig.lib.json",
+            "project": "projects/dynamic-form-lib/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/fireform-lib/tsconfig.lib.prod.json"
+              "tsConfig": "projects/dynamic-form-lib/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/fireform-lib/src/test.ts",
-            "tsConfig": "projects/fireform-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/fireform-lib/karma.conf.js"
+            "main": "projects/dynamic-form-lib/src/test.ts",
+            "tsConfig": "projects/dynamic-form-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/dynamic-form-lib/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/fireform-lib/tsconfig.lib.json",
-              "projects/fireform-lib/tsconfig.spec.json"
+              "projects/dynamic-form-lib/tsconfig.lib.json",
+              "projects/dynamic-form-lib/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

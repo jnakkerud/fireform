@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { FormGroup } from '@angular/forms';
 
 import { CollectionService, CollectionItem } from '../../core/collection-service/collection.service';
-import { DynamicFormService, DynamicFormModel, DynamicFormControlModelConfig } from 'fireform-lib';
+import { DynamicFormService, DynamicFormModel, DynamicFormControlModelConfig } from 'dynamic-form-lib';
 import { Subscription } from 'rxjs';
 
 const SETTINGS_FORM = 'settings';

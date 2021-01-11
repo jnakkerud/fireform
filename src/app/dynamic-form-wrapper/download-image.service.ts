@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ImageService } from 'fireform-lib'; 
+import { ImageService } from 'dynamic-form-lib'; 
 import { Observable } from 'rxjs';
 
 import { AngularFireStorage } from '@angular/fire/storage';

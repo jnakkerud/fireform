@@ -21,7 +21,7 @@ import { FormFieldSnippetComponent } from './form-field-snippet/form-field-snipp
 import {DynamicFormControlModelConfig, 
         DynamicFormControlModel,
         DynamicFormModel,
-        FireFormLibModule} from 'fireform-lib';
+        DynamicFormLibModule} from 'dynamic-form-lib';
 import { PropertyEditorComponent } from './property-editor/property-editor.component';
 import { CollectionItem } from '../core/collection-service/collection.service';
 import { OptionEditorComponent } from './option-editor/option-editor.component';
@@ -252,7 +252,7 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         AngularMaterialModule,
         DynamicFormWrapperModule,
         DragDropModule,
-        FireFormLibModule,
+        DynamicFormLibModule,
         ReactiveFormsModule,
         CommonModule],
     exports: [FormBuilderComponent,

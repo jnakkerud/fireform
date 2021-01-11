@@ -6,7 +6,7 @@ import { DynamicFormControlModel, DynamicFormControlModelConfig } from '../model
 import { DynamicFormModel } from '../models/dynamic-form.model';
 import { ValidatorModel } from '../models/validator.model';
 
-import {  FireFormLibModule } from '../fireform-lib.module';
+import {  DynamicFormLibModule } from '../dynamic-form-lib.module';
 import { isString } from '../utils';
 
 function isFormControl(type: string): boolean {
@@ -24,7 +24,7 @@ export function parseReviver(key: string, value: any): any {
 export type ValidatorFactory = (args: any) => ValidatorFn;
 
 @Injectable({
-  providedIn: FireFormLibModule
+  providedIn: DynamicFormLibModule
 })
 export class DynamicFormService {
 

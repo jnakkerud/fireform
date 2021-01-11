@@ -1,5 +1,5 @@
 /*
- * Public API Surface of fireform-lib
+ * Public API Surface of dynamic-form-lib
  */
 export * from './lib/directives/dynamic-control/dynamic-control.directive';
 export * from './lib/containers/dynamic-form/dynamic-form.component';
@@ -17,4 +17,4 @@ export { ImageService } from './lib/components/dynamic-image/image.service';
 export { DynamicFormService } from './lib/services/dynamic-form.service';
 export { DynamicFormModel } from './lib/models/dynamic-form.model';
 export { DynamicFormControlModelConfig, DynamicFormControlModel } from './lib/models/dynamic-form-control.model';
-export * from './lib/fireform-lib.module';
+export * from './lib/dynamic-form-lib.module';

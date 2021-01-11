@@ -13,7 +13,7 @@ import { FormBuilderModule } from '../form-builder/form-builder.component';
 import { GenerateLinkModule } from '../generate-link/generate-link.component';
 import { SendInvitationModule } from '../send-invitation/send-invitation.component';
 import { CollectionsRoutingModule } from './collections-routing.module';
-import { FireFormLibModule } from 'fireform-lib';
+import { DynamicFormLibModule } from 'dynamic-form-lib';
 
 @NgModule({
     imports: [
@@ -22,7 +22,7 @@ import { FireFormLibModule } from 'fireform-lib';
         ReactiveFormsModule,
         FormBuilderModule,
         CollectionsRoutingModule,
-        FireFormLibModule,
+        DynamicFormLibModule,
         GenerateLinkModule,
         SendInvitationModule,
         AngularMaterialModule],
