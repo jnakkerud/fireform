@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from '../angular-material.module';
 
@@ -92,15 +93,27 @@ const FORM_JSON = `
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'dynamic-form-test',
-    templateUrl: 'dynamic-form-test.component.html'
+    templateUrl: 'dynamic-form-test.component.html',
+    styleUrls: ['./dynamic-form-test.component.scss']
 })
 export class DynamicFormTestComponent {
     public config = FORM_JSON;
+
+    public collection = 'test-collection';
+
+    public editCollection() {
+        console.log('edit collection')
+
+        // TODO get the collection
+
+        // if assign id to ff-form will get the collection
+    }
 }
 @NgModule({
     imports: [
         AngularMaterialModule,
         DynamicFormWrapperModule,
+        FormsModule,
         CommonModule],
     exports: [DynamicFormTestComponent],
     declarations: [DynamicFormTestComponent],
