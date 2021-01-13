@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { DataTransformFactory } from './data-transform-factory.service';
@@ -18,7 +18,7 @@ function isString(value: any): value is string {
     styleUrls: ['./dynamic-form-wrapper.component.scss'],
     providers: [DataTransformFactory, FireStoreFormService]
 })
-export class DynamicFormWrapperComponent implements OnInit {
+export class DynamicFormWrapperComponent implements OnInit, OnChanges {
 
     public formGroup: FormGroup;
  
@@ -35,6 +35,13 @@ export class DynamicFormWrapperComponent implements OnInit {
         private fireStoreFormService: FireStoreFormService,
         private dataTransform: DataTransformFactory) { }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log('OnChanges', changes)
+        if (changes.dataPath.currentValue) {
+            this.loadForm();
+        }
+    }
+
     ngOnInit() {
         this.createForm();
     }
@@ -44,9 +51,16 @@ export class DynamicFormWrapperComponent implements OnInit {
         this.formGroup = this.dynamicFormService.createGroup(this.formModel);
     }
 
-    // TODO OnChanges on dataPath.  If data path contains id then get from fireStoreFormService
-    // and formGroup.patch the data
     // Test ID: 60sGMd1ZxSWhUxXE8ZRS
+    loadForm() {
+        const dp = isString(this.dataPath) ? new DataPath(this.dataPath as string) : this.dataPath;
+        if (dp.id) {
+            this.fireStoreFormService.get(dp).then(data => {
+                console.log('data:', data);
+                this.formGroup.patchValue(data);
+            });
+        }
+    }
 
     onSubmit() {
         // save the document to the collection
