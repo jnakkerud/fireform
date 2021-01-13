@@ -16,5 +16,8 @@ service cloud.firestore {
 			// TODO allow anonymous access ?
       allow create: if request.auth.uid != null;
     }
+    match /test-collection/{document=**} {
+      allow read, write: if true;
+    }       
   }
 }

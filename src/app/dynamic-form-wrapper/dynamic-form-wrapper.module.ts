@@ -10,7 +10,6 @@ import { DynamicFormLibModule, ImageService } from 'dynamic-form-lib';
 import { DownloadImageService } from './download-image.service';
 import { DynamicFormWrapperComponent } from './dynamic-form-wrapper.component';
 import { ConvertorFactoryService } from './convertor-factory.service';
-
 @NgModule({
     imports: [
         AngularMaterialModule,

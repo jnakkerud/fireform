@@ -101,12 +101,11 @@ export class DynamicFormTestComponent {
 
     public collection = 'test-collection';
 
+    public dataPath = null;
+
     public editCollection() {
         console.log('edit collection')
-
-        // TODO get the collection
-
-        // if assign id to ff-form will get the collection
+        this.dataPath = this.collection;
     }
 }
 @NgModule({
