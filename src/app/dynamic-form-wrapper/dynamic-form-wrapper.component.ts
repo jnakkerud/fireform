@@ -57,7 +57,7 @@ export class DynamicFormWrapperComponent implements OnInit, OnChanges {
         if (dp.id) {
             this.fireStoreFormService.get(dp).then(data => {
                 console.log('data:', data);
-                this.formGroup.patchValue(data);
+                this.formGroup.patchValue(this.dataTransform.formTransform(data));
             });
         }
     }

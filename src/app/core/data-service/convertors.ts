@@ -11,6 +11,14 @@ export function isDate(input: any) {
     return false;
 }
 
+export function isTimeStamp(input: any): boolean {
+    return (input instanceof firebase.firestore.Timestamp);
+}
+
+export function isGeoPoint(input: any): boolean {
+    return (input instanceof firebase.firestore.GeoPoint);
+}
+
 export const NUMBER_CONVERTOR: Convertor = (value: any) => {
     return Number(value || 0);
 };
@@ -27,4 +35,12 @@ export const LOCATION_CONVERTOR: Convertor = (value: any) => {
     const lat = Number(ary[0].trim());
     const lon = Number(ary[1].trim());
     return new firebase.firestore.GeoPoint(lat, lon);
+};
+
+export const ToDateConvertor: Convertor = (value: firebase.firestore.Timestamp) => {
+    return value.toDate();
+};
+
+export const ToLocationConvertor: Convertor = (value: firebase.firestore.GeoPoint) => {
+    return `${value.latitude},${value.longitude}`;
 };

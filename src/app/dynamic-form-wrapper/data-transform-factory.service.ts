@@ -29,6 +29,20 @@ export class DataTransformFactory {
         return validData;
     }
 
+    public formTransform(data: any): any {
+        let validData = {};
+        Object.keys(data).forEach(key => {
+            let val = data[key];
+            // if (val instanceof firebase.firestore.Timestamp)
+            const convertor: Convertor = this.convertorFactory.getConvertor(val);
+            if (convertor) {
+                val = convertor(val);
+            }
+            validData[key] = val;
+        });
+        return validData;      
+    }
+
     private getConvertors(formModel: DynamicFormModel): ConvertorsMap | undefined {
         const cv = this.convertorFactory.getConvertors(formModel);
         return cv.size > 0 ? cv : undefined;
