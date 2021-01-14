@@ -34,7 +34,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     isLoggedIn(): Observable<boolean> {
         return this.afAuth.authState.pipe(
             take(1),
-            map(user => !!user)
+            map(user => user ? (user?.isAnonymous ? false : true) : false)
         );
     }
 }
