@@ -10,6 +10,7 @@ import { DynamicFormLibModule, ImageService } from 'dynamic-form-lib';
 import { DownloadImageService } from './download-image.service';
 import { DynamicFormWrapperComponent } from './dynamic-form-wrapper.component';
 import { ConvertorFactoryService } from './convertor-factory.service';
+import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
 @NgModule({
     imports: [
         AngularMaterialModule,
@@ -17,8 +18,8 @@ import { ConvertorFactoryService } from './convertor-factory.service';
         DynamicFormLibModule,
         AngularFireStorageModule,
         CommonModule],
-    exports: [DynamicFormWrapperComponent],
-    declarations: [DynamicFormWrapperComponent],
+    exports: [DynamicFormWrapperComponent, DynamicTableComponent],
+    declarations: [DynamicFormWrapperComponent, DynamicTableComponent],
     providers: [
         {provide: ImageService, useClass: DownloadImageService}, 
         ConvertorFactoryService]

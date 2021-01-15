@@ -19,6 +19,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table'
 
 const modules: any[] = [
   LayoutModule,
@@ -38,7 +39,8 @@ const modules: any[] = [
   MatChipsModule,
   MatExpansionModule,
   MatSnackBarModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatTableModule
 ];
 
 @NgModule({
