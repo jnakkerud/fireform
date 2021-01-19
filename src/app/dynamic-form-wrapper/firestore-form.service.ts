@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { FirestoreService } from '../core/firestore-service/firestore.service';
 
+function isString(value: any): value is string {
+    return typeof value === 'string';
+}
+
+export function coerceDataPath(value: DataPath | string): DataPath {
+    return isString(value) ? new DataPath(value as string) : value;
+}
 @Injectable()
 export class FireStoreFormService {
 
@@ -20,6 +28,10 @@ export class FireStoreFormService {
             this.fireStoreService.upsert(dataPath.path(), data).then(() => resolve(new DataPath(dataPath.path())));
         });        
     }
+
+    public items(dataPath: DataPath): Observable<any> {
+        return this.fireStoreService.collection(dataPath.path()).valueChanges();
+    }
 }
 
 export class DataPath {
@@ -35,6 +47,9 @@ export class DataPath {
     }
 
     public path(): string {
+        if (!this.id) {
+            return this.collection;
+        }
         return `${this.collection}/${this.id}`;
     }
 }

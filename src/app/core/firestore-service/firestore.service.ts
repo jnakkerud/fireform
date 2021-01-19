@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import firebase from 'firebase/app';
 import { take } from 'rxjs/operators';
@@ -24,6 +24,10 @@ export class FirestoreService {
 
     doc<T>(ref: DocPredicate<T>): AngularFirestoreDocument<T> {
         return typeof ref === 'string' ? this.afs.doc<T>(ref) : ref;
+    }
+
+    collection(path: string): AngularFirestoreCollection {
+        return this.afs.collection(path);
     }
 
     get<T>(ref: DocPredicate<T>): Promise<T> {

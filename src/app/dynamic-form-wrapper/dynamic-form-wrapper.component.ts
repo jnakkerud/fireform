@@ -2,15 +2,11 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { FormGroup } from '@angular/forms';
 
 import { DataTransformFactory } from './data-transform-factory.service';
-import { FireStoreFormService, DataPath } from './firestore-form.service';
+import { FireStoreFormService, DataPath, coerceDataPath } from './firestore-form.service';
 
 import { DynamicFormService, 
     DynamicFormModel, 
     DynamicFormControlModelConfig } from 'dynamic-form-lib';
-
-function isString(value: any): value is string {
-    return typeof value === 'string';
-}
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'ff-form',
@@ -53,7 +49,7 @@ export class DynamicFormWrapperComponent implements OnInit, OnChanges {
 
     // Test ID: 60sGMd1ZxSWhUxXE8ZRS
     loadForm() {
-        const dp = isString(this.dataPath) ? new DataPath(this.dataPath as string) : this.dataPath;
+        const dp = coerceDataPath(this.dataPath);
         if (dp.id) {
             this.fireStoreFormService.get(dp).then(data => {
                 console.log('data:', data);
@@ -70,7 +66,7 @@ export class DynamicFormWrapperComponent implements OnInit, OnChanges {
 
         console.log('After:', data);
 
-        this.fireStoreFormService.upsert(isString(this.dataPath) ? new DataPath(this.dataPath as string) : this.dataPath, data).then(dp => {
+        this.fireStoreFormService.upsert(coerceDataPath(this.dataPath), data).then(dp => {
             // TODO fireevent: afterSubmit
             console.log(dp);
         });
@@ -79,6 +75,5 @@ export class DynamicFormWrapperComponent implements OnInit, OnChanges {
     getFormMetadata(): DynamicFormModel {
         return this.dynamicFormService.fromJSON(this.modelConfig);
     }
-
 }
 

@@ -1,38 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { DynamicFormControlModelConfig, DynamicFormService, DynamicFormModel } from 'dynamic-form-lib';
+import { DataTransformFactory } from '../data-transform-factory.service';
+import { DataPath, FireStoreFormService, coerceDataPath } from '../firestore-form.service';
 
-export interface PeriodicElement {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
-  }
-  
-  const ELEMENT_DATA: PeriodicElement[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  ];
+function isDisplayable(type: string): boolean {
+    switch (type) {
+        case 'image':
+        case 'label':
+            return false;
+        default:
+            return true;
+    }
+} 
 
-
+export interface Column {
+    id: string;
+    title: string;
+}
 @Component({
     selector: 'ff-table',
     templateUrl: 'dynamic-table.component.html',
     styleUrls: ['dynamic-table.component.scss'],
+    providers: [DataTransformFactory, FireStoreFormService]
 })
-
 export class DynamicTableComponent implements OnInit {
-    displayedColumns: string[] = ['name', 'weight', 'symbol', 'position'];
-    columnsToDisplay: string[] = this.displayedColumns.slice();
-    data: PeriodicElement[] = ELEMENT_DATA;
+    columns: Column[];
 
-    constructor() { }
+    displayedColumns: string[];
 
-    ngOnInit() { }
+    data: [] = [];
+
+    @Input() modelConfig: DynamicFormControlModelConfig[] | string;
+
+    @Input() dataPath: DataPath | string;
+
+    constructor(
+        private dynamicFormService: DynamicFormService, 
+        private fireStoreFormService: FireStoreFormService,
+        private dataTransform: DataTransformFactory) { }
+
+    ngOnInit(): void {
+        // get columns
+        const model = this.dynamicFormService.fromJSON(this.modelConfig);
+        this.columns = this.extractColumns(model);
+
+        this.displayedColumns = this.columns.map(c => c.id);
+
+        console.log('columns', this.columns);
+        console.log('dataPath', this.dataPath);
+
+        // get data collection
+        this.fireStoreFormService.items(coerceDataPath(this.dataPath)).subscribe(d => {
+            this.data = d;
+        });
+    }
+
+    // TODO ignore label, image types
+    extractColumns(model: DynamicFormModel): Column[] {
+        const c: Column[] = [];
+        for (const m of model) {
+            if (isDisplayable(m.type)) {
+                c.push({id: m.id, title: m.label});
+            }
+        }
+        return c;
+    }
+
 }
