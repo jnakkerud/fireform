@@ -51,6 +51,7 @@ export class DynamicTableComponent implements OnInit {
 
         // get data collection
         this.fireStoreFormService.items(coerceDataPath(this.dataPath)).subscribe(d => {
+            console.log(d);
             this.data = d;
         });
     }

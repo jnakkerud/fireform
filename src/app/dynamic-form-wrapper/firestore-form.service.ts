@@ -22,6 +22,7 @@ export class FireStoreFormService {
     public upsert(dataPath: DataPath, data: any): Promise<DataPath> {
         if (!dataPath.id) {
             dataPath.id = this.fireStoreService.generateId();
+            data['id'] = dataPath.id;
         }
 
         return new Promise<DataPath>(resolve => {

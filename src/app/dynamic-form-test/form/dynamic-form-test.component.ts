@@ -1,10 +1,4 @@
-import { Component, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { AngularMaterialModule } from '../angular-material.module';
-
-import { DynamicFormWrapperModule } from '../dynamic-form-wrapper/dynamic-form-wrapper.module';
+import { Component } from '@angular/core';
 
 const FORM_JSON = `
 [
@@ -93,10 +87,10 @@ const FORM_JSON = `
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'dynamic-form-test',
-    templateUrl: 'dynamic-form-test.component.html',
-    styleUrls: ['./dynamic-form-test.component.scss']
+    templateUrl: 'dynamic-form-test.component.html'
 })
 export class DynamicFormTestComponent {
+    // TODO Inject config and collection
     public config = FORM_JSON;
 
     public collection = 'test-collection';
@@ -108,13 +102,4 @@ export class DynamicFormTestComponent {
         this.dataPath = this.collection;
     }
 }
-@NgModule({
-    imports: [
-        AngularMaterialModule,
-        DynamicFormWrapperModule,
-        FormsModule,
-        CommonModule],
-    exports: [DynamicFormTestComponent],
-    declarations: [DynamicFormTestComponent],
-  })
-export class DynamicFormTestModule {}
+

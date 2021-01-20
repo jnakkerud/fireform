@@ -13,7 +13,7 @@ import { CoreModule } from './core/core.module';
 
 // TODO Lazy load in AppRoutingModule ???
 import { GeneratedFormModule } from './generated-form/generated-form.component';
-import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.component';
+import { DynamicFormTestModule } from './dynamic-form-test/dynamic-form-test.module';
 import { LoginModule } from './login/login.component';
 
 import { HeaderModule } from './header/header.component';

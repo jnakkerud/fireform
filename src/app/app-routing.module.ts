@@ -4,12 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './core/auth/auth-guard.service';
 import { GeneratedFormComponent, FormCompleteComponent } from './generated-form/generated-form.component';
-import { DynamicFormTestComponent } from './dynamic-form-test/dynamic-form-test.component';
+import { DynamicTableTestComponent } from './dynamic-form-test/table/dynamic-table-test.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'collections', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'test-form', component: DynamicFormTestComponent},
+  // TODO lazy load
+  { path: 'test-form', component: DynamicTableTestComponent},
   {
     path: 'collections',
     canActivateChild: [AuthGuardService],
