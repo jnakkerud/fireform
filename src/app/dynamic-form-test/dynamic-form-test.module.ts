@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 import { AngularMaterialModule } from '../angular-material.module';
 import { DYNAMIC_FORM_WRAPPER_CONFIG } from '../dynamic-form-wrapper/dynamic-form-wrapper-config';
 import { DynamicFormWrapperModule } from '../dynamic-form-wrapper/dynamic-form-wrapper.module';
@@ -12,6 +14,7 @@ import { TEST_CONFIG } from './test-config';
     imports: [
         AngularMaterialModule,
         DynamicFormWrapperModule,
+        RouterModule,
         FormsModule,
         CommonModule],
     exports: [DynamicFormTestComponent, DynamicTableTestComponent],

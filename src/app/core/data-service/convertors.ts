@@ -31,10 +31,13 @@ export const DATE_CONVERTOR: Convertor = (value: any) => {
 };
 
 export const LOCATION_CONVERTOR: Convertor = (value: any) => {
-    const ary = value.split(',');
-    const lat = Number(ary[0].trim());
-    const lon = Number(ary[1].trim());
-    return new firebase.firestore.GeoPoint(lat, lon);
+    if (value) {
+        const ary = value.split(',');
+        const lat = Number(ary[0].trim());
+        const lon = Number(ary[1].trim());
+        return new firebase.firestore.GeoPoint(lat, lon);
+    }
+    return value;
 };
 
 export const ToDateConvertor: Convertor = (value: firebase.firestore.Timestamp) => {

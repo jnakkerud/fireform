@@ -1,3 +1,6 @@
-<ff-form [modelConfig]='config.formModel' title='Test Form' [dataPath]='config.collectionPath'>
+<ff-form [modelConfig]='config.formModel' 
+    title='Test Form' 
+    [dataPath]='collection'
+    (onAfterSubmit)='afterSubmit()'>
 </ff-form>
 

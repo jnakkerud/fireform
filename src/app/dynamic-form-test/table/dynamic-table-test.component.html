@@ -1,5 +1,5 @@
 <div class='edit-container'>
-    <button mat-raised-button (click)="editCollection()">Create</button>
+    <button mat-raised-button [routerLink]="['/test-form/create']">Create</button>
 </div>
 
 <ff-table [modelConfig]='config.formModel' [dataPath]='config.collectionPath'></ff-table>

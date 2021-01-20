@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { DataTransformFactory } from './data-transform-factory.service';
@@ -25,6 +25,8 @@ export class DynamicFormWrapperComponent implements OnInit, OnChanges {
     @Input() title: string;
 
     @Input() dataPath: DataPath | string;
+
+    @Output() onAfterSubmit = new EventEmitter<string>();
 
     constructor(
         private dynamicFormService: DynamicFormService, 
@@ -67,8 +69,8 @@ export class DynamicFormWrapperComponent implements OnInit, OnChanges {
         console.log('After:', data);
 
         this.fireStoreFormService.upsert(coerceDataPath(this.dataPath), data).then(dp => {
-            // TODO fireevent: afterSubmit
             console.log(dp);
+            this.onAfterSubmit.emit(dp.id);
         });
     }
 

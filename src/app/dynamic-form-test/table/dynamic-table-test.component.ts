@@ -10,9 +10,5 @@ export class DynamicTableTestComponent {
 
     constructor(@Inject(DYNAMIC_FORM_WRAPPER_CONFIG) public config: DynamicFormWrapperConfig) {}
 
-    public editCollection() {
-        console.log('edit collection')
-        //this.dataPath = this.collection;
-    }
 }
 
