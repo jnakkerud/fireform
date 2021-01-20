@@ -1,8 +1,5 @@
 <div class='edit-container'>
-    <mat-form-field>
-        <input matInput placeholder="Enter Collection" [(ngModel)]="collection">
-    </mat-form-field>
-    <button mat-raised-button (click)="editCollection()">Edit</button>
+    <button mat-raised-button (click)="editCollection()">Create</button>
 </div>
 
-<ff-table [modelConfig]='config' dataPath='test-collection'></ff-table>
+<ff-table [modelConfig]='config.formModel' [dataPath]='config.collectionPath'></ff-table>
