@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
@@ -17,6 +18,7 @@ import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
         ReactiveFormsModule,
         DynamicFormLibModule,
         AngularFireStorageModule,
+        RouterModule,
         CommonModule],
     exports: [DynamicFormWrapperComponent, DynamicTableComponent],
     declarations: [DynamicFormWrapperComponent, DynamicTableComponent],

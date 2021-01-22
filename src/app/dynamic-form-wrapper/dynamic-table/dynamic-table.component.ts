@@ -34,6 +34,8 @@ export class DynamicTableComponent implements OnInit {
 
     @Input() dataPath: DataPath | string;
 
+    @Input() editPath: string;
+
     constructor(
         private dynamicFormService: DynamicFormService, 
         private fireStoreFormService: FireStoreFormService,
@@ -44,7 +46,9 @@ export class DynamicTableComponent implements OnInit {
         const model = this.dynamicFormService.fromJSON(this.modelConfig);
         this.columns = this.extractColumns(model);
 
-        this.displayedColumns = this.columns.map(c => c.id);
+        const c = this.columns.map(c => c.id);
+        c.push('actions');
+        this.displayedColumns = c
 
         console.log('columns', this.columns);
         console.log('dataPath', this.dataPath);
