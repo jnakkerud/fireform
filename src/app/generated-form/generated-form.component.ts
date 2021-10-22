@@ -211,7 +211,7 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
     `,
     styles:
     [':host {display: flex;justify-content: center; height: 100vh; background-color: #ECEFF1;}',
-    '.card-container {margin: 104px 0px;'
+    '.card-container {margin: 104px 0px;}'
     ]
 })
 export class FormCompleteComponent {
