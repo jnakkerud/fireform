@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireAuth } from '@angular/fire/auth';
-import { firebase } from '@firebase/app';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { BehaviorSubject } from 'rxjs';
-
 export interface User {
     email: string;
     isAnonymous: boolean;
     refreshToken: string;
     uid: string;
 }
-
 @Injectable()
 export class UserService {
 

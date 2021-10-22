@@ -7,7 +7,7 @@ import {
     CanActivateChild } from '@angular/router';
 
 import { map, take } from 'rxjs/operators';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 
 @Injectable()

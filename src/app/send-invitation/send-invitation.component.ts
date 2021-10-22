@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 
 import { AngularMaterialModule } from '../angular-material.module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

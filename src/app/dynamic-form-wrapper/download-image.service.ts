@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ImageService } from 'dynamic-form-lib'; 
 import { Observable } from 'rxjs';
 
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable()
 export class DownloadImageService implements ImageService {

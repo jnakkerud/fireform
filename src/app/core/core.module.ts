@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireFunctionsModule, ORIGIN} from '@angular/fire/functions';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireFunctionsModule, ORIGIN} from '@angular/fire/compat/functions';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 import { CollectionService } from './collection-service/collection.service';
 import { AuthGuardService } from './auth/auth-guard.service';

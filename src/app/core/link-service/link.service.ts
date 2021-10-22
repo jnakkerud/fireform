@@ -5,7 +5,7 @@ import { map, take } from 'rxjs/operators';
 
 import {
     AngularFirestore,
-    AngularFirestoreCollection} from '@angular/fire/firestore';
+    AngularFirestoreCollection} from '@angular/fire/compat/firestore';
 
 import { FirestoreService } from '../firestore-service/firestore.service';
 

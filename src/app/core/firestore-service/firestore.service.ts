@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 import { take } from 'rxjs/operators';
 
 type DocPredicate<T> = string | AngularFirestoreDocument<T>;

@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireAuth } from '@angular/fire/auth';
-import { firebase } from '@firebase/app';
-import '@firebase/auth';
-
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 export interface Login {
     username: string;
     password: string;
 }
-
 @Injectable()
 export class AuthService {
+
+    constructor(public auth: AngularFireAuth) {}
 
     public authenticate(login?: Login): Promise<boolean> {
         if (login) {
@@ -21,7 +19,7 @@ export class AuthService {
 
     private doEmailLogin(login: Login): Promise<boolean>  {
         return new Promise<boolean>((resolve) => {
-            firebase.auth().signInWithEmailAndPassword(login.username, login.password)
+            this.auth.signInWithEmailAndPassword(login.username, login.password)
                 .then(res => {
                     resolve(res?.user?.email === login.username);
                 }, err => {
@@ -32,7 +30,7 @@ export class AuthService {
 
     private doAnonymousLogin(): Promise<boolean>  {
         return new Promise<boolean>((resolve) => {
-            firebase.auth().signInAnonymously()
+            this.auth.signInAnonymously()
                 .then(res => {
                     resolve(true);
                 }, err => {
@@ -45,8 +43,8 @@ export class AuthService {
 
     doLogout() {
         return new Promise<void>((resolve, reject) => {
-            if (firebase.auth().currentUser) {
-                firebase.auth().signOut();
+            if (this.auth.currentUser) {
+                this.auth.signOut();
                 resolve();
             } else {
                 reject();
