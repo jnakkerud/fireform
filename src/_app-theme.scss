@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '../node_modules/@angular/material/theming';
 
 // Styles for the docs app that are based on the current theme.
@@ -7,5 +8,5 @@
   $warn: map-get($theme, warn);
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
-  $next-theme: mat-palette($mat-red);
+  $next-theme: mat.define-palette(mat.$red-palette);
 }
