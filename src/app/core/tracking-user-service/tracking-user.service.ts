@@ -6,7 +6,8 @@ import { FingerprintService } from '../fingerprint-service/fingerprint.service';
 
 export interface TrackingUser {
     collectionId: string;
-    user?: string; // email or for anonymous users: tracking ID
+    id?: string;
+    email?: string; // email or for anonymous users: tracking ID
     isRegistered?: boolean;
 }
 
@@ -15,15 +16,15 @@ export class TrackingUserService {
 
     constructor(private fireStoreService: FirestoreService, private fingerprintService: FingerprintService) { }
 
-    public async lookupTrackingUserById(collectionItem: CollectionItem, trackingId?: string): Promise<TrackingUser> {
-        let lookupId = trackingId;
-        if (!lookupId) {
-            lookupId = await this.generateTrackingId({collectionId: collectionItem.id});
+    public async lookupTrackingUserById(collectionItem: CollectionItem, lookupId?: string): Promise<TrackingUser> {
+        let trackingId = lookupId;
+        if (!trackingId) {
+            trackingId = await this.generateTrackingId({collectionId: collectionItem.id});
         }
-        let trackingUser = await this.fireStoreService.get<TrackingUser>(`tracking-users/${lookupId}`);
+        let trackingUser = await this.fireStoreService.get<TrackingUser>(`tracking-users/${trackingId}`);
         if (!trackingUser) {
             // create an anonymous tracking user
-            trackingUser = {collectionId: collectionItem.id, user: lookupId, isRegistered: false};
+            trackingUser = {collectionId: collectionItem.id, id: trackingId, isRegistered: false};
         }
 
         return new Promise<TrackingUser>((resolve) => {
@@ -35,6 +36,7 @@ export class TrackingUserService {
         let trackingId = id;
         if (!trackingId) {
             trackingId = await this.generateTrackingId(user);
+            user.id = trackingId;
         }
 
         return new Promise<string>(resolve => {

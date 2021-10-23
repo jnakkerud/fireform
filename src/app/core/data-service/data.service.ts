@@ -87,8 +87,8 @@ export class DataService {
         return new Promise<any>(resolve => resolve(mergedData));
     }
 
-    queryByTrackingUser(collectionItem: CollectionItem, user: string): Promise<any> {
-        return this.afs.collection(`formdata/${collectionItem.id}/data`, ref => ref.where('tracking_user', '==', user)).
+    queryByTrackingUser(collectionItem: CollectionItem, trackingId: string): Promise<any> {
+        return this.afs.collection(`formdata/${collectionItem.id}/data`, ref => ref.where('tracking_user_id', '==', trackingId)).
             valueChanges().pipe(
                 take(1),
                 map(data => {

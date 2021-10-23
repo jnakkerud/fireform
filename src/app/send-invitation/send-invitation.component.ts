@@ -61,7 +61,7 @@ export class SendInvitationComponent implements OnInit {
             await this.trackingUserService.upsert(
                 {
                     collectionId: this.collectionItem.id,
-                    user: e,
+                    email: e,
                     isRegistered: true
                 }
             ).then(t => tokens.push({email: e, token: t}));

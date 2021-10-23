@@ -47,7 +47,7 @@ function convert(data: any) {
 }
 
 function send(mailOptions: any) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
         transporter.sendMail(mailOptions, (err: any, info: any) => {
             if (err) {
                 console.log("error: ", err);

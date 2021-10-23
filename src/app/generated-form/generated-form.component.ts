@@ -50,7 +50,6 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
     collectionItem: CollectionItem = {id: '', name: ''};
     link: Link;
     trackingUser: TrackingUser;
-    trackingId: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -95,9 +94,8 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
     async setupForm() {
         // detect the tracking user
         if (this.collectionItem.trackResponses) {
-            const id = getTrackingIdFromUrl();
-            this.trackingUser = await this.getTrackingUser();
-            this.trackingId = id || this.trackingUser.user;
+            // if a tracking user is not found in the db, then an anonymous tracking user will be returned with a fingerprint id
+            this.trackingUser = await this.trackingUserService.lookupTrackingUserById(this.collectionItem, getTrackingIdFromUrl());
         }
         const canCreate = await this.canCreateForm();
         if (canCreate) {
@@ -113,25 +111,20 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
         this.formGroup = this.dynamicFormService.createGroup(this.formModel);
     }
 
-    getTrackingUser(id?: string): Promise<TrackingUser>  {
-        return this.trackingUserService.lookupTrackingUserById(this.collectionItem, id);
-    }
-
     updateTrackingUser() {
-        if (this.trackingUser) {
+        if (this.trackingUser && this.trackingUser.isRegistered) {
             if (!this.trackingUser.collectionId) {
                 this.trackingUser.collectionId = this.collectionItem.id;
             }
-            this.trackingUserService.upsert(this.trackingUser, this.trackingId);
+            this.trackingUserService.upsert(this.trackingUser, this.trackingUser.id);
         }
     }
 
     canCreateForm(): Promise<boolean> {
-        // allow multiple responses ? then create the form
         if (!this.collectionItem.allowMultiple) {
             // look for an existing response by the tracking user, if existing then show 'response already submitted'
             return new Promise<boolean>(resolve => {
-                this.dataService.queryByTrackingUser(this.collectionItem, this.trackingUser.user).then(data => {
+                this.dataService.queryByTrackingUser(this.collectionItem, this.trackingUser.id).then(data => {
                     resolve(!data);
                 });
             });
@@ -144,7 +137,7 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
 
         // add the user  to the data, if tracking is on
         if (this.trackingUser) {
-            const user = {tracking_user: this.trackingUser.user || 'anonymous'};
+            const user = {tracking_user_id: this.trackingUser.id, tracking_user_email: this.trackingUser.email || 'anonymous'};
             data = {...user, ...data};
         }
 
