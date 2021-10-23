@@ -32,19 +32,16 @@ function getTrackingIdFromUrl() {
     }
     return null;
 }
-
 interface ResultParam {
     s: number;
     g?: number;
 }
-
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'generated-form',
     templateUrl: 'generated-form.component.html',
     styleUrls: ['./generated-form.component.scss']
 })
-
 export class GeneratedFormComponent implements OnInit, OnDestroy {
 
     public formGroup: FormGroup;
@@ -98,7 +95,9 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
     async setupForm() {
         // detect the tracking user
         if (this.collectionItem.trackResponses) {
+            const id = getTrackingIdFromUrl();
             this.trackingUser = await this.getTrackingUser();
+            this.trackingId = id || this.trackingUser.user;
         }
         const canCreate = await this.canCreateForm();
         if (canCreate) {
@@ -114,9 +113,8 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
         this.formGroup = this.dynamicFormService.createGroup(this.formModel);
     }
 
-    getTrackingUser(): Promise<TrackingUser>  {
-        this.trackingId = getTrackingIdFromUrl();
-        return this.trackingUserService.lookupTrackingUserById(this.collectionItem, this.trackingId);
+    getTrackingUser(id?: string): Promise<TrackingUser>  {
+        return this.trackingUserService.lookupTrackingUserById(this.collectionItem, id);
     }
 
     updateTrackingUser() {
@@ -133,7 +131,7 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
         if (!this.collectionItem.allowMultiple) {
             // look for an existing response by the tracking user, if existing then show 'response already submitted'
             return new Promise<boolean>(resolve => {
-                this.dataService.queryByTrackingUser(this.collectionItem, this.trackingUser.email || this.trackingId).then(data => {
+                this.dataService.queryByTrackingUser(this.collectionItem, this.trackingUser.user).then(data => {
                     resolve(!data);
                 });
             });
@@ -146,7 +144,7 @@ export class GeneratedFormComponent implements OnInit, OnDestroy {
 
         // add the user  to the data, if tracking is on
         if (this.trackingUser) {
-            const user = {tracking_user: this.trackingUser.email || 'anonymous'};
+            const user = {tracking_user: this.trackingUser.user || 'anonymous'};
             data = {...user, ...data};
         }
 

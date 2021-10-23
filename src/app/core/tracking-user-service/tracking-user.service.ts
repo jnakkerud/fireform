@@ -6,7 +6,7 @@ import { FingerprintService } from '../fingerprint-service/fingerprint.service';
 
 export interface TrackingUser {
     collectionId: string;
-    email?: string;
+    user?: string; // email or for anonymous users: tracking ID
     isRegistered?: boolean;
 }
 
@@ -23,7 +23,7 @@ export class TrackingUserService {
         let trackingUser = await this.fireStoreService.get<TrackingUser>(`tracking-users/${lookupId}`);
         if (!trackingUser) {
             // create an anonymous tracking user
-            trackingUser = {collectionId: collectionItem.id, isRegistered: false};
+            trackingUser = {collectionId: collectionItem.id, user: lookupId, isRegistered: false};
         }
 
         return new Promise<TrackingUser>((resolve) => {
