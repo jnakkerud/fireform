@@ -55,6 +55,7 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
 
     constructor(private formBuilder: FormBuilder, private kvDiffers: KeyValueDiffers, private formBuilderStore: FormBuilderStore) { }
 
+    // Called on initial load and when the formField value changes like label or value
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.hasOwnProperty('formField')) {
             this.formBuilderStore.bindGradeEditor(this);
@@ -65,6 +66,7 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
         }
     }
 
+    // When the expansion panel opens create the form
     onOpen() {
         if (!this.group) {
             this.createForm();
@@ -93,7 +95,7 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
                 options: this.formBuilder.array(formGroups)
             });
 
-            // Listen for changes to the options control of {label, value}
+            // Create the differ to listen for changes to the options control of {label, value}
             const optionsControl = this.formGroup.get('options');
             const arrayDiffer = this.kvDiffers.find(optionsControl.value).create<string, string>();
 
@@ -101,6 +103,9 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
             // as first diff will compare against an empty object
             arrayDiffer.diff(optionsControl.value);
 
+            // Listen to the formfield changes to the options and update the grade editor
+            // to reflect the new changes, i.e. if an option is removed, then remove from the
+            // grade editor
             optionsControl.valueChanges.subscribe(() => {
                 const diff = arrayDiffer.diff(optionsControl.value);
                 if (diff) {
@@ -134,6 +139,7 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
         return false;
     }
 
+    // Return an updated grade response
     updatedGradeResponse(): Promise<GradeResponse> {
         return new Promise<GradeResponse>(resolve => {
             const val = this.group.value;

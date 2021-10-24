@@ -1,16 +1,12 @@
-import { Injectable, KeyValueDiffers, KeyValueDiffer, OnDestroy, NgZone } from '@angular/core';
+import { Injectable, KeyValueDiffers, KeyValueDiffer } from '@angular/core';
 
 import { CollectionItem, CollectionService, GradeResponse } from '../core/collection-service/collection.service';
 import { FormField } from './form-builder.component';
 import { DynamicFormControlModel } from 'dynamic-form-lib';
-import { Observable, fromEvent, of as observableOf, Subscription } from 'rxjs';
-import { Platform } from '@angular/cdk/platform';
-
 export interface PropertyEditor {
     formField: FormField;
     isDirty(): boolean;
 }
-
 export interface GradeEditor {
     isDirty(): boolean;
     updatedGradeResponse(): Promise<GradeResponse>;
@@ -28,7 +24,7 @@ function toJson(model: DynamicFormControlModel[]): string {
 }
 
 @Injectable()
-export class FormBuilderStore implements OnDestroy {
+export class FormBuilderStore {
 
     private previousCollectionItem: CollectionItem;
     private dirty = false;
@@ -42,15 +38,14 @@ export class FormBuilderStore implements OnDestroy {
 
     formFieldsDiffer: KeyValueDiffer<any, any>;
 
-    private windowUnloadSubscription: Subscription;
+    // private windowUnloadSubscription: Subscription;
 
     constructor(
         private collectionService: CollectionService,
-        private kvDiffers: KeyValueDiffers,
-        platform: Platform,
-        ngZone: NgZone) {
+        private kvDiffers: KeyValueDiffers) {
 
-        ngZone.runOutsideAngular(() => {
+        // TODO refactor unload: see https://github.com/angular/angular/blob/master/aio/src/app/shared/scroll.service.ts
+        /*ngZone.runOutsideAngular(() => {
             const windowUnload: Observable<Event> = platform.isBrowser ?
                 fromEvent(window, 'beforeunload') :
                 observableOf();
@@ -64,13 +59,14 @@ export class FormBuilderStore implements OnDestroy {
                 }
                 return null;
             });
-        });
+        });*/
     }
 
-    ngOnDestroy() {
+    /*ngOnDestroy() {
         this.windowUnloadSubscription.unsubscribe();
+        // Called when toggling between card view and form builder view
         this.save();
-    }
+    }*/
 
     save(item: CollectionItem = this.collectionItem) {
         if (item && this.isDirty()) {
@@ -123,9 +119,9 @@ export class FormBuilderStore implements OnDestroy {
     }
 
     setCollectionItem(item: CollectionItem) {
-        if (item !== this.previousCollectionItem) {
+        /*if (item !== this.previousCollectionItem) {
             this.save(this.previousCollectionItem);
-        }
+        }*/
         this.previousCollectionItem = this.collectionItem;
         this.collectionItem = item;
         this.propertyEditor = null;
@@ -161,8 +157,7 @@ export class FormBuilderStore implements OnDestroy {
         // see if the current editor is dirty
         if (this.gradeEditor && this.gradeEditor.isDirty()) {
             this.dirty = true;
-            const fieldId = this.propertyEditor.formField.fieldId;
-            this.gradeEditor.updatedGradeResponse().then(gr => this.updateGradeResponse(this.collectionItem, gr, fieldId));
+            this.gradeEditor.updatedGradeResponse().then(gr => this.updateGradeResponse(this.collectionItem, gr));
         }
         this.gradeEditor = editor;
     }
@@ -195,7 +190,7 @@ export class FormBuilderStore implements OnDestroy {
         }
     }
 
-    updateGradeResponse(item: CollectionItem, gradeResponse: GradeResponse, fieldId: string) {
+    updateGradeResponse(item: CollectionItem, gradeResponse: GradeResponse, fieldId = gradeResponse.field) {
         if (!item.hasOwnProperty('gradeResponse')) {
             item.gradeResponse = [];
         }

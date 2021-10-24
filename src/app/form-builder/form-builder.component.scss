@@ -4,7 +4,10 @@
     display: flex;
     flex: 1 0 auto;
     flex-direction: column;
-    padding: 1.5em;
+    //padding: 1.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    padding-bottom: 1.5em;
     justify-content: space-between;
 }
 
@@ -23,13 +26,25 @@
     order: -1;
 }
 
+.edit-actions {
+    display: flex;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    justify-content: flex-end;
+}
+
+.edit-actions button {
+    margin: 8px;
+}
+
 @media (min-width: $small-breakpoint-width) {
     .edit-container {
       flex-direction: row;
     }
     .edit-main {
       flex: 1;
-      padding: 2em;
+      padding-left: 2em;
+      padding-right: 2em;
       margin: 0;
     }
     .edit-controls, .edit-properties {

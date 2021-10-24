@@ -228,6 +228,10 @@ export class FormBuilderComponent implements AfterViewInit, OnDestroy, OnChanges
         this.selectField();
     }
 
+    onSave() {
+        this.formBuilderStore.save();
+    }
+
     private selectField() {
         if (this.selectedIndex >= 0 && this.fieldSnippets.length > 0) {
             Promise.resolve(null).then(() => {
