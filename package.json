@@ -24,10 +24,10 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "firebase": "^9.9.3",
+    "rxfire": "^6.0.0",
     "rxjs": "^6.6.3",
     "tslib": "^2.3.1",
-    "zone.js": "~0.11.4",
-    "rxfire": "^6.0.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.1",
@@ -45,7 +45,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "ng-packagr": "^14.3.0",
+    "ng-packagr": "^14.2.0",
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.0",
