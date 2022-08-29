@@ -19,11 +19,8 @@ export class DownloadService {
 
     private saveFile(csvContent: any, filename: string) {
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        if (navigator.msSaveBlob) { // IE 10+
-          navigator.msSaveBlob(blob, filename);
-        } else {
-          const link = document.createElement('a');
-          if (link.download !== undefined) {
+        const link = document.createElement('a');
+        if (link.download !== undefined) {
             // Browsers that support HTML5 download attribute
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
@@ -32,7 +29,6 @@ export class DownloadService {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-          }
         }
     }
 }
