@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControl, UntypedFormGroup, ValidatorFn } from '@angular/forms';
 
 import { DynamicFormControlCustomEvent, DynamicFormControlModel } from '../../models/dynamic-form-control.model';
 
@@ -31,7 +31,7 @@ export function latitudeLongitudeValidator(): ValidatorFn {
 })
 export class DynamicLocationComponent implements OnInit {
 
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
     @Input() model: DynamicFormControlModel;
 
     @Output() customEvent = new EventEmitter<DynamicFormControlCustomEvent>();

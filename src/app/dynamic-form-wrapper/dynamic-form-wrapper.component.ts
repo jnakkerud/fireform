@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { DataTransformFactory } from './data-transform-factory.service';
 import { FireStoreFormService, DataPath, coerceDataPath } from './firestore-form.service';
@@ -16,7 +16,7 @@ import { DynamicFormService,
 })
 export class DynamicFormWrapperComponent implements OnInit, OnChanges {
 
-    public formGroup: FormGroup;
+    public formGroup: UntypedFormGroup;
  
     public formModel: DynamicFormModel;
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { DynamicFormControlCustomEvent, DynamicFormControlModel } from '../../models/dynamic-form-control.model';
 
@@ -10,7 +10,7 @@ import { DynamicFormControlCustomEvent, DynamicFormControlModel } from '../../mo
 })
 export class DynamicInputComponent implements OnInit {
 
-  @Input() formGroup: FormGroup;
+  @Input() formGroup: UntypedFormGroup;
   @Input() model: DynamicFormControlModel;
 
   @Output() customEvent = new EventEmitter<DynamicFormControlCustomEvent>();

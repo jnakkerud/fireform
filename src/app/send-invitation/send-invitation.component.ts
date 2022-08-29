@@ -1,5 +1,5 @@
 import { Component, OnInit, NgModule, Inject } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,10 +31,10 @@ interface EmailToken {
 
 export class SendInvitationComponent implements OnInit {
 
-    form: FormGroup = new FormGroup({
-        email: new FormControl(''),
-        subject: new FormControl(''),
-        message: new FormControl('')
+    form: UntypedFormGroup = new UntypedFormGroup({
+        email: new UntypedFormControl(''),
+        subject: new UntypedFormControl(''),
+        message: new UntypedFormControl('')
     });
 
     collectionItem: CollectionItem;

@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, AbstractControl } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -18,7 +18,7 @@ import { PropertyEditor, FormBuilderStore } from '../form-builder-store.service'
 })
 export class PropertyEditorComponent implements OnDestroy, PropertyEditor {
 
-    formGroup: FormGroup;
+    formGroup: UntypedFormGroup;
 
     // tslint:disable-next-line: variable-name
     private _formField: FormField;
@@ -34,7 +34,7 @@ export class PropertyEditorComponent implements OnDestroy, PropertyEditor {
     subscriptions: Subscription[] = [];
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private storageLocation: StorageLocationService,
         private formBuilderStore: FormBuilderStore) { }
 
@@ -84,7 +84,7 @@ export class PropertyEditorComponent implements OnDestroy, PropertyEditor {
             }
 
             // create a array of formgroups
-            const formGroups: FormGroup[] = [];
+            const formGroups: UntypedFormGroup[] = [];
             for (const cfg of model[0].options) {
                 formGroups.push(this.formBuilder.group(cfg));
             }

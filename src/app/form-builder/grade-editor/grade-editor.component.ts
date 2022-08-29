@@ -1,5 +1,5 @@
 import { Component, Input, KeyValueDiffers, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray } from '@angular/forms';
 
 import { filter, map, tap } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
@@ -27,9 +27,9 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
 
     @Input() formField: FormField;
 
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
 
-    group: FormGroup;
+    group: UntypedFormGroup;
 
     gradeResponse: GradeResponse;
 
@@ -47,13 +47,13 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
         }
     }
 
-    get options(): FormArray {
-        return this.group.get('options') as FormArray;
+    get options(): UntypedFormArray {
+        return this.group.get('options') as UntypedFormArray;
     }
 
     @ViewChild('expansionPanel') expansionPanel !: MatExpansionPanel;
 
-    constructor(private formBuilder: FormBuilder, private kvDiffers: KeyValueDiffers, private formBuilderStore: FormBuilderStore) { }
+    constructor(private formBuilder: UntypedFormBuilder, private kvDiffers: KeyValueDiffers, private formBuilderStore: FormBuilderStore) { }
 
     // Called on initial load and when the formField value changes like label or value
     ngOnChanges(changes: SimpleChanges): void {
@@ -81,7 +81,7 @@ export class GradeEditorComponent implements OnChanges, GradeEditor {
             // create a array of form groups
             const model = this.formField.model[0];
 
-            const formGroups: FormGroup[] = [];
+            const formGroups: UntypedFormGroup[] = [];
             for (const option of model.options) {
                 const pt = points.find(point => point.value === option.value);
                 formGroups.push(this.formBuilder.group({

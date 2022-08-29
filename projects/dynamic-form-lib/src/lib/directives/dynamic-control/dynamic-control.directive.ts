@@ -10,7 +10,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -46,7 +46,7 @@ const components = {
 })
 export class DynamicControlDirective implements OnInit, OnDestroy {
 
-  @Input() formGroup: FormGroup;
+  @Input() formGroup: UntypedFormGroup;
   @Input() model: DynamicFormControlModel;
 
   @Output() customEvent = new EventEmitter<DynamicFormControlCustomEvent>();

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ValidatorFn, UntypedFormControl } from '@angular/forms';
 
 import { DynamicFormControlModel, DynamicFormControlModelConfig } from '../models/dynamic-form-control.model';
 import { DynamicFormModel } from '../models/dynamic-form.model';
@@ -31,14 +31,14 @@ export class DynamicFormService {
   private uriPrefix = 'assets/data/forms/';
   private uriSuffix = '.json';
 
-  constructor(private formBuilder: FormBuilder, private httpClient: HttpClient) {
+  constructor(private formBuilder: UntypedFormBuilder, private httpClient: HttpClient) {
   }
 
   public getFormMetadata(formId: string) {
     return this.httpClient.get<DynamicFormControlModelConfig[]>(this.uriPrefix + formId + this.uriSuffix);
   }
 
-  public createGroup(formModel: DynamicFormModel): FormGroup {
+  public createGroup(formModel: DynamicFormModel): UntypedFormGroup {
 
     const group = this.formBuilder.group({});
 
@@ -54,13 +54,13 @@ export class DynamicFormService {
     return group;
   }
 
-  public createControl(controlModel: DynamicFormControlModel): FormControl {
+  public createControl(controlModel: DynamicFormControlModel): UntypedFormControl {
 
     if (controlModel.type === 'toggle') {
       return this.formBuilder.control(false, this.getValidators(controlModel.validators || []));
     }
 
-    const fc: FormControl = this.formBuilder.control(null, this.getValidators(controlModel.validators || []));
+    const fc: UntypedFormControl = this.formBuilder.control(null, this.getValidators(controlModel.validators || []));
 
     return fc;
   }

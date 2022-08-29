@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { DynamicFormModel } from '../../models/dynamic-form.model';
 import { DynamicFormControlCustomEvent } from '../../models/dynamic-form-control.model';
@@ -25,7 +25,7 @@ import { DynamicFormControlCustomEvent } from '../../models/dynamic-form-control
 })
 export class DynamicFormComponent {
 
-  @Input() formGroup: FormGroup;
+  @Input() formGroup: UntypedFormGroup;
 
   // tslint:disable-next-line:no-input-rename
   @Input('model') formModel: DynamicFormModel;

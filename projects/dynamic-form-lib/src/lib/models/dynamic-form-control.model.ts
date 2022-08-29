@@ -1,5 +1,5 @@
 import { EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { ValidatorModel } from './validator.model';
 
 export interface DynamicFormControlCustomEvent {
@@ -10,7 +10,7 @@ export interface DynamicFormControlCustomEvent {
 }
 
 export interface DynamicFormControl {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   model: DynamicFormControlModel;
   customEvent?: EventEmitter<any>;
 }

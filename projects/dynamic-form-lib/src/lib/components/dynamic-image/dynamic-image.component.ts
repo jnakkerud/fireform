@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input, OnInit, DoCheck, KeyValueDiffers, KeyValueDiffer, KeyValueChangeRecord } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ import { ImageService } from './image.service';
 })
 export class DynamicImageComponent implements OnInit, DoCheck {
 
-    @Input() formGroup: FormGroup;
+    @Input() formGroup: UntypedFormGroup;
     @Input() model: DynamicFormControlModel;
 
     @HostBinding('class') elementClass;

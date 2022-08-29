@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { FormField } from '../form-builder.component';
 import { DynamicFormService } from 'dynamic-form-lib';
@@ -17,7 +17,7 @@ export class FormFieldSnippetComponent implements OnInit {
 
     @Input() formField: FormField;
 
-    public formGroup: FormGroup;
+    public formGroup: UntypedFormGroup;
 
     constructor(private dynamicFormService: DynamicFormService) { }
 

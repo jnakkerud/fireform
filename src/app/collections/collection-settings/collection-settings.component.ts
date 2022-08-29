@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { CollectionService, CollectionItem } from '../../core/collection-service/collection.service';
 import { DynamicFormService, DynamicFormModel, DynamicFormControlModelConfig } from 'dynamic-form-lib';
@@ -31,7 +31,7 @@ export class CollectionSettingsComponent implements OnInit, OnDestroy {
         allowMultiple: true
     };
 
-    public formGroup: FormGroup;
+    public formGroup: UntypedFormGroup;
     public formModel: DynamicFormModel;
 
     subscription: Subscription;

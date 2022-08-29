@@ -1,6 +1,6 @@
 import { Component, OnInit, NgModule, Inject, OnDestroy } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { tap, concatMap } from 'rxjs/operators';
 
@@ -44,7 +44,7 @@ interface ResultParam {
 })
 export class GeneratedFormComponent implements OnInit, OnDestroy {
 
-    public formGroup: FormGroup;
+    public formGroup: UntypedFormGroup;
     public formModel: DynamicFormModel;
 
     collectionItem: CollectionItem = {id: '', name: ''};
