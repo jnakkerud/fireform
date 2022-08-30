@@ -11,7 +11,7 @@
         <form-field-snippet *ngFor="let field of formFields; let i = index"
           (click)="handleClick(i)"
           [formField]="field"
-          [class.form-field-snippet-active]="selectedIndex == i"
+          [class.form-field-snippet-active]="selectedIndex === i"
           cdkDrag>
         </form-field-snippet>
       </div>
