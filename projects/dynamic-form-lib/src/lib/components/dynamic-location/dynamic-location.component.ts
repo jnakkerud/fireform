@@ -25,7 +25,7 @@ export function latitudeLongitudeValidator(): ValidatorFn {
 }
 
 @Component({
-    // tslint:disable-next-line: component-selector
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'dynamic-location',
     templateUrl: 'dynamic-location.component.html'
 })

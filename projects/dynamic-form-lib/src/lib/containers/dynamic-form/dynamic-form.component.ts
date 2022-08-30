@@ -6,7 +6,7 @@ import { DynamicFormControlCustomEvent } from '../../models/dynamic-form-control
 
 @Component({
   // encapsulation: ViewEncapsulation.None,
-  selector: 'dynamic-form, app-dynamic-form',
+  selector: 'dynamic-form, app-dynamic-form, lib-dynamic-form',
   template: `
     <form  [autocomplete]="autocomplete"
            [className]="className"
@@ -27,7 +27,7 @@ export class DynamicFormComponent {
 
   @Input() formGroup: UntypedFormGroup;
 
-  // tslint:disable-next-line:no-input-rename
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('model') formModel: DynamicFormModel;
 
   @Input() autocomplete = 'off';

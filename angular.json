@@ -142,8 +142,22 @@
             "tsConfig": "projects/dynamic-form-lib/tsconfig.spec.json",
             "karmaConfig": "projects/dynamic-form-lib/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dynamic-form-lib/**/*.ts",
+              "projects/dynamic-form-lib/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

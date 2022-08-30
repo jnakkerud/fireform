@@ -41,7 +41,7 @@ const components = {
 };
 
 @Directive({
-  // tslint:disable-next-line: directive-selector
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[dynamicControl]'
 })
 export class DynamicControlDirective implements OnInit, OnDestroy {

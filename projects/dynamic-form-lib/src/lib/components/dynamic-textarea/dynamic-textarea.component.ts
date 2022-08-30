@@ -4,7 +4,7 @@ import { UntypedFormGroup } from '@angular/forms';
 import { DynamicFormControlCustomEvent, DynamicFormControlModel } from '../../models/dynamic-form-control.model';
 
 @Component({
-  // tslint:disable-next-line: component-selector
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'dynamic-textarea',
   templateUrl: 'dynamic-textarea.component.html'
 })
