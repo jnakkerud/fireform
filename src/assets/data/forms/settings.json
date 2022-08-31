@@ -27,11 +27,11 @@
     {
       "type": "toggle",
       "id": "allowMultiple",
-      "label": "Allow Multiple Responses"
+      "label": "Allow multiple responses"
     },
     {
       "type": "toggle",
       "id": "trackResponses",
-      "label": "Track responses"
+      "label": "Allow tracking of user responses"
     }
 ]
