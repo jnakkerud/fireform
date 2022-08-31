@@ -1,18 +1,17 @@
 <div class="project-list">
     <a class="project-list-item" [routerLink]="['/collections/create']">
-      <mat-card class="project-list-card">
-        <mat-card-title>Create Collection</mat-card-title>        
-        <mat-card-content class="project-list-card-summary">
-          <mat-icon aria-hidden="false" aria-label="Add" color='accent' fontIcon="add"></mat-icon>
-        </mat-card-content>
-      </mat-card>
+        <mat-card class="project-list-card">
+            <mat-card-title>Create Collection</mat-card-title>
+            <mat-card-content class="project-list-card-summary">
+                <mat-icon aria-hidden="false" aria-label="Add" color='accent' fontIcon="add"></mat-icon>
+            </mat-card-content>
+        </mat-card>
     </a>
-    <a *ngFor="let item of (collectionItems | async)"
-       class="project-list-item"
-      [routerLink]="['/collections/', item.id]">
-      <mat-card class="project-list-card">
-        <mat-card-title>{{item.name}}</mat-card-title>
-        <mat-card-content class="project-list-card-summary">{{item.description}}</mat-card-content>
-      </mat-card>
+    <a *ngFor="let item of (collectionItems | async)" class="project-list-item"
+        [routerLink]="['/collections/', item.id]">
+        <mat-card class="project-list-card">
+            <mat-card-title>{{item.name}}</mat-card-title>
+            <mat-card-content class="project-list-card-summary">{{item.description}}</mat-card-content>
+        </mat-card>
     </a>
 </div>
