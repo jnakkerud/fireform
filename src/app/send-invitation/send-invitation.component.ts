@@ -86,7 +86,7 @@ export class SendInvitationComponent implements OnInit {
         });
 
         result.subscribe(x => this.snackBar.open('Email sent', 'Success!', {
-            duration: 3000,
+            duration: 4000,
         }));
     }
 

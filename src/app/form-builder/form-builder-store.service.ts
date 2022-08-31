@@ -3,6 +3,7 @@ import { Injectable, KeyValueDiffers, KeyValueDiffer } from '@angular/core';
 import { CollectionItem, CollectionService, GradeResponse } from '../core/collection-service/collection.service';
 import { FormField } from './form-builder.component';
 import { DynamicFormControlModel } from 'dynamic-form-lib';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface PropertyEditor {
     formField: FormField;
     isDirty(): boolean;
@@ -42,6 +43,7 @@ export class FormBuilderStore {
 
     constructor(
         private collectionService: CollectionService,
+        private snackBar: MatSnackBar,
         private kvDiffers: KeyValueDiffers) {
 
         // TODO refactor unload: see https://github.com/angular/angular/blob/master/aio/src/app/shared/scroll.service.ts
@@ -89,7 +91,12 @@ export class FormBuilderStore {
             const ff = this.formFields;
             const id = this.propertyEditor.formField.fieldId;
             const ge = this.gradeEditor;
-            saver(item, ff, ge, id).then(() => this.dirty = false);
+            saver(item, ff, ge, id).then(() => {
+                this.dirty = false
+                this.snackBar.open('Form saved', 'Success!', {
+                    duration: 4000,
+                });                
+            });
         }
     }
 
