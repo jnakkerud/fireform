@@ -1,12 +1,32 @@
 <h1 mat-dialog-title>Form Link</h1>
 <mat-dialog-content>
-  <p>Link to share:</p>
 
-  <input type="text" readonly [(ngModel)]="linkUrl" (focus)="$event.target.select()" style="width: 100%;">
-  
-  <br>
-  <br>
+    <ng-container *ngIf="data.collectionItem.trackResponses">
+        <table class="generate-link-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field appearance="outline" class="generate-link-full-width">
+                        <mat-label>Tracking user</mat-label>
+                        <input matInput [(ngModel)]="trackingUser" placeholder="Enter tracking user name">
+                        <mat-hint>Generate a link for a tracking user</mat-hint>
+                    </mat-form-field>            
+                </td>
+                <td>
+                    <button mat-button (click)="generateTracking()">Generate</button>
+                </td>
+            </tr>
+        </table>
+    </ng-container>
+    <br>
+    <label class="generate-link-label">Link to share:</label>
+    <p>
+        <a class="generate-link" href="{{linkUrl}}" target="_blank" rel="noopener noreferrer">{{linkUrl}}</a>
+        <button mat-icon-button aria-label="Copy link" [cdkCopyToClipboard]="linkUrl">
+            <mat-icon>content_copy</mat-icon>
+        </button>
+    </p>
+    <br>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button cdkFocusInitial mat-dialog-close class="ff-button">Done</button>
+    <button mat-button cdkFocusInitial mat-dialog-close class="ff-button">Done</button>
 </mat-dialog-actions>

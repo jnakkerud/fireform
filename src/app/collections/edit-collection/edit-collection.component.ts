@@ -76,7 +76,7 @@ export class EditCollectionComponent {
         // show the generated link in a dialog
         // pass in the edit item to the dialog
         this.dialog.open(GenerateLinkComponent, {
-            width: '450px',
+            width: '650px',
             data: { collectionItem: this.editItem }
         });
     }
